@@ -1,18 +1,30 @@
 import { Button } from "@chakra-ui/react";
 
-export default function ClickMe() {
+
+export default function ClickMe({buttonWidth}) {
   return (
     <Button
-      px={8}
+    lineHeight='10'
+    fontSize='30'
+    fontWeight='600'
+    fontFamily='nunito, sans-serif'
+      justifyContent='center' //for the writing inside the btn
+      width={buttonWidth} //overall width of the btn in relation to page
+      paddingX={5} //
+      paddingY={1} //
       bg="brand.primary"
-      color={"white"}
+      color={"brand.light"}
       rounded={"md"}
+      _active={{
+        bg: "brand.light",
+        color: "brand.primary",
+      }}
       _hover={{
         transform: "translateY(-2px)",
-        boxShadow: "lg",
+        boxShadow: "md",
       }}
     >
-      Click Me
+      Click me again
     </Button>
   );
 }
