@@ -1,8 +1,8 @@
-export default function ChewsLogo({ fontSize }) {
+export default function ChewsLogo({ fontSize, theme }) {
   return (
     <h1
       className={
-        "font-permanent-marker " + "text-primary-color " + "text-" + fontSize
+        "font-permanent-marker " + "text-" + fontSize + " text-" + theme + "-color"
       }
     >
       Chews
