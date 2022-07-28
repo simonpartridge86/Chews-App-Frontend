@@ -10,12 +10,8 @@ import {
 import {
     FiMenu,
     FiHome,
-    FiCalendar,
-    FiUser,
-    FiDollarSign,
-    FiBriefcase,
-    FiSettings
 } from 'react-icons/fi'
+import { MdFoodBank, MdStar, MdPerson } from "react-icons/md";
 import { IoPawOutline } from 'react-icons/io5'
 import NavItem from './NavItem'
 
@@ -52,13 +48,10 @@ export default function Sidebar() {
                             changeNavSize("small")
                     }}
                 />
-                <NavItem navSize={navSize} icon={FiHome} title="Dashboard" description="This is the description for the dashboard." />
-                <NavItem navSize={navSize} icon={FiCalendar} title="Calendar" active />
-                <NavItem navSize={navSize} icon={FiUser} title="Clients" />
-                <NavItem navSize={navSize} icon={IoPawOutline} title="Animals" />
-                <NavItem navSize={navSize} icon={FiDollarSign} title="Stocks" />
-                <NavItem navSize={navSize} icon={FiBriefcase} title="Reports" />
-                <NavItem navSize={navSize} icon={FiSettings} title="Settings" />
+                <NavItem navSize={navSize} icon={FiHome} title="Home" description="This is the description for the dashboard." />
+                <NavItem navSize={navSize} icon={MdFoodBank} title="Find Chews" />
+                <NavItem navSize={navSize} icon={MdStar} title="My Favorites" />
+                <NavItem navSize={navSize} icon={MdPerson} title="My Profile" />
             </Flex>
 
             <Flex

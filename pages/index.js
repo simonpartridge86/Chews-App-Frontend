@@ -1,12 +1,17 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import Sidebar from '../components/Sidebar/Sidebar'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
   return (
+    <>
     <h1 className="text-5xl text-primary-color font-permanent-marker font-bold underline">
       Hello world!
     </h1>
+    <Sidebar />
+
+    </>
   )
 }
 
