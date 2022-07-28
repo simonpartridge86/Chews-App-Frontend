@@ -6,7 +6,7 @@ import ChewsLogo from "../components/chews-logo";
 export default function Home() {
   return (
     <>
-      <ChewsLogo fontSize={"9xl"} theme={"primary"}/>
+      <ChewsLogo theme={"primary"} fontSize={"9xl"}/>
     </>
   );
 }
