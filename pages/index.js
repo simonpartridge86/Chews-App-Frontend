@@ -4,7 +4,11 @@ import styles from "../styles/Home.module.css";
 import ChewsLogo from "../components/chews-logo";
 
 export default function Home() {
-  return <ChewsLogo />;
+  return (
+    <>
+      <ChewsLogo />
+    </>
+  );
 }
 
 /*export default function Home() {
