@@ -7,7 +7,7 @@ import ChewsLogo from "../components/chews-logo";
 export default function Home() {
   return (
     <>
-      <ChewsLogo />
+      <ChewsLogo theme={"primary"}/>
     </>
   );
 }
