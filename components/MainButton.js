@@ -4,6 +4,7 @@ import { Button } from "@chakra-ui/react";
 Prop Notes:
  - buttonWidth = to adjust width of button to your needs
  - buttonSize = options are lg, md, sm, xs (will also adjust text size)
+ - buttonText = whatever text you want to appear on the button
  - onClick = whatever onClick callback function you are passing to this button
  - colorMode = add "light" for white button with red features, otherwise defaults to standard red button
 */
