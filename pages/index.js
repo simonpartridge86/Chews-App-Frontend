@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import Sidebar from '../components/Sidebar/Sidebar'
+import Hamburger from '../components/Hamburger/HamburgerButton'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
@@ -9,7 +9,7 @@ export default function Home() {
     <h1 className="text-5xl text-primary-color font-permanent-marker font-bold underline">
       Hello world!
     </h1>
-    <Sidebar />
+    <Hamburger />
 
     </>
   )
