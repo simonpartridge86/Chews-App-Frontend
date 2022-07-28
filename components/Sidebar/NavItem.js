@@ -20,7 +20,7 @@ export default function NavItem({ icon, title, description, active, navSize }) {
         >
             <Menu placement="right">
                 <Link
-                    backgroundColor={active && "#AEC8CA"}
+                    backgroundColor={active && "brand.primary-color"}
                     p={3}
                     borderRadius={8}
                     _hover={{ textDecor: 'none', backgroundColor: "#AEC8CA" }}
