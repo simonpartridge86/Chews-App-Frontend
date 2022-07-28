@@ -1,12 +1,14 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import ChewsLogo from '../components/chews-logo'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
   return (
-    <h1 className="text-5xl text-primary-color font-permanent-marker font-bold underline">
-      Hello world!
-    </h1>
+    <>
+    <h1 className="text-5xl text-primary-color font-nunito">Chews</h1>
+    <ChewsLogo/>
+    </>
   )
 }
 
