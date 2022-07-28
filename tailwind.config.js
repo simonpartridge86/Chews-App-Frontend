@@ -6,6 +6,10 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    fontFamily: {
+       "nunito": ["nunito", "sans-serif"],
+       "permanent-marker": ["permanent-marker", "sans-serif"]
+    }
   },
   plugins: [],
 }
