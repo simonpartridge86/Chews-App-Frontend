@@ -1,4 +1,3 @@
-
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
@@ -7,10 +6,12 @@ import ChewsLogo from "../components/chews-logo";
 export default function Home() {
   return (
     <>
-      <ChewsLogo theme={"primary"}/>
+      <ChewsLogo fontSize={"1xl"} />
     </>
   );
 }
+
+// theme={"primary"} fontSize={"5xl"}
 
 /*export default function Home() {
   return (

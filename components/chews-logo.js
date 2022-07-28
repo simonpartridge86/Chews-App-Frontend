@@ -1,5 +1,11 @@
-export default function ChewsLogo({theme}) {
+export default function ChewsLogo({ fontSize }) {
   return (
-    <h1 className={"font-permanent-marker text-5xl " + "text-" + theme + "-color"}>Chews</h1>
+    <h1
+      className={
+        "font-permanent-marker " + "text-primary-color " + "text-" + fontSize
+      }
+    >
+      Chews
+    </h1>
   );
 }
