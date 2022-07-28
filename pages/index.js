@@ -1,15 +1,15 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import ChewsLogo from '../components/chews-logo'
-import styles from '../styles/Home.module.css'
+
+import Head from "next/head";
+import Image from "next/image";
+import styles from "../styles/Home.module.css";
+import ChewsLogo from "../components/chews-logo";
 
 export default function Home() {
   return (
     <>
-    <h1 className="text-5xl text-primary-color font-nunito">Chews</h1>
-    <ChewsLogo/>
+      <ChewsLogo />
     </>
-  )
+  );
 }
 
 /*export default function Home() {
