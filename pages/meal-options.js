@@ -1,9 +1,17 @@
 import MainButton from "../components/MainButton";
 import { Stack, HStack, VStack } from "@chakra-ui/react";
+import { useState } from "react";
 
 import React from "react";
 
 export default function MealOptions() {
+
+    const [mealChoice, setMealChoice] = useState("")
+    function handleClick (meal) {
+        setMealChoice(meal)
+        console.log(mealChoice)
+    }
+
   return (
     <div className="h-screen">
       <nav className="h-1/6 text-center font-permanent-marker text-3xl">
@@ -19,6 +27,7 @@ export default function MealOptions() {
             buttonSize="lg"
             colorMode="dark"
             buttonWidth="80%"
+            onClick={() => {handleClick("breakfast")}}
           />
           <MainButton
             buttonText="Main"
