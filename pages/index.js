@@ -9,7 +9,7 @@ export default function Home() {
     <>
       <ChewsLogo theme={"brand.primary"} size={"4xl"} />
       <div className="flex flex-col items-center space-y-4">
-        <h2 className="text-primary-color font-bold">We Choose...You Chews!</h2>
+        <h2 className="text-primary-color font-bold">We Choose...You Chew!</h2>
         <MainButton
           buttonWidth="75%"
           buttonSize="lg"
