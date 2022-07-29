@@ -18,17 +18,17 @@ export default function Hamburger() {
     icon={<HamburgerIcon />}
     variant='outline'
   />
-  <MenuList w="100vw" h='calc(100vh)'>
-    <MenuItem icon={<AddIcon />} command='⌘T'>
+  <MenuList w="100vw" h='100vh'>
+    <MenuItem minH='25vh' icon={<AddIcon />} command='⌘T'>
       New Tab
     </MenuItem>
-    <MenuItem icon={<ExternalLinkIcon />} command='⌘N'>
+    <MenuItem minH='25vh' icon={<ExternalLinkIcon />} command='⌘N'>
       New Window
     </MenuItem>
-    <MenuItem icon={<RepeatIcon />} command='⌘⇧N'>
+    <MenuItem minH='25vh' icon={<RepeatIcon />} command='⌘⇧N'>
       Open Closed Tab
     </MenuItem>
-    <MenuItem icon={<EditIcon />} command='⌘O'>
+    <MenuItem minH='25vh' icon={<EditIcon />} command='⌘O'>
       Open File...
     </MenuItem>
   </MenuList>
