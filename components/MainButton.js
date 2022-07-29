@@ -23,6 +23,7 @@ export default function MainButton({
         size={buttonSize}
         fontWeight={"600"}
         fontFamily={"brand.main"}
+        fontSize={"xl"}
         rounded={"lg"}
         width={buttonWidth}
         _hover={{
@@ -47,6 +48,7 @@ export default function MainButton({
         onClick={onClick}
         size={buttonSize}
         fontWeight={"600"}
+        fontSize={"xl"}
         fontFamily={"brand.main"}
         rounded={"md"}
         width={buttonWidth}
