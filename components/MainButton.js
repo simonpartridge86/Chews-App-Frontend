@@ -6,7 +6,7 @@ Prop Notes:
  - buttonSize = options are lg, md, sm, xs (will also adjust text size)
  - buttonText = whatever text you want to appear on the button
  - onClick = whatever onClick callback function you are passing to this button
- - colorMode = add "light" for white button with red features, otherwise defaults to standard red button
+ - colorMode = add "light" for white button with red features, otherwise add"dark" for a standard red button
 */
 
 export default function MainButton({
@@ -23,6 +23,7 @@ export default function MainButton({
         size={buttonSize}
         fontWeight={"600"}
         fontFamily={"brand.main"}
+        fontSize={"xl"}
         rounded={"lg"}
         width={buttonWidth}
         _hover={{
@@ -47,6 +48,7 @@ export default function MainButton({
         onClick={onClick}
         size={buttonSize}
         fontWeight={"600"}
+        fontSize={"xl"}
         fontFamily={"brand.main"}
         rounded={"md"}
         width={buttonWidth}
