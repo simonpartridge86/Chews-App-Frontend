@@ -7,27 +7,21 @@ import MainButton from "../components/MainButton";
 export default function Home() {
   return (
     <>
-      <ChewsLogo theme={'brand.primary'} size={'4xl'}/>
+      <ChewsLogo theme={"brand.primary"} size={"4xl"} />
       <div className="flex flex-col items-center space-y-4">
+        <h2 className="text-primary-color font-bold">We Choose...You Chews!</h2>
         <MainButton
-          buttonWidth="100%"
+          buttonWidth="75%"
           buttonSize="lg"
-          buttonText="Hello"
-          colorMode="light"
-        />
-        <MainButton
-          buttonWidth="50%"
-          buttonSize="md"
-          buttonText="Hello"
+          buttonText="Log In / Sign Up"
           colorMode="dark"
         />
         <MainButton
-          buttonWidth="25%"
-          buttonSize="sm"
-          buttonText="Hello"
+          buttonWidth="75%"
+          buttonSize="lg"
+          buttonText="Continue As Guest"
           colorMode="light"
         />
-        <MainButton buttonSize="xs" buttonText="Hello" colorMode="dark" />
       </div>
     </>
   );
