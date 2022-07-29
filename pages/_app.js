@@ -1,8 +1,7 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { extendTheme } from "@chakra-ui/react";
 import "../styles/globals.css";
-import "@fontsource/nunito";
-import "@fontsource/permanent-marker";
+
 
 const colors = {
   brand: {
