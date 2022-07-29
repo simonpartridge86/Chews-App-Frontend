@@ -4,9 +4,9 @@ import "../styles/globals.css";
 
 const colors = {
   brand: {
-    'primary-color': '#FD2B46',
-    'light-color': '#FFFFFF',
-    'dark-color': '#32373B',
+    primary: '#FD2B46',
+    light: '#FFFFFF',
+    dark: '#32373B',
   },
 }
 
