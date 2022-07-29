@@ -1,13 +1,9 @@
-export default function ChewsLogo({ theme, fontSize }) {
+import { Heading } from '@chakra-ui/react'
 
-let value2 = ["font-permanent-marker " + "text-" + theme + "-color " + "text-" + fontSize].toString()
-
-
+export default function ChewsLogo({ theme, size }) {
   return (
-    <h1
-    className={value2}
-      >
+    <Heading size={size} fontFamily='brand.logo' color={theme}>
       Chews
-    </h1>
+    </Heading>
   );
 }
