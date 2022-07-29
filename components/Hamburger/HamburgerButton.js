@@ -20,16 +20,16 @@ export default function Hamburger() {
   />
   <MenuList w="100vw" h='100vh'>
     <MenuItem minH='25vh' icon={<AddIcon />} command='⌘T'>
-      New Tab
+      Home
     </MenuItem>
     <MenuItem minH='25vh' icon={<ExternalLinkIcon />} command='⌘N'>
-      New Window
+      Find Chews
     </MenuItem>
     <MenuItem minH='25vh' icon={<RepeatIcon />} command='⌘⇧N'>
-      Open Closed Tab
+      My Favourites
     </MenuItem>
     <MenuItem minH='25vh' icon={<EditIcon />} command='⌘O'>
-      Open File...
+      My Profile
     </MenuItem>
   </MenuList>
 </Menu>
