@@ -1,8 +1,11 @@
-import Head from "next/head";
-import Image from "next/image";
-import styles from "../styles/Home.module.css";
+
+import Head from 'next/head'
+import Image from 'next/image'
+import Hamburger from '../components/Hamburger/HamburgerButton'
+import styles from '../styles/Home.module.css'
 import ChewsLogo from "../components/chews-logo";
 import MainButton from "../components/MainButton";
+
 
 export default function Home() {
   return (
