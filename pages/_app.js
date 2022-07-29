@@ -1,6 +1,8 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { extendTheme } from "@chakra-ui/react";
 import "../styles/globals.css";
+//import "@fontsource/permanent-marker"
+//import "@fontsource/nunito"
 
 
 const colors = {
@@ -13,7 +15,7 @@ const colors = {
 
 const fonts = ({
   brand: {
-    logo: `'Permanent Marker', sans-serif`,
+    logo: `'Permanent-Marker', sans-serif`,
     main: `'Nunito', sans-serif`,
   }
 });
