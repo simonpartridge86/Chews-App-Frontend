@@ -22,7 +22,7 @@ export default function MainButton({
         onClick={onClick}
         size={buttonSize}
         fontWeight={"600"}
-        fontFamily={"nunito, sans-serif"}
+        fontFamily={"brand.main"}
         rounded={"lg"}
         width={buttonWidth}
         _hover={{
@@ -47,7 +47,7 @@ export default function MainButton({
         onClick={onClick}
         size={buttonSize}
         fontWeight={"600"}
-        fontFamily={"nunito, sans-serif"}
+        fontFamily={"brand.main"}
         rounded={"md"}
         width={buttonWidth}
         _hover={{

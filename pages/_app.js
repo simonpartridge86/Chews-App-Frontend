@@ -10,7 +10,14 @@ const colors = {
   },
 };
 
-const theme = extendTheme({ colors });
+const fonts = {
+  brand: {
+    logo: `'Permanent Marker', sans-serif`,
+    main: `'Nunito', sans-serif`,
+  },
+};
+
+const theme = extendTheme({ colors, fonts });
 
 function MyApp({ Component, pageProps }) {
   return (
