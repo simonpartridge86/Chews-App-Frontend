@@ -95,7 +95,7 @@ export default function Hamburger() {
 
       {/* Mobile Content */}
       <Flex
-        bgColor={"#FD2B46"}
+        bgColor={"brand.primary"}
         color={"#fff"}
         w="100vw"
         display={display}
@@ -108,27 +108,15 @@ export default function Hamburger() {
         overflowY="auto"
         flexDir="column"
       >
-        <Flex justify="flex-start">
-          <IconButton
-          bgColor='none'
-            color={'#000'}
-            mt={4}
-            ml={2}
-            aria-label="Open Menu"
-            size="lg"
-            icon={<Avatar name='Dan Abrahmov' src='https://bit.ly/dan-abramov' />}
-            onClick={() => changeDisplay("none")}
-          />
-        </Flex>
         <Flex justify="flex-end">
           <IconButton
-          bgColor='none'
+          bgColor='brand.primary'
             color={'#000'}
-            mt={-12}
+            mt={2}
             mr={2}
             aria-label="Open Menu"
             size="lg"
-            icon={<CloseIcon />}
+            icon={<Avatar name='Dan Abrahmov' src='https://bit.ly/dan-abramov' />}
             onClick={() => changeDisplay("none")}
           />
         </Flex>
@@ -158,6 +146,17 @@ export default function Hamburger() {
             My Profile
             </Button>
           </NextLink>
+
+        
+          <IconButton
+          bgColor='brand.primary'
+            color={'white'}
+            aria-label="Open Menu"
+            size="lg"
+            icon={<CloseIcon />}
+            onClick={() => changeDisplay("none")}
+          />
+
         </Flex>
       </Flex>
     </Flex>
