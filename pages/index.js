@@ -6,10 +6,13 @@ import MainButton from "../components/MainButton";
 
 export default function Home() {
   return (
-    <>
-      <ChewsLogo theme={"brand.primary"} size={"4xl"} />
+    <div className="flex flex-col space-y-20 content-end h-screen">
+    <div className="bg-red w-screen h-1/5"></div>
       <div className="flex flex-col items-center space-y-4">
+        <ChewsLogo theme={"brand.primary"} size={"4xl"} />
         <h2 className="text-primary-color font-bold">We Choose...You Chew!</h2>
+      </div>
+      <div className="flex flex-col items-center space-y-4">
         <MainButton
           buttonWidth="75%"
           buttonSize="lg"
@@ -23,6 +26,7 @@ export default function Home() {
           colorMode="light"
         />
       </div>
-    </>
+    </div>
+  
   );
 }
