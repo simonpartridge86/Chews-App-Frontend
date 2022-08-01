@@ -1,13 +1,13 @@
-
-import Head from 'next/head'
-import Image from 'next/image'
-import Hamburger from '../components/Hamburger/HamburgerButton'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+import Image from "next/image";
+import Hamburger from "../components/Hamburger/HamburgerButton";
+import styles from "../styles/Home.module.css";
 import ChewsLogo from "../components/chews-logo";
 import MainButton from "../components/MainButton";
-
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const router = useRouter();
   return (
     <div className="flex flex-col space-y-20 justify-center h-screen">
       <div className="flex flex-col items-center space-y-4">
@@ -26,9 +26,13 @@ export default function Home() {
           buttonSize="lg"
           buttonText="Continue As Guest"
           colorMode="light"
+          onClick={() => {
+            router.push({
+              pathname: "/meal-select",
+            });
+          }}
         />
       </div>
     </div>
-  
   );
 }
