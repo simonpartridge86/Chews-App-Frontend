@@ -1,5 +1,6 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { extendTheme } from "@chakra-ui/react";
+import Layout from "../components/layout";
 import "../styles/globals.css";
 //import "@fontsource/permanent-marker"
 //import "@fontsource/nunito"
@@ -25,8 +26,11 @@ const theme = extendTheme({ colors, fonts });
 function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider theme={theme}>
+    <Layout>
       <Component {...pageProps} />
+      </Layout> 
     </ChakraProvider>
+   
   );
 }
 export default MyApp;
