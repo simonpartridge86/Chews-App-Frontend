@@ -7,6 +7,7 @@ Prop Notes:
  - buttonText = whatever text you want to appear on the button
  - onClick = whatever onClick callback function you are passing to this button
  - colorMode = add "light" for white button with red features, otherwise add"dark" for a standard red button
+ - isDisabled = takes boolean to determine whether button is enabled or disable (true = disabled), defaults to false
 */
 
 export default function MainButton({
@@ -15,15 +16,17 @@ export default function MainButton({
   buttonText,
   onClick,
   colorMode,
+  isDisabled,
 }) {
   if (colorMode === "light") {
     return (
       <Button
+        disabled={isDisabled}
         onClick={onClick}
         size={buttonSize}
         fontWeight={"600"}
         fontFamily={"brand.main"}
-        fontSize={"xl"}
+        fontSize={buttonSize}
         rounded={"lg"}
         width={buttonWidth}
         _hover={{
@@ -45,10 +48,11 @@ export default function MainButton({
   } else if (colorMode === "dark") {
     return (
       <Button
+        disabled={isDisabled}
         onClick={onClick}
         size={buttonSize}
         fontWeight={"600"}
-        fontSize={"xl"}
+        fontSize={buttonSize}
         fontFamily={"brand.main"}
         rounded={"md"}
         width={buttonWidth}
