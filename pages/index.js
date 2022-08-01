@@ -5,7 +5,7 @@ import Hamburger from '../components/Hamburger/HamburgerButton'
 import styles from '../styles/Home.module.css'
 import ChewsLogo from "../components/chews-logo";
 import MainButton from "../components/MainButton";
-
+import Navbar from "../components/navbar"
 
 export default function Home() {
   return (
