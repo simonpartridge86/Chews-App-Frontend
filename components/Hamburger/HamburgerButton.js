@@ -29,7 +29,7 @@ export default function Hamburger() {
 
   return (
     <Flex >
-      <Flex position="fixed" top="1rem" right="1rem" align="center">
+      <Flex>
         {/* Desktop */}
         <Flex display={["none", "none", "flex", "flex"]}>
           <NextLink href="/" passHref>
