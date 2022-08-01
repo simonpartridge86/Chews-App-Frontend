@@ -1,7 +1,7 @@
 import { IconButton, Avatar } from '@chakra-ui/react'
 import ChewsLogo from './chews-logo';
 import Hamburger from './Hamburger/HamburgerButton';
-import "./pic.jpg";
+import Testpic from '../public/pic.jpg';
 
 export default function Navbar() {
   return (
