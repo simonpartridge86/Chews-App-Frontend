@@ -14,7 +14,7 @@ export default function Home() {
       <Navbar></Navbar>
       <div className="flex flex-col items-center space-y-4">
         <ChewsLogo theme={"brand.primary"} size={"4xl"} />
-        <h2 className="text-primary-color font-bold">We Choose...You Chew!</h2>
+        <h2 className="text-primary-color font-bold font-nunito">We Choose...You Chew!</h2>
       </div>
       <div className="flex flex-col items-center space-y-4">
         <MainButton

@@ -1,7 +1,10 @@
 
 export default function Footer() {
   return (
-    <div className= 'bg-red' > <p>baristacrafts</p></div>
+    <div className='flex flex-col justify-evenly items-center bg-dark-color text-light-color h-20 font-nunito' > 
+    <p>Served up by The Baristacrats</p>
+    <p>Powered by Edamam recipe API</p>
+    </div>
   
   );
 }
