@@ -1,15 +1,16 @@
 import MainButton from "../components/MainButton";
-import { Stack, HStack, VStack } from "@chakra-ui/react";
-import { useState } from "react";
+import { VStack } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
 import React from "react";
 
 export default function MealSelect() {
-  const [mealChoice, setMealChoice] = useState("");
-  function handleClick(meal) {
-    setMealChoice(meal);
-    console.log(mealChoice);
-  }
+  const router = useRouter();
+  // const [mealChoice, setMealChoice] = useState("");
+  // function handleClick(meal) {
+  //   setMealChoice(meal);
+  //   console.log(mealChoice);
+  // }
 
   return (
     <div className="h-screen">
@@ -27,7 +28,11 @@ export default function MealSelect() {
             colorMode="dark"
             buttonWidth="80%"
             onClick={() => {
-              handleClick("breakfast");
+              // const meal = "breakfast";
+              router.push({
+                pathname: "/search-select/{meal}",
+                query: { meal: "breakfast" },
+              });
             }}
           />
           <MainButton
@@ -36,7 +41,10 @@ export default function MealSelect() {
             colorMode="dark"
             buttonWidth="80%"
             onClick={() => {
-              handleClick("main");
+              router.push({
+                pathname: "/search-select/{meal}",
+                query: { meal: "main" },
+              });
             }}
           />
           <MainButton
@@ -45,7 +53,10 @@ export default function MealSelect() {
             colorMode="dark"
             buttonWidth="80%"
             onClick={() => {
-              handleClick("dessert");
+              router.push({
+                pathname: "/search-select/{meal}",
+                query: { meal: "dessert" },
+              });
             }}
           />
         </VStack>
@@ -53,3 +64,23 @@ export default function MealSelect() {
     </div>
   );
 }
+
+// import { useRouter } from 'next/router'
+
+// export default function ReadMore({ post }) {
+//   const router = useRouter()
+
+//   return (
+//     <button
+//       type="button"
+//       onClick={() => {
+//         router.push({
+//           pathname: '/search-select/{meal}',
+//           query: { meal: mealChoice },
+//         })
+//       }}
+//     >
+//       Click here to read more
+//     </button>
+//   )
+// }
