@@ -6,6 +6,7 @@ import styles from '../styles/Home.module.css'
 import ChewsLogo from "../components/chews-logo";
 import MainButton from "../components/MainButton";
 import Navbar from "../components/navbar"
+import Footer from '../components/footer';
 
 export default function Home() {
   return (
@@ -29,6 +30,7 @@ export default function Home() {
           colorMode="light"
         />
       </div>
+      <Footer></Footer>
     </div>
   
   );
