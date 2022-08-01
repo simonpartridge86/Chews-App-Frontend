@@ -49,52 +49,7 @@ export default function MealSelect() {
             }}
           />
         </VStack>
-        <VStack spacing={4} align="center">
-          {mealChoice === "" ? (
-            <>
-              <MainButton
-                isDisabled={true}
-                buttonText="Just Chews for Me"
-                buttonSize="lg"
-                colorMode="dark"
-                buttonWidth="80%"
-              />
-              <MainButton
-                isDisabled={true}
-                buttonText="Search by Ingredients"
-                buttonSize="lg"
-                colorMode="dark"
-                buttonWidth="80%"
-              />
-            </>
-          ) : (
-            <>
-              <h2>
-                Searching for{" "}
-                {mealChoice.charAt(0).toUpperCase() + mealChoice.slice(1)}
-              </h2>
-              <MainButton
-                buttonText="Just Chews for Me"
-                buttonSize="lg"
-                colorMode="dark"
-                buttonWidth="80%"
-              />
-              <MainButton
-                buttonText="Search by Ingredients"
-                buttonSize="lg"
-                colorMode="dark"
-                buttonWidth="80%"
-              />
-            </>
-          )}
-        </VStack>
       </main>
     </div>
   );
 }
-
-/* PLAN:
-- Make buttons ✅
-- use state to store the breakfast/main/dessert choice
-- disable bottom two buttons if not meal choice has been made
-*/
