@@ -16,8 +16,13 @@ export default function MainButton({
   buttonText,
   onClick,
   colorMode,
+  borderWidthRecipe,
   isDisabled,
 }) {
+
+  if(!borderWidthRecipe){
+    borderWidthRecipe = '2px'
+  }
   if (colorMode === "light") {
     return (
       <Button
@@ -35,7 +40,7 @@ export default function MainButton({
         }}
         bg={"brand.light"}
         color={"brand.primary"}
-        borderWidth={"2px"}
+        borderWidth={borderWidthRecipe}
         borderColor={"brand.primary"}
         _active={{
           bg: "brand.primary",
@@ -65,7 +70,7 @@ export default function MainButton({
         _active={{
           bg: "brand.light",
           color: "brand.primary",
-          borderWidth: "2px",
+          borderWidth: borderWidthRecipe,
           borderColor: "brand.primary",
         }}
       >
