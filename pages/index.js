@@ -9,7 +9,7 @@ import Navbar from "../components/navbar"
 
 export default function Home() {
   return (
-    <div className="flex flex-col space-y-20 justify-center h-screen">
+    <div className="flex flex-col justify-between h-screen">
       <Navbar></Navbar>
       <div className="flex flex-col items-center space-y-4">
         <ChewsLogo theme={"brand.primary"} size={"4xl"} />
