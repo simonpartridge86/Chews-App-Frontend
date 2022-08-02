@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { recipeData } from "../libs/recipes/recipes";
 import { Link } from '@chakra-ui/react'
-import { ArrowBackIcon } from '@chakra-ui/icons'
+import { ArrowBackIcon, StarIcon } from '@chakra-ui/icons'
 import { useRouter } from "next/router";
 
 import React from "react";
@@ -17,7 +17,7 @@ function Recipes() {
    alt={recipeData[0].recipe.label}
    className="w-4/5">
    </img>
-   <MainButton buttonWidth='20' buttonSize='20' buttonText='F' colorMode="dark" isDisabled={false}/>
+   <MainButton buttonWidth='12' buttonSize='40' buttonText={<StarIcon w={8} h={8}/>} colorMode="dark" borderWidthRecipe="5px" isDisabled={false}/>
    <h2 className="color-primary font-permanent-marker text-2xl">Things you need:</h2>
    <ul>
    <li>{recipeData[0].recipe.ingredientLines[0]}</li>
