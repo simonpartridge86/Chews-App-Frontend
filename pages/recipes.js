@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { recipeData } from "../libs/recipes/recipes";
-import { Link } from '@chakra-ui/react'
+import { Link, Icon } from '@chakra-ui/react'
 import { ArrowBackIcon, StarIcon } from '@chakra-ui/icons'
 import { useRouter } from "next/router";
 
@@ -8,6 +8,16 @@ import React from "react";
 import MainButton from "../components/MainButton";
 
 function Recipes() {
+
+  const CircleIcon = (props) => (
+    <Icon viewBox='0 0 200 200' {...props}>
+      <path
+        fill='brand.dark'
+        d='M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0'
+      />
+    </Icon>
+  );
+
   return(<div className="flex flex-col items-center">
   <Link>Back to results <ArrowBackIcon/></Link>
   <h2 className="color-primary font-permanent-marker text-2xl">You are making:</h2>
@@ -17,12 +27,15 @@ function Recipes() {
    alt={recipeData[0].recipe.label}
    className="w-4/5">
    </img>
-   <MainButton buttonWidth='12' buttonSize='40' buttonText={<StarIcon w={8} h={8}/>} colorMode="dark" borderWidthRecipe="5px" isDisabled={false}/>
+   <MainButton buttonWidth='25%' buttonSize='xs' buttonText={<StarIcon/>} colorMode="dark"/>
    <h2 className="color-primary font-permanent-marker text-2xl">Things you need:</h2>
-   <ul>
-   <li>{recipeData[0].recipe.ingredientLines[0]}</li>
-  <li>{recipeData[0].recipe.ingredientLines[1]}</li>
-  <li>{recipeData[0].recipe.ingredientLines[2]}</li>
+   <ul className="w-4/5">
+   {recipeData[0].recipe.ingredientLines.map((ingredient) => {
+    return(<li className="color-dark font-nunito">
+    <CircleIcon boxSize={3}/>
+    {ingredient}
+    </li>)
+    })}
   </ul>
   <h2 className="color-primary font-permanent-marker text-2xl">How to make it:</h2>
   <Link>Return to Top</Link>
