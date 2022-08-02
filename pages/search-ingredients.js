@@ -1,7 +1,18 @@
 import { Search2Icon } from "@chakra-ui/icons";
-import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
+import {
+  HStack,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Select,
+  Tag,
+  TagCloseButton,
+  TagLabel,
+  VStack,
+} from "@chakra-ui/react";
 import React from "react";
 import { useState } from "react";
+import MainButton from "../components/MainButton";
 
 export default function SearchIngredients() {
   const [ingredientOptions, setIngredientOptions] = useState([]);
@@ -19,55 +30,83 @@ export default function SearchIngredients() {
   }
 
   return (
-    <main>
-      <InputGroup>
-        <InputLeftElement
-          pointerEvents="none"
-          children={<Search2Icon color="gray.300" />}
-        />
-        <Input
-          type="text"
-          placeholder="Type ingredients here"
+    <main className="h-screen w-screen flex flex-col items-center justify-center space-y-6">
+      <VStack width="80%">
+        <h1 className="font-permanent-marker text-center text-3xl text-primary-color font-bold">
+          Add Ingredients:
+        </h1>
+
+        <InputGroup>
+          <InputLeftElement
+            pointerEvents="none"
+            children={<Search2Icon color="gray.300" />}
+          />
+          <Input
+            type="text"
+            placeholder="Type ingredients here"
+            onChange={(e) => {
+              setInputText(e.target.value);
+              fetchIngredients(inputText);
+            }}
+            value={inputText}
+          />
+        </InputGroup>
+
+        <label htmlFor="ingredients" hidden>
+          Select from list:
+        </label>
+        <Select
+          placeholder="Chews from list"
+          name="ingredients"
+          id="ingredients"
           onChange={(e) => {
-            setInputText(e.target.value);
-            fetchIngredients(inputText);
+            setCurrentIngredient(e.target.value);
           }}
-          value={inputText}
+        >
+          {ingredientOptions.map((ingredient) => {
+            return <option value={ingredient}>{ingredient}</option>;
+          })}
+        </Select>
+
+        <HStack wrap={"wrap"} spacing={2} align={"space-between"}>
+          {tagsArray.map((tag) => (
+            <Tag
+              size="md"
+              key={tag}
+              borderRadius="full"
+              variant="solid"
+              colorScheme="red"
+            >
+              <TagLabel>{tag}</TagLabel>
+              <TagCloseButton />
+            </Tag>
+          ))}
+        </HStack>
+
+        <MainButton
+          onClick={() => {
+            setTagsArray([...tagsArray, currentIngredient]);
+          }}
+          buttonText="Add Ingredient"
+          colorMode={"light"}
+          buttonWidth="100%"
+          buttonSize="lg"
         />
-      </InputGroup>
-      {/* <input
-        type="text"
-        placeholder="Type ingredients here"
-        value={inputText}
-        onChange={(e) => {
-          setInputText(e.target.value);
-          fetchIngredients(inputText);
-        }}
-      ></input> */}
-      <label htmlFor="ingredients">Select from list:</label>
-      <select
-        name="ingredients"
-        id="ingredients"
-        onChange={(e) => {
-          setCurrentIngredient(e.target.value);
-        }}
-      >
-        {ingredientOptions.map((ingredient) => {
-          return <option value={ingredient}>{ingredient}</option>;
-        })}
-      </select>
-      <button
-        onClick={() => {
-          setTagsArray([...tagsArray, currentIngredient]);
-        }}
-      >
-        Add Ingredient
-      </button>
-      <ul>
-        {tagsArray.map((tag) => {
-          return <li>{tag}</li>;
-        })}
-      </ul>
+      </VStack>
+      <VStack width="80%">
+        <MainButton
+          buttonText="Chews for Me"
+          colorMode={"dark"}
+          buttonWidth="100%"
+          buttonSize="lg"
+        />
+        <MainButton
+          buttonText="Add Search Filters"
+          colorMode={"light"}
+          buttonWidth="100%"
+          buttonSize="lg"
+        />
+      </VStack>
     </main>
   );
 }
