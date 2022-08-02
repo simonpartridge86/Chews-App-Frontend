@@ -1,68 +1,28 @@
 import MainButton from "../components/MainButton";
-import { Stack, HStack, VStack } from "@chakra-ui/react";
 import { useState } from "react";
+import { recipeData } from "../libs/recipes/recipes";
 
 import React from "react";
 
-export default function Recepis() {
-
-    const [mealChoice, setMealChoice] = useState("")
-    function handleClick (meal) {
-        setMealChoice(meal)
-        console.log(mealChoice)
-    }
-
+export default function Recipes() {
   return (
-    <div className="h-screen">
-      <nav className="h-1/6 text-center font-permanent-marker text-3xl">
-        Nav Bar Placeholder
-      </nav>
-      <main className="flex flex-col h-5/6 justify-around">
-        <VStack spacing={4} align="center">
-          <h1 className="font-permanent-marker text-center text-2xl">
-            Chews <span className="font-nunito font-bold">an option:</span>
-          </h1>
-          <MainButton
-            buttonText="Breakfast"
-            buttonSize="lg"
-            colorMode="dark"
-            buttonWidth="80%"
-            onClick={() => {handleClick("breakfast")}}
-          />
-          <MainButton
-            buttonText="Main"
-            buttonSize="lg"
-            colorMode="dark"
-            buttonWidth="80%"
-          />
-          <MainButton
-            buttonText="Dessert"
-            buttonSize="lg"
-            colorMode="dark"
-            buttonWidth="80%"
-          />
-        </VStack>
-        <VStack spacing={4} align="center">
-          <MainButton
-            buttonText="Just Chews for Me"
-            buttonSize="lg"
-            colorMode="dark"
-            buttonWidth="80%"
-          />
-          <MainButton
-            buttonText="Search by Ingredients"
-            buttonSize="lg"
-            colorMode="dark"
-            buttonWidth="80%"
-          />
-        </VStack>
-      </main>
+    <div className="flex flex-col">
+      
     </div>
   );
 }
 
 /* PLAN:
-- Make buttons ✅
-- use state to store the breakfast/main/dessert choice
-- disable bottom two buttons if not meal choice has been made
+- Find dummy data ✅
+  - Toolbar (from yesterday) - burger, chews logo, profile pic
+  - 'Back to results' link with <-- arrow
+  - 'You are making' header, perm-marker, primary
+  - 'Creamy steak alfredo' nunito, dark
+  - Picture of meal, 80% screen-width
+  - Add to favourites button
+  - 'Things you need' primary, perm-marker, header
+  - List of ingredients with measurements, bullet points, nunito, dark
+  - 'How to make it' primary, perm-marker, header
+  - Recipe instructions, paragraph, nunito, dark
+  - 'Return to top' link, nunito, small, dark
 */
