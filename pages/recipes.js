@@ -1,16 +1,19 @@
 import MainButton from "../components/MainButton";
 import { useState } from "react";
 import { recipeData } from "../libs/recipes/recipes";
+import { Link } from '@chakra-ui/react'
+import { ArrowBackIcon } from '@chakra-ui/icons'
 
 import React from "react";
 
 export default function Recipes() {
   return (
     <div className="flex flex-col">
-      
+      <Link>Back to results<ArrowBackIcon></ArrowBackIcon></Link>
     </div>
   );
 }
+
 
 /* PLAN:
 - Find dummy data ✅
@@ -26,3 +29,4 @@ export default function Recipes() {
   - Recipe instructions, paragraph, nunito, dark
   - 'Return to top' link, nunito, small, dark
 */
+
