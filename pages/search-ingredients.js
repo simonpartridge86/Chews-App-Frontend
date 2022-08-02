@@ -1,5 +1,6 @@
 import { Search2Icon } from "@chakra-ui/icons";
 import {
+  Divider,
   HStack,
   Input,
   InputGroup,
@@ -25,17 +26,41 @@ export default function SearchIngredients() {
       `https://api.edamam.com/auto-complete?app_id=5cca2bea&app_key=%2061c41e444a3a1fa44fc42fcbe169faad&q=${inputText}`
     );
     const data = await response.json();
-    console.log(data);
     setIngredientOptions(data);
   }
 
+  function addTag(str) {
+    if (tagsArray.length > 4) {
+      alert("You can only add a maximum of 5 ingredients!");
+      setInputText("");
+      setIngredientOptions([]);
+      return;
+    }
+    if (str === "") {
+      alert(
+        "No ingredient entered, please search for an ingredient and select from dropdown menu"
+      );
+      setInputText("");
+      setIngredientOptions([]);
+      return;
+    }
+    if (tagsArray.includes(str)) {
+      alert("This ingredient has already been added");
+      setInputText("");
+      setIngredientOptions([]);
+      return;
+    }
+    setTagsArray([...tagsArray, currentIngredient]);
+    setInputText("");
+    setIngredientOptions([]);
+  }
+
   return (
-    <main className="h-screen w-screen flex flex-col items-center justify-center space-y-6">
+    <main className="h-[80vh] w-screen flex flex-col items-center justify-center space-y-6">
       <VStack width="80%">
         <h1 className="font-permanent-marker text-center text-3xl text-primary-color font-bold">
           Add Ingredients:
         </h1>
-
         <InputGroup>
           <InputLeftElement
             pointerEvents="none"
@@ -59,12 +84,22 @@ export default function SearchIngredients() {
           placeholder="Chews from list"
           name="ingredients"
           id="ingredients"
+          fontFamily={"brand.main"}
           onChange={(e) => {
             setCurrentIngredient(e.target.value);
+            console.log(currentIngredient);
           }}
         >
           {ingredientOptions.map((ingredient) => {
-            return <option value={ingredient}>{ingredient}</option>;
+            return (
+              <option
+                key={ingredient}
+                value={ingredient}
+                fontFamily={"brand.main"}
+              >
+                {ingredient}
+              </option>
+            );
           })}
         </Select>
 
@@ -75,7 +110,8 @@ export default function SearchIngredients() {
               key={tag}
               borderRadius="full"
               variant="solid"
-              colorScheme="red"
+              bg={"brand.primary"}
+              fontFamily={"brand.main"}
             >
               <TagLabel>{tag}</TagLabel>
               <TagCloseButton />
@@ -85,7 +121,7 @@ export default function SearchIngredients() {
 
         <MainButton
           onClick={() => {
-            setTagsArray([...tagsArray, currentIngredient]);
+            addTag(currentIngredient);
           }}
           buttonText="Add Ingredient"
           colorMode={"light"}
@@ -93,6 +129,7 @@ export default function SearchIngredients() {
           buttonSize="lg"
         />
       </VStack>
+      <Divider width="80%" />
       <VStack width="80%">
         <MainButton
           buttonText="Chews for Me"
@@ -110,3 +147,17 @@ export default function SearchIngredients() {
     </main>
   );
 }
+
+/*
+Bug fixing:
+- Stop blank tags getting added ✅
+- Stop repeat tags getting added (maybe add alert) ✅
+- limit number of tags to 5ish ✅
+- When clicking Add Ingredient - clear text input and return select input to "Chews from list" ✅
+- make tags deletable by clicking cross 
+
+- Limit number of suggestions to 5?
+- Connect "Chews for Me" button to results page 
+- Tags are indented on second+ line
+
+*/
