@@ -1,7 +1,9 @@
+import { Search2Icon } from "@chakra-ui/icons";
+import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import React from "react";
 import { useState } from "react";
 
-export default function Search() {
+export default function SearchIngredients() {
   const [ingredientOptions, setIngredientOptions] = useState([]);
   const [inputText, setInputText] = useState("");
   const [currentIngredient, setCurrentIngredient] = useState("");
@@ -18,7 +20,22 @@ export default function Search() {
 
   return (
     <main>
-      <input
+      <InputGroup>
+        <InputLeftElement
+          pointerEvents="none"
+          children={<Search2Icon color="gray.300" />}
+        />
+        <Input
+          type="text"
+          placeholder="Type ingredients here"
+          onChange={(e) => {
+            setInputText(e.target.value);
+            fetchIngredients(inputText);
+          }}
+          value={inputText}
+        />
+      </InputGroup>
+      {/* <input
         type="text"
         placeholder="Type ingredients here"
         value={inputText}
@@ -26,7 +43,7 @@ export default function Search() {
           setInputText(e.target.value);
           fetchIngredients(inputText);
         }}
-      ></input>
+      ></input> */}
       <label htmlFor="ingredients">Select from list:</label>
       <select
         name="ingredients"

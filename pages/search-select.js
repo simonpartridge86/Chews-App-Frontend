@@ -41,6 +41,12 @@ export default function SearchSelect() {
           buttonSize="lg"
           colorMode="dark"
           buttonWidth="80%"
+          onClick={() => {
+            router.push({
+              pathname: "/search-ingredients",
+              query: { meal: meal },
+            });
+          }}
         />
       </VStack>
     </main>
