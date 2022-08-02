@@ -1,68 +1,56 @@
-import MainButton from "../components/MainButton";
-import { Stack, HStack, VStack } from "@chakra-ui/react";
+import React from "react";
 import { useState } from "react";
 
-import React from "react";
-
 export default function Search() {
+  const [ingredientOptions, setIngredientOptions] = useState([]);
+  const [inputText, setInputText] = useState("");
+  const [currentIngredient, setCurrentIngredient] = useState("");
+  const [tagsArray, setTagsArray] = useState([]);
 
-    const [mealChoice, setMealChoice] = useState("")
-    function handleClick (meal) {
-        setMealChoice(meal)
-        console.log(mealChoice)
-    }
+  async function fetchIngredients(inputText) {
+    const response = await fetch(
+      `https://api.edamam.com/auto-complete?app_id=5cca2bea&app_key=%2061c41e444a3a1fa44fc42fcbe169faad&q=${inputText}`
+    );
+    const data = await response.json();
+    console.log(data);
+    setIngredientOptions(data);
+  }
 
   return (
-    <div className="h-screen">
-      <nav className="h-1/6 text-center font-permanent-marker text-3xl">
-        Nav Bar Placeholder
-      </nav>
-      <main className="flex flex-col h-5/6 justify-around">
-        <VStack spacing={4} align="center">
-          <h1 className="font-permanent-marker text-center text-2xl">
-            Chews <span className="font-nunito font-bold">an option:</span>
-          </h1>
-          <MainButton
-            buttonText="Breakfast"
-            buttonSize="lg"
-            colorMode="dark"
-            buttonWidth="80%"
-            onClick={() => {handleClick("breakfast")}}
-          />
-          <MainButton
-            buttonText="Main"
-            buttonSize="lg"
-            colorMode="dark"
-            buttonWidth="80%"
-          />
-          <MainButton
-            buttonText="Dessert"
-            buttonSize="lg"
-            colorMode="dark"
-            buttonWidth="80%"
-          />
-        </VStack>
-        <VStack spacing={4} align="center">
-          <MainButton
-            buttonText="Just Chews for Me"
-            buttonSize="lg"
-            colorMode="dark"
-            buttonWidth="80%"
-          />
-          <MainButton
-            buttonText="Search by Ingredients"
-            buttonSize="lg"
-            colorMode="dark"
-            buttonWidth="80%"
-          />
-        </VStack>
-      </main>
-    </div>
+    <main>
+      <input
+        type="text"
+        placeholder="Type ingredients here"
+        value={inputText}
+        onChange={(e) => {
+          setInputText(e.target.value);
+          fetchIngredients(inputText);
+        }}
+      ></input>
+      <label htmlFor="ingredients">Select from list:</label>
+      <select
+        name="ingredients"
+        id="ingredients"
+        onChange={(e) => {
+          setCurrentIngredient(e.target.value);
+        }}
+      >
+        {ingredientOptions.map((ingredient) => {
+          return <option value={ingredient}>{ingredient}</option>;
+        })}
+      </select>
+      <button
+        onClick={() => {
+          setTagsArray([...tagsArray, currentIngredient]);
+        }}
+      >
+        Add Ingredient
+      </button>
+      <ul>
+        {tagsArray.map((tag) => {
+          return <li>{tag}</li>;
+        })}
+      </ul>
+    </main>
   );
 }
-
-/* PLAN:
-- Make buttons ✅
-- use state to store the breakfast/main/dessert choice
-- disable bottom two buttons if not meal choice has been made
-*/
