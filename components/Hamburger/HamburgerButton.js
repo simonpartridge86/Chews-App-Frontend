@@ -81,7 +81,7 @@ export default function Hamburger() {
         pos="fixed"
         top="0"
         left="0"
-        z-Index={20}
+        z-index={20}
         overflowY="auto"
         flexDir="column"
       >
