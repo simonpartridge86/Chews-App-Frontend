@@ -5,6 +5,8 @@ import MainButton from "../../components/MainButton";
 export default function Results() {
   const router = useRouter();
   const meal = router.query.meal;
+  const ingredients = router.query.ingredients;
+  console.log(ingredients);
   return (
     <main className="flex flex-col h-screen w-screen items-center justify-center space-y-2">
       <div className="flex flex-col w-4/5 items-center justify-end space-y-1">
