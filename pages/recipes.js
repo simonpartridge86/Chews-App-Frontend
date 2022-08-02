@@ -16,6 +16,14 @@ function Recipes() {
    alt={recipeData[0].recipe.label}
    className="w-4/5">
    </img>
+   <h2 className="color-primary font-permanent-marker text-2xl">Things you need:</h2>
+   <ul>
+   <li>{recipeData[0].recipe.ingredientLines[0]}</li>
+  <li>{recipeData[0].recipe.ingredientLines[1]}</li>
+  <li>{recipeData[0].recipe.ingredientLines[2]}</li>
+  </ul>
+  <h2 className="color-primary font-permanent-marker text-2xl">How to make it:</h2>
+  <Link>Return to Top</Link>
 </div>)
 }
 
@@ -28,12 +36,12 @@ export default Recipes;
   - 'Back to results' link with <-- arrow ✅
   - 'You are making' header, perm-marker, primary ✅ALMOST
   - 'Creamy steak alfredo' nunito, dark ✅
-  - Picture of meal, 80% screen-width
+  - Picture of meal, 80% screen-width ✅
   - Add to favourites button
-  - 'Things you need' primary, perm-marker, header
-  - List of ingredients with measurements, bullet points, nunito, dark
-  - 'How to make it' primary, perm-marker, header
+  - 'Things you need' primary, perm-marker, header✅
+  - List of ingredients with measurements, bullet points, nunito, dark✅
+  - 'How to make it' primary, perm-marker, header✅
   - Recipe instructions, paragraph, nunito, dark
-  - 'Return to top' link, nunito, small, dark
+  - 'Return to top' link, nunito, small, dark✅
 */
 
