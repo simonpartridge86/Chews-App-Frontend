@@ -21,8 +21,6 @@ function SocialProfileWithImageHorizontal({data}) {
 
 
 
-console.log(data)
-
     const descriptionArray = [
       `Whet your appetite with our tasty ${data.meals[0].strArea} meal. Made with ${data.meals[0].strIngredient1.toLowerCase()} and ${data.meals[0].strIngredient2.toLowerCase()}.`,
       `Feat your eyes on our our tasty ${data.meals[0].strArea} dish. We've chosen special ingredients, like: ${data.meals[0].strIngredient1.toLowerCase()} and ${data.meals[0].strIngredient2.toLowerCase()}, to make this a truly special meal.`,

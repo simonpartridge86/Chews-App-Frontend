@@ -1,32 +1,43 @@
-// pages/404.js
-import Link from 'next/link'
-import SocialProfileWithImageHorizontal from '../components/RecipeCard/RecipeCard'
-import {useState, useEffect} from 'react';
-
+import Link from "next/link";
+import SocialProfileWithImageHorizontal from "../components/RecipeCard/RecipeCard";
+import { useState, useEffect } from "react";
+import { Input } from "@chakra-ui/react";
 
 export default function Play() {
+  const noReturn = ["British", "American"];
+  const [data, setData] = useState(null);
 
-const [data, setData] = useState(null)
-console.log(data)
-  useEffect( () => {
+  useEffect(() => {
     async function fetchData() {
-      const res = await fetch('https://www.themealdb.com/api/json/v1/1/random.php')
-      const data = await res.json()
-      setData(data)
-      console.log(data)
+      const res = await fetch(
+        "https://www.themealdb.com/api/json/v1/1/random.php"
+      );
+      const data = await res.json();
+      for (const i of noReturn) {
+        if (data.meals[0].strArea === i) {
+          fetchData();
+        }
+        setData(data)
+
+      }
+      console.log(data);
     }
-    fetchData()
-  },[])
 
-  if(data) {
-  return (
-    <>
-        <SocialProfileWithImageHorizontal data={data} />
-    </>
-  
-)}
+    fetchData();
+  }, []);
 
+  if (!data) {
+    return <p>loading</p>;
   }
+
+  if (data) {
+    return (
+      <>
+        <SocialProfileWithImageHorizontal data={data} />
+      </>
+    );
+  }
+}
 
 // export async function getServerSideProps() {
 //   // Fetch data from external API
