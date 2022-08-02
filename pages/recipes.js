@@ -5,6 +5,7 @@ import { ArrowBackIcon } from '@chakra-ui/icons'
 import { useRouter } from "next/router";
 
 import React from "react";
+import MainButton from "../components/MainButton";
 
 function Recipes() {
   return(<div className="flex flex-col items-center">
@@ -16,6 +17,7 @@ function Recipes() {
    alt={recipeData[0].recipe.label}
    className="w-4/5">
    </img>
+   <MainButton buttonWidth='20' buttonSize='20' buttonText='F' colorMode="dark" isDisabled={false}/>
    <h2 className="color-primary font-permanent-marker text-2xl">Things you need:</h2>
    <ul>
    <li>{recipeData[0].recipe.ingredientLines[0]}</li>
@@ -37,9 +39,9 @@ export default Recipes;
   - 'You are making' header, perm-marker, primary ✅ALMOST
   - 'Creamy steak alfredo' nunito, dark ✅
   - Picture of meal, 80% screen-width ✅
-  - Add to favourites button
+  - Add to favourites button ✅ALMOST
   - 'Things you need' primary, perm-marker, header✅
-  - List of ingredients with measurements, bullet points, nunito, dark✅
+  - List of ingredients with measurements, bullet points, nunito, dark✅ALMOST
   - 'How to make it' primary, perm-marker, header✅
   - Recipe instructions, paragraph, nunito, dark
   - 'Return to top' link, nunito, small, dark✅
