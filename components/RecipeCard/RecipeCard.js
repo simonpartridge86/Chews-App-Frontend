@@ -13,8 +13,24 @@ import {
 import { recipeData } from "../../libs/recipes/recipes";
 import MainButton from "../MainButton";
 import { StarIcon } from "@chakra-ui/icons";
+import { useEffect, useState } from "react";
 
-export default function SocialProfileWithImageHorizontal() {
+
+
+function SocialProfileWithImageHorizontal({data}) {
+
+
+
+console.log(data)
+
+    const descriptionArray = [
+      `Whet your appetite with our tasty ${data.meals[0].strArea} meal. Made with ${data.meals[0].strIngredient1.toLowerCase()} and ${data.meals[0].strIngredient2.toLowerCase()}.`,
+      `Feat your eyes on our our tasty ${data.meals[0].strArea} dish. We've chosen special ingredients, like: ${data.meals[0].strIngredient1.toLowerCase()} and ${data.meals[0].strIngredient2.toLowerCase()}, to make this a truly special meal.`,
+      `Bored? Lonely? Neither? Try this ${data.meals[0].strArea} dish. Made with special care and love by carefully sellecting the freshest ${data.meals[0].strIngredient1.toLowerCase()} and ${data.meals[0].strIngredient2.toLowerCase()}.`
+    ];
+      const randomDescription = Math.floor(Math.random() * 3);
+  
+
   return (
     <Center py={6} padding={2}>
       <Stack
@@ -22,15 +38,22 @@ export default function SocialProfileWithImageHorizontal() {
         borderWidth="2px"
         w={{ sm: "100%", md: "540px" }}
         height={{ sm: "476px", md: "11rem" }}
-        direction={{ base: "row"}}
+        direction={{ base: "row" }}
         bg={useColorModeValue("white", "gray.900")}
         boxShadow={"2xl"}
         padding={0}
       >
-        <Flex flex={0.4} flexDirection="column" alignItems="center" justifyContent='center' pl={1} pt={0}>
+        <Flex
+          flex={0.4}
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+          pl={1}
+          pt={0}
+        >
           <Image
             objectFit="cover"
-            src={recipeData[0].recipe.images.THUMBNAIL.url}
+            src={data.meals[0].strMealThumb}
           />
         </Flex>
         <Stack
@@ -43,12 +66,12 @@ export default function SocialProfileWithImageHorizontal() {
           fontSize={"10px"}
         >
           <Heading fontSize={"12px"} fontFamily={"body"}>
-            {recipeData[0].recipe.label}
+            {data.meals[0].strMeal}
           </Heading>
           <p id="chakra-text" color={useColorModeValue("gray.700", "gray.400")}>
-            {recipeData[0].recipe.description.length > 100
-              ? `${recipeData[0].recipe.description.substring(0, 100)}...`
-              : recipeData[0].recipe.description}
+            {descriptionArray[randomDescription].length > 125
+              ? `${descriptionArray[randomDescription].substring(0, 125)}...`
+              : descriptionArray[randomDescription]}
           </p>
           <Stack
             mt={"2rem"}
@@ -77,3 +100,16 @@ export default function SocialProfileWithImageHorizontal() {
     </Center>
   );
 }
+
+
+// export async function getServerSideProps() {
+//   // Fetch data from external API
+//   const res = await fetch(`https://api.edamam.com/api/recipes/v2/fd2956d1b07db78913c4bf38d23decea?app_id=d6752ced&app_key=dd313e1761bc6ba97b9c65b475de7937&type=public`)
+//   const data = await res.json()
+//   // Pass data to the page via props
+//   return { props: { data } }
+// }
+
+
+
+export default SocialProfileWithImageHorizontal
