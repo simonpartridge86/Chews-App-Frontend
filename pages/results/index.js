@@ -17,7 +17,7 @@ export default function Results() {
   console.log(ingredients);
   return (
     <main className="flex flex-col h-[80vh] w-screen items-center justify-center space-y-2">
-      <section className="flex flex-col w-[80vw] items-center justify-end space-y-2">
+      <section className="flex flex-col w-[80vw] items-center justify-end space-y-2 max-w-lg">
         <h1 className="font-nunito font-bold text-2xl text-dark-color text-center">
           Ok, we think you should{" "}
           <span className="font-permanent-marker text-center text-2xl text-dark-color font-bold">
@@ -35,7 +35,7 @@ export default function Results() {
           alt="recipe image"
         />
       </section>
-      <section className="flex flex-row justify-between w-[80vw] space-x-2">
+      <section className="flex flex-row justify-between w-[80vw] space-x-2 max-w-lg">
         <MainButton
           buttonText="View Recipe"
           buttonSize="md"
@@ -49,7 +49,7 @@ export default function Results() {
           buttonWidth="30%"
         />
       </section>
-      <section className="flex flex-col w-[80vw] items-center justify-end space-y-2">
+      <section className="flex flex-col w-[80vw] items-center justify-end space-y-2 max-w-lg">
         <Divider />
         <h1 className="font-nunito font-bold text-center text-2xl text-dark-color">
           Prefer something else?
