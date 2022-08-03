@@ -1,6 +1,12 @@
+@import url("https://use.typekit.net/hij8huq.css");
+
+
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 html,
 body {
   padding: 0;
