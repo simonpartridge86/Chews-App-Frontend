@@ -12,7 +12,6 @@ import {
   Switch,
 } from "@chakra-ui/react";
 
-
 import { useState } from "react";
 import {
   HamburgerIcon,
@@ -28,7 +27,7 @@ export default function Hamburger() {
   const [display, changeDisplay] = useState("none");
 
   return (
-    <Flex >
+    <Flex>
       <Flex>
         {/* Desktop */}
         <Flex display={["none", "none", "flex", "flex"]}>
@@ -40,7 +39,7 @@ export default function Hamburger() {
 
           <NextLink href="/meal-options" passHref>
             <Button as="a" variant="ghost" aria-label="About" my={5} w="100%">
-              Find Chews
+              Chews A Meal
             </Button>
           </NextLink>
 
@@ -49,10 +48,10 @@ export default function Hamburger() {
               My Favourites
             </Button>
           </NextLink>
-        
-        <NextLink href="/contact" passHref>
+
+          <NextLink href="/contact" passHref>
             <Button as="a" variant="ghost" aria-label="Contact" my={5} w="100%">
-            My Profile
+              My Profile
             </Button>
           </NextLink>
         </Flex>
@@ -60,8 +59,8 @@ export default function Hamburger() {
         {/* Mobile */}
         <IconButton
           aria-label="Open Menu"
-          color={'brand.primary'}
-          bgColor={'#fff'}
+          color={"brand.primary"}
+          bgColor={"#fff"}
           size="lg"
           mr={2}
           icon={<HamburgerIcon />}
@@ -81,59 +80,86 @@ export default function Hamburger() {
         pos="fixed"
         top="0"
         left="0"
-        z-Index={20}
+        z-index={20}
         overflowY="auto"
         flexDir="column"
       >
         <Flex justify="flex-end">
           <IconButton
-          bgColor='brand.primary'
-            color={'#000'}
+            bgColor="brand.primary"
+            color={"#000"}
             mt={2}
             mr={2}
             aria-label="Open Menu"
             size="lg"
-            icon={<Avatar name='Dan Abrahmov' src='https://bit.ly/dan-abramov' />}
+            icon={
+              <Avatar name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
+            }
             onClick={() => changeDisplay("none")}
           />
         </Flex>
 
         <Flex flexDir="column" align="center">
           <NextLink href="/" passHref>
-            <Button  onClick={() => changeDisplay("none")}
- as="a" variant="ghost" aria-label="Home" my={5} w="100%">
+            <Button
+              onClick={() => changeDisplay("none")}
+              as="a"
+              variant="ghost"
+              aria-label="Home"
+              my={5}
+              w="100%"
+            >
               Home
             </Button>
           </NextLink>
 
           <NextLink href="/about" passHref>
-            <Button onClick={() => changeDisplay("none")} as="a" variant="ghost" aria-label="About" my={5} w="100%">
-              Find Chews
+            <Button
+              onClick={() => changeDisplay("none")}
+              as="a"
+              variant="ghost"
+              aria-label="About"
+              my={5}
+              w="100%"
+            >
+              Chews A Meal
             </Button>
           </NextLink>
 
           <NextLink href="/contact" passHref>
-            <Button onClick={() => changeDisplay("none")} as="a" variant="ghost" aria-label="Contact" my={5} w="100%">
+            <Button
+              onClick={() => changeDisplay("none")}
+              as="a"
+              variant="ghost"
+              aria-label="Contact"
+              my={5}
+              w="100%"
+            >
               My Favourites
             </Button>
           </NextLink>
 
           <NextLink href="/contact" passHref>
-            <Button onClick={() => changeDisplay("none")} as="a" variant="ghost" aria-label="Contact" my={5} w="100%">
-            My Profile
+            <Button
+              onClick={() => changeDisplay("none")}
+              as="a"
+              variant="ghost"
+              aria-label="Contact"
+              my={5}
+              w="100%"
+            >
+              My Profile
             </Button>
           </NextLink>
 
-        
           <IconButton
-          bgColor='brand.primary'
-            color={'white'}
+            bgColor="brand.primary"
+            color={"white"}
             aria-label="Open Menu"
             size="lg"
             icon={<CloseIcon />}
             onClick={() => changeDisplay("none")}
           />
-
         </Flex>
       </Flex>
     </Flex>
