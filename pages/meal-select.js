@@ -32,12 +32,12 @@ export default function MealSelect() {
             }}
           />
           <MainButton
-            buttonText="Main"
+            buttonText="Main Dish"
             buttonSize="lg"
             colorMode="dark"
             buttonWidth="80%"
             onClick={() => {
-              const meal = "main";
+              const meal = "main dish";
               router.push({
                 pathname: "/search-select",
                 query: { meal: meal },
