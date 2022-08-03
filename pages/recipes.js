@@ -1,11 +1,25 @@
-import { recipeData } from "../libs/recipes/recipes";
+import meals from "../libs/recipes.js";
 import { Link, Icon } from "@chakra-ui/react";
 import { ArrowBackIcon, StarIcon } from "@chakra-ui/icons";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MainButton from "../components/MainButton";
 
+console.log(meals);
 function Recipes() {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    setIndex(Math.floor(Math.random() * 10));
+  }, []);
+
+  const mealName = meals[index].strMeal;
+  const mealThumb = meals[index].strMealThumb;
+  const ingredient1 = meals[index].strIngredient1;
+  const ingredient2 = meals[index].strIngredient2;
+  const ingredient3 = meals[index].strIngredient3;
+  const instructions = meals[index].strInstructions;
+
   const CircleIcon = (props) => (
     <Icon viewBox="0 0 200 200" {...props}>
       <path
@@ -26,15 +40,9 @@ function Recipes() {
         You are making:
       </h2>
       <br></br>
-      <h3 className="text-dark-color font-nunito text-lg">
-        {recipeData[0].recipe.label}
-      </h3>
+      <h3 className="text-dark-color font-nunito text-lg">{mealName}</h3>
       <br></br>
-      <img
-        src="https://www.alrightnow.com/wp-content/uploads/2018/03/Hearty-Chickpea-Salad-Pic-scaled.jpeg"
-        alt={recipeData[0].recipe.label}
-        className="w-4/5"
-      ></img>
+      <img src={mealThumb} alt={mealName} className="w-4/5"></img>
       <br></br>
       <MainButton
         buttonWidth="25%"
@@ -48,38 +56,25 @@ function Recipes() {
       </h2>
       <br></br>
       <ul className="w-4/5">
-        {recipeData[0].recipe.ingredientLines.map((ingredient) => {
-          return (
-            <li className="text-dark-color font-nunito">
-              <CircleIcon boxSize={3} />
-              {ingredient}
-            </li>
-          );
-        })}
+        <li className="text-dark-color font-nunito">
+          <CircleIcon boxSize={3} />
+          {ingredient1}
+        </li>
+        <li className="text-dark-color font-nunito">
+          <CircleIcon boxSize={3} />
+          {ingredient2}
+        </li>
+        <li className="text-dark-color font-nunito">
+          <CircleIcon boxSize={3} />
+          {ingredient3}
+        </li>
       </ul>
       <br></br>
       <h2 className="text-primary-color font-permanent-marker text-2xl">
         How to make it:
       </h2>
       <br></br>
-      <p className="w-4/5 text-dark-color font-nunito">
-        Preheat the oven to fan 200C/ conventional 220C/gas 7. Put the onion,
-        courgettes, pepper and tomatoes in a shallow roasting tin and season
-        with black pepper. Drizzle with 2 tbsp of the olive oil and toss well.
-        Roast for 30 minutes, stirring halfway through, until the vegetables are
-        cooked and beginning to turn brown.
-        <br></br>
-        <br></br>
-        Meanwhile, mix the lemon juice and remaining olive oil to make a
-        dressing. Season with salt and pepper and stir in the herbs.
-        <br></br>
-        <br></br>
-        When the vegetables are cooked, allow them to cool for 5 minutes, then
-        tip into a bowl with the chickpeas, feta and dressing. Toss lightly
-        before serving. Leftovers are delicious cold and served with pitta
-        bread.
-      </p>
-      <br></br>
+      <p className="w-4/5 text-dark-color font-nunito">{instructions}</p>{" "}
       <Link>Return to Top</Link>
       <br></br>
     </div>

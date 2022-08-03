@@ -1,18 +1,13 @@
-import Link from "next/link";
-import SocialProfileWithImageHorizontal from "../components/RecipeCard/RecipeCard";
+import RecipeCard from "../components/RecipeCard.js";
 import { useState, useEffect } from "react";
-import { Input } from "@chakra-ui/react";
 
 export default function Play() {
   const noReturn = ["British", "American"];
   const [data, setData] = useState(null);
 
- 
-
-
   useEffect(() => {
     console.time("timer1");
-        async function fetchData() {
+    async function fetchData() {
       const res = await fetch(
         "https://www.themealdb.com/api/json/v1/1/random.php"
       );
@@ -21,10 +16,9 @@ export default function Play() {
         if (data.meals[0].strArea === i) {
           fetchData();
         }
-        
-        setData(data)
-        console.timeEnd("timer1");
 
+        setData(data);
+        console.timeEnd("timer1");
       }
       console.log(data);
     }
@@ -39,7 +33,7 @@ export default function Play() {
   if (data) {
     return (
       <>
-        <SocialProfileWithImageHorizontal data={data} />
+        <RecipeCard data={data} />
       </>
     );
   }
