@@ -7,6 +7,9 @@ export default function Play() {
   const noReturn = ["British", "American"];
   const [data, setData] = useState(null);
 
+ 
+
+
   useEffect(() => {
     console.time("timer1");
         async function fetchData() {
