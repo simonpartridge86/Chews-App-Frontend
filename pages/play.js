@@ -8,7 +8,8 @@ export default function Play() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    async function fetchData() {
+    console.time("timer1");
+        async function fetchData() {
       const res = await fetch(
         "https://www.themealdb.com/api/json/v1/1/random.php"
       );
@@ -17,7 +18,9 @@ export default function Play() {
         if (data.meals[0].strArea === i) {
           fetchData();
         }
+        
         setData(data)
+        console.timeEnd("timer1");
 
       }
       console.log(data);

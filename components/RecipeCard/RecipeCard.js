@@ -23,7 +23,7 @@ function SocialProfileWithImageHorizontal({data}) {
 
     const descriptionArray = [
       `Whet your appetite with our tasty ${data.meals[0].strArea} meal. Made with ${data.meals[0].strIngredient1.toLowerCase()} and ${data.meals[0].strIngredient2.toLowerCase()}.`,
-      `Feat your eyes on our our tasty ${data.meals[0].strArea} dish. We've chosen special ingredients, like: ${data.meals[0].strIngredient1.toLowerCase()} and ${data.meals[0].strIngredient2.toLowerCase()}, to make this a truly special meal.`,
+      `Feast your eyes on our our tasty ${data.meals[0].strArea} dish. We've chosen special ingredients, like: ${data.meals[0].strIngredient1.toLowerCase()} and ${data.meals[0].strIngredient2.toLowerCase()}, to make this a truly special meal.`,
       `Bored? Lonely? Neither? Try this ${data.meals[0].strArea} dish. Made with special care and love by carefully sellecting the freshest ${data.meals[0].strIngredient1.toLowerCase()} and ${data.meals[0].strIngredient2.toLowerCase()}.`
     ];
       const randomDescription = Math.floor(Math.random() * 3);
