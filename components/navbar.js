@@ -1,6 +1,6 @@
 // NAVBAR COMPONENT
 /*
-This component contains the navigation bar, with a burger menu, logo, and profile pic, as well as a horizontal line underneath
+Component contains the navigation bar, with a burger menu, logo, and profile pic, as well as a horizontal line underneath
 The height is set to 10% of the user's screen. Revise this if unsuitable design.
 
 Things to do:
