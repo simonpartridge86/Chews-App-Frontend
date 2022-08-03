@@ -1,10 +1,10 @@
-import NavBar from "./NavBar";
-import Footer from "./Footer";
+import NavBar from "./NavigationBar";
+import Footer from "./LayoutFooter";
 export default function Layout({ children }) {
   return (
     <>
       <NavBar />
-      <main>{children}</main>
+      <>{children}</>
       <Footer />
     </>
   );
