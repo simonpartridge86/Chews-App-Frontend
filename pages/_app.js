@@ -1,6 +1,6 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { extendTheme } from "@chakra-ui/react";
-import Layout from "../components/LayoutFull";
+import Layout from "../components/Layout";
 import "../styles/globals.css";
 //import "@fontsource/permanent-marker"
 //import "@fontsource/nunito"
