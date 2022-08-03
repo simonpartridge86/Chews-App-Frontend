@@ -7,12 +7,6 @@ import React from "react";
 export default function SearchSelect() {
   const router = useRouter();
 
-  //const [meal, setMeal] = useState("");
-  // useEffect(() => {
-  //   if (!router.isReady) return;
-  //   setMeal(router.query.meal);
-  // }, [router.isReady]);
-
   const meal = router.query.meal;
 
   return (
@@ -41,6 +35,12 @@ export default function SearchSelect() {
           buttonSize="lg"
           colorMode="dark"
           buttonWidth="80%"
+          onClick={() => {
+            router.push({
+              pathname: "/search-ingredients",
+              query: { meal: meal },
+            });
+          }}
         />
       </VStack>
     </main>
