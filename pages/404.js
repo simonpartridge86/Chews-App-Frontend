@@ -1,5 +1,6 @@
 // pages/404.js
-import { VStack } from "@chakra-ui/react";
+import { VStack, Link } from "@chakra-ui/react";
+import ChewsLogo from "../components/ChewsLogo";
 
 export default function Custom404() {
   return (
@@ -8,12 +9,6 @@ export default function Custom404() {
         <h1>404 - Page Not Found</h1>
         <h2>Uh-Oh.. looks you need to Chews something else.</h2>
         <ChewsLogo theme={"brand.primary"} size={"3xl"} />
-        <p>
-          Home{" "}
-          <Link href="/">
-            <a>Home</a>
-          </Link>{" "}
-        </p>
       </VStack>
     </main>
   );
