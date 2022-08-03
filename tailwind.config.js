@@ -1,4 +1,4 @@
-/** @type {import('tailwindcss').Config} */
+// @type {import('tailwindcss').Config}
 module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
@@ -7,16 +7,16 @@ module.exports = {
   theme: {
     extend: {},
     colors: {
-      'primary-color': '#FD2B46',
-      'light-color': '#FFFFFF',
-      'dark-color': '#32373B',
+      "primary-color": "#FD2B46",
+      "light-color": "#FFFFFF",
+      "dark-color": "#32373B",
     },
     fontFamily: {
-       "nunito": ["nunito", "sans-serif"],
-       "permanent-marker": ["permanent-marker", "sans-serif"]
-    }
+      nunito: ["nunito", "sans-serif"],
+      "permanent-marker": ["permanent-marker", "sans-serif"],
+    },
   },
   plugins: [],
-}
+};
 
 // Remember to include paths to all pages and components using tailwind here
