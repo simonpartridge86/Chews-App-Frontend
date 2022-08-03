@@ -10,30 +10,30 @@ Things to do:
 - Allow dark mode
 */
 
-import { IconButton, Avatar } from '@chakra-ui/react'
-import ChewsLogo from './chews-logo';
-import Hamburger from './Hamburger/HamburgerButton';
-import { Divider } from '@chakra-ui/react'
+import { IconButton, Avatar } from "@chakra-ui/react";
+import ChewsLogo from "./ChewsLogo";
+import Hamburger from "./HamburgerButton";
+import { Divider } from "@chakra-ui/react";
 
 export default function Navbar() {
   return (
     <>
-    <div className='flex flex-row justify-around items-center h-[10vh]'>
-    <Hamburger/>
-    <ChewsLogo theme={"brand.primary"} size={"2xl"}/>
-    <IconButton
-          bgColor='brand.light'
-            color={'none'}
-            mt={2}
-            mr={2}
-            aria-label="Open Menu"
-            size="md"
-            icon={<Avatar name='Dan Abrahmov' src='https://bit.ly/dan-abramov' />}
-            onClick={() => changeDisplay("none")}
-    />
-    </div>
-    <Divider/>
+      <div className="flex flex-row justify-around items-center h-[10vh]">
+        <Hamburger />
+        <ChewsLogo theme={"brand.primary"} size={"2xl"} />
+        <IconButton
+          bgColor="brand.light"
+          color={"none"}
+          mt={2}
+          mr={2}
+          aria-label="Open Menu"
+          size="md"
+          icon={<Avatar name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />}
+          onClick={() => changeDisplay("none")}
+        />
+      </div>
+      <Divider />
     </>
   );
 }
-//<picture><img src= "./pic.jpg" alt="girl with sweets"></img></picture> 
+//<picture><img src= "./pic.jpg" alt="girl with sweets"></img></picture>
