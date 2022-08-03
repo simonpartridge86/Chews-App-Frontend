@@ -1,5 +1,6 @@
 import { Button } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
+import { useRouter } from "next/router";
 
 /*
 Prop Notes:
@@ -9,6 +10,7 @@ Prop Notes:
 */
 
 export default function BackButton({ buttonWidth, buttonSize, extraText }) {
+  const router = useRouter();
   let buttonText = "Back";
   if (extraText) {
     buttonText = `Back ${extraText}`;
