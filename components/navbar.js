@@ -12,14 +12,14 @@ Things to do:
 
 import { IconButton, Avatar } from "@chakra-ui/react";
 import ChewsLogo from "./ChewsLogo";
-import Hamburger from "./HamburgerButton";
+import HamburgerMenu from "./HamburgerMenu";
 import { Divider } from "@chakra-ui/react";
 
-export default function Navbar() {
+export default function NavBar() {
   return (
     <>
       <div className="flex flex-row justify-around items-center h-[10vh]">
-        <Hamburger />
+        <HamburgerMenu />
         <ChewsLogo theme={"brand.primary"} size={"2xl"} />
         <IconButton
           bgColor="brand.light"
