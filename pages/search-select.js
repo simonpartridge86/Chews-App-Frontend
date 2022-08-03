@@ -6,14 +6,20 @@ import React from "react";
 
 export default function SearchSelect() {
   const router = useRouter();
-
+  let selectedMeal;
+  if (router.query.meal) {
+    selectedMeal = router.query.meal;
+  } else {
+    selectedMeal = "main dish";
+  }
   const meal = router.query.meal;
 
   return (
     <main className="flex flex-col h-[80vh] justify-center items-center">
       <VStack spacing={4} align="center" className="max-w-lg">
         <h1 className="font-nunito font-bold text-2xl text-center">
-          Ok, you want {meal.charAt(0).toUpperCase() + meal.slice(1)} ideas!
+          Ok, you want{" "}
+          {selectedMeal.charAt(0).toUpperCase() + selectedMeal.slice(1)} ideas!
         </h1>
         <Divider width={"80vw"} className="max-w-md" />
         <h1 className="font-nunito font-bold text-2xl text-center">
@@ -31,7 +37,7 @@ export default function SearchSelect() {
           onClick={() => {
             router.push({
               pathname: "/results",
-              query: { meal: meal },
+              query: { meal: selectedMeal },
             });
           }}
         >
@@ -45,7 +51,7 @@ export default function SearchSelect() {
           onClick={() => {
             router.push({
               pathname: "/search-ingredients",
-              query: { meal: meal },
+              query: { meal: selectedMeal },
             });
           }}
         />
