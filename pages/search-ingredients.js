@@ -15,6 +15,7 @@ import React from "react";
 import { useState } from "react";
 import MainButton from "../components/MainButton";
 import { useRouter } from "next/router";
+import BackButton from "../components/BackButton";
 
 export default function SearchIngredients() {
   const router = useRouter();
@@ -65,105 +66,114 @@ export default function SearchIngredients() {
   }
 
   return (
-    <main className="h-[80vh] w-screen flex flex-col items-center justify-center space-y-6">
-      <VStack width="80%">
-        <h1 className="font-permanent-marker text-center text-3xl text-primary-color font-bold">
-          Add Ingredients:
-        </h1>
-        <InputGroup>
-          <InputLeftElement
-            pointerEvents="none"
-            children={<Search2Icon color="gray.300" />}
-          />
-          <Input
-            type="text"
-            placeholder="Type ingredients here"
-            onChange={(e) => {
-              setInputText(e.target.value);
-              fetchIngredients(inputText);
-            }}
-            value={inputText}
-          />
-        </InputGroup>
+    <>
+      <section className="absolute top-[12vh] left-[2vh]">
+        <BackButton extraText={"to Search Options"} buttonSize="sm" />
+      </section>
+      <main className="h-[80vh] w-screen flex flex-col items-center justify-center space-y-6">
+        <VStack width="80%" className="max-w-lg">
+          <h1 className="font-nunito font-bold text-2xl text-center">
+            Time to{" "}
+            <span className="font-permanent-marker text-center text-2xl">
+              Chews{" "}
+            </span>
+            your ingredients:
+          </h1>
+          <InputGroup>
+            <InputLeftElement
+              pointerEvents="none"
+              children={<Search2Icon color="gray.300" />}
+            />
+            <Input
+              type="text"
+              placeholder="Type ingredients here"
+              onChange={(e) => {
+                setInputText(e.target.value);
+                fetchIngredients(inputText);
+              }}
+              value={inputText}
+            />
+          </InputGroup>
 
-        <label htmlFor="ingredients" hidden>
-          Select from list:
-        </label>
-        <Select
-          placeholder="Chews from list"
-          name="ingredients"
-          id="ingredients"
-          fontFamily={"brand.main"}
-          onChange={(e) => {
-            setCurrentIngredient(e.target.value);
-            console.log(currentIngredient);
-          }}
-        >
-          {ingredientOptions.map((ingredient) => {
-            return (
-              <option
-                key={ingredient}
-                value={ingredient}
+          <label htmlFor="ingredients" hidden>
+            Select from list:
+          </label>
+          <Select
+            placeholder="Chews from list"
+            name="ingredients"
+            id="ingredients"
+            fontFamily={"brand.main"}
+            onChange={(e) => {
+              setCurrentIngredient(e.target.value);
+              console.log(currentIngredient);
+            }}
+          >
+            {ingredientOptions.map((ingredient) => {
+              return (
+                <option
+                  key={ingredient}
+                  value={ingredient}
+                  fontFamily={"brand.main"}
+                >
+                  {ingredient}
+                </option>
+              );
+            })}
+          </Select>
+
+          <HStack wrap={"wrap"} spacing={2} align={"space-between"}>
+            {tagsArray.map((tag, index) => (
+              <Tag
+                size="md"
+                key={tag}
+                borderRadius="full"
+                variant="solid"
+                bg={"brand.primary"}
                 fontFamily={"brand.main"}
               >
-                {ingredient}
-              </option>
-            );
-          })}
-        </Select>
+                <TagLabel>{tag}</TagLabel>
+                <TagCloseButton
+                  onClick={() => {
+                    deleteTag(index);
+                  }}
+                />
+              </Tag>
+            ))}
+          </HStack>
 
-        <HStack wrap={"wrap"} spacing={2} align={"space-between"}>
-          {tagsArray.map((tag, index) => (
-            <Tag
-              size="md"
-              key={tag}
-              borderRadius="full"
-              variant="solid"
-              bg={"brand.primary"}
-              fontFamily={"brand.main"}
-            >
-              <TagLabel>{tag}</TagLabel>
-              <TagCloseButton
-                onClick={() => {
-                  deleteTag(index);
-                }}
-              />
-            </Tag>
-          ))}
-        </HStack>
-
-        <MainButton
-          onClick={() => {
-            addTag(currentIngredient);
-          }}
-          buttonText="Add Ingredient"
-          colorMode={"light"}
-          buttonWidth="100%"
-          buttonSize="lg"
-        />
-      </VStack>
-      <Divider width="80%" />
-      <VStack width="80%">
-        <MainButton
-          buttonText="Chews for Me"
-          colorMode={"dark"}
-          buttonWidth="100%"
-          buttonSize="lg"
-          onClick={() => {
-            router.push({
-              pathname: "/results",
-              query: { meal: meal, ingredients: { ...tagsArray } },
-            });
-          }}
-        />
-        <MainButton
-          buttonText="Add Search Filters"
-          colorMode={"light"}
-          buttonWidth="100%"
-          buttonSize="lg"
-        />
-      </VStack>
-    </main>
+          <MainButton
+            onClick={() => {
+              addTag(currentIngredient);
+            }}
+            buttonText="Add Ingredient"
+            colorMode={"light"}
+            buttonWidth="100%"
+            buttonSize="lg"
+          />
+        </VStack>
+        <Divider width="80%" className="max-w-lg" />
+        <VStack width="80%" className="max-w-lg">
+          <MainButton
+            buttonText="Chews for Me"
+            colorMode={"dark"}
+            buttonWidth="100%"
+            buttonSize="lg"
+            onClick={() => {
+              router.push({
+                pathname: "/results",
+                query: { meal: meal, ingredients: { ...tagsArray } },
+              });
+            }}
+          />
+          <MainButton
+            buttonText="Add Search Filters"
+            colorMode={"light"}
+            buttonWidth="100%"
+            buttonSize="lg"
+          />
+        </VStack>
+      </main>
+    </>
   );
 }
 
