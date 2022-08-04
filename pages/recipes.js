@@ -1,4 +1,4 @@
-import meals from "../libs/recipes.js";
+import meals from "../libs/recipeData.js";
 import { UnorderedList, ListItem } from "@chakra-ui/react";
 import { StarIcon, ArrowUpIcon } from "@chakra-ui/icons";
 import React, { useEffect, useState } from "react";

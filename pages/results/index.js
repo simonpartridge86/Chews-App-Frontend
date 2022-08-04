@@ -1,4 +1,4 @@
-import meals from "../../libs/recipes.js";
+import meals from "../../libs/recipeData.js";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import MainButton from "../../components/MainButton";
