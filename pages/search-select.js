@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import MainButton from "../components/MainButton";
 import { Divider, VStack } from "@chakra-ui/react";
 import React from "react";
@@ -34,7 +33,13 @@ export default function SearchSelect() {
           a search option:
         </h1>
         <MainButton
-          buttonText="Just Chews for Me"
+          buttonText={
+            <span className="font-permanent-marker text-center text-xl text-light-color font-bold">
+              Chews
+            </span>
+          }
+          leftIcon="Just"
+          rightIcon="for Me"
           buttonSize="lg"
           colorMode="dark"
           buttonWidth="80%"
@@ -48,7 +53,12 @@ export default function SearchSelect() {
           Hello {<span>World</span>}
         </MainButton>
         <MainButton
-          buttonText="Chews by Ingredient"
+          leftIcon={
+            <span className="font-permanent-marker text-center text-xl text-light-color font-bold">
+              Chews
+            </span>
+          }
+          buttonText="by Ingredient"
           buttonSize="lg"
           colorMode="dark"
           buttonWidth="80%"

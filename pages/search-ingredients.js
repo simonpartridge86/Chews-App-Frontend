@@ -1,4 +1,4 @@
-import { Search2Icon } from "@chakra-ui/icons";
+import { Search2Icon, AddIcon, EditIcon } from "@chakra-ui/icons";
 import {
   Divider,
   HStack,
@@ -10,6 +10,15 @@ import {
   TagCloseButton,
   TagLabel,
   VStack,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  Text,
 } from "@chakra-ui/react";
 import React from "react";
 import { useState } from "react";
@@ -21,6 +30,7 @@ export default function SearchIngredients() {
   const router = useRouter();
   const meal = router.query.meal;
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [ingredientOptions, setIngredientOptions] = useState([]);
   const [inputText, setInputText] = useState("");
   const [currentIngredient, setCurrentIngredient] = useState("");
@@ -86,6 +96,7 @@ export default function SearchIngredients() {
           <Input
             type="text"
             placeholder="Type ingredients here"
+            fontFamily={"brand.main"}
             onChange={(e) => {
               setInputText(e.target.value);
               fetchIngredients(inputText);
@@ -144,8 +155,9 @@ export default function SearchIngredients() {
           onClick={() => {
             addTag(currentIngredient);
           }}
+          leftIcon={<AddIcon />}
           buttonText="Add Ingredient"
-          colorMode={"light"}
+          colorMode={"dark"}
           buttonWidth="100%"
           buttonSize="lg"
         />
@@ -153,24 +165,51 @@ export default function SearchIngredients() {
       <Divider width="80%" className="max-w-lg" />
       <VStack width="80%" className="max-w-lg">
         <MainButton
-          buttonText="Chews for Me"
+          leftIcon={
+            <span className="font-permanent-marker text-center text-xl text-light-color font-bold">
+              Chews
+            </span>
+          }
+          buttonText="for Me"
           colorMode={"dark"}
           buttonWidth="100%"
           buttonSize="lg"
           onClick={() => {
-            router.push({
-              pathname: "/results",
-              query: { meal: meal, ingredients: { ...tagsArray } },
-            });
+            tagsArray.length > 0
+              ? router.push({
+                  pathname: "/results",
+                  query: { meal: meal, ingredients: { ...tagsArray } },
+                })
+              : onOpen();
           }}
         />
         <MainButton
-          buttonText="Add Search Filters"
-          colorMode={"light"}
+          leftIcon={<EditIcon />}
+          buttonText="Edit Search Filters"
+          buttonSize="sm"
+          colorMode="light"
           buttonWidth="100%"
-          buttonSize="lg"
         />
       </VStack>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent width="80vw" mt="30vh">
+          <ModalHeader>WAIT!</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text>Please add some ingredients first!</Text>
+          </ModalBody>
+
+          <ModalFooter>
+            <MainButton
+              buttonText="OK"
+              colorMode="dark"
+              mr={3}
+              onClick={onClose}
+            />
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </main>
   );
 }
