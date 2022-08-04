@@ -16,7 +16,7 @@ export default function MealSelect() {
       <VStack spacing={4} align="center">
         <h1 className="font-nunito font-bold text-2xl">
           First,{" "}
-          <span className="font-permanent-marker text-center text-2xl">
+          <span className="font-permanent-marker text-center text-2xl text-primary-color font-normal">
             Chews{" "}
           </span>
           a meal type:

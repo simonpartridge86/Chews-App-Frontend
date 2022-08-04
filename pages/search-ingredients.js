@@ -83,7 +83,7 @@ export default function SearchIngredients() {
       <VStack width="80%" className="max-w-lg">
         <h1 className="font-nunito font-bold text-2xl text-center">
           Time to{" "}
-          <span className="font-permanent-marker text-center text-2xl">
+          <span className="font-permanent-marker text-center text-2xl text-primary-color font-normal">
             Chews{" "}
           </span>
           your ingredients:
@@ -157,20 +157,24 @@ export default function SearchIngredients() {
           }}
           leftIcon={<AddIcon />}
           buttonText="Add Ingredient"
-          colorMode={"dark"}
+          colorMode={"light"}
           buttonWidth="100%"
           buttonSize="lg"
         />
       </VStack>
       <Divider width="80%" className="max-w-lg" />
       <VStack width="80%" className="max-w-lg">
+        <h2 className="font-nunito font-bold text-2xl text-center">
+          Added your ingredients?
+        </h2>
         <MainButton
-          leftIcon={
-            <span className="font-permanent-marker text-center text-xl text-light-color font-bold">
+          leftIcon={"Yes, now"}
+          buttonText={
+            <span className="font-permanent-marker text-center text-xl text-light-color font-normal">
               Chews
             </span>
           }
-          buttonText="for Me"
+          rightIcon="for Me"
           colorMode={"dark"}
           buttonWidth="100%"
           buttonSize="lg"
