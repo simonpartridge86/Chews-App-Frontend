@@ -6,7 +6,7 @@ import {
   Stack,
   useColorModeValue,
 } from "@chakra-ui/react";
-import meals from "../libs/recipes";
+import meals from "../libs/recipeData.js";
 import MainButton from "./MainButton";
 import { StarIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
