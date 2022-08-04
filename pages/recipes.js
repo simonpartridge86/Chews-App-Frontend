@@ -1,33 +1,21 @@
 import meals from "../libs/recipes.js";
-import { Icon, UnorderedList, ListItem } from "@chakra-ui/react";
+import { UnorderedList, ListItem } from "@chakra-ui/react";
 import { StarIcon, ArrowUpIcon } from "@chakra-ui/icons";
 import React, { useEffect, useState } from "react";
 import MainButton from "../components/MainButton";
 import BackButton from "../components/BackButton";
+import { useRouter } from "next/router";
 
-console.log(meals);
 function Recipes() {
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    setIndex(Math.floor(Math.random() * 10));
-  }, []);
-
+  const router = useRouter();
+  const meal = router.query.meal;
+  const index = router.query.mealIndex;
   const mealName = meals[index].strMeal;
   const mealThumb = meals[index].strMealThumb;
   const ingredient1 = meals[index].strIngredient1;
   const ingredient2 = meals[index].strIngredient2;
   const ingredient3 = meals[index].strIngredient3;
   const instructions = meals[index].strInstructions;
-
-  const CircleIcon = (props) => (
-    <Icon viewBox="0 0 200 200" {...props}>
-      <path
-        fill="brand.dark"
-        d="M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0"
-      />
-    </Icon>
-  );
 
   return (
     <main className="flex flex-col justify-around items-center w-screen">
@@ -41,11 +29,15 @@ function Recipes() {
         <h1 className="font-permanent-marker text-center text-2xl text-primary-color">
           {mealName}
         </h1>
-        <img src={mealThumb} alt={mealName} className="w-[100%]"></img>
+        <img
+          src={mealThumb}
+          alt={mealName}
+          className="w-[100%] max-h-[30vh] object-cover rounded"
+        ></img>
         <MainButton
           buttonWidth="100%"
-          buttonSize="lg"
-          rightIcon={<StarIcon />}
+          buttonSize="md"
+          leftIcon={<StarIcon />}
           buttonText={"Save to Favourites"}
           colorMode="dark"
         />
@@ -64,7 +56,6 @@ function Recipes() {
         </h2>
         <p className="text-dark-color font-nunito">{instructions}</p>{" "}
         <MainButton
-          className="max-w-sm"
           onClick={() => {
             window.scrollTo({
               top: 0,
@@ -83,19 +74,3 @@ function Recipes() {
 }
 
 export default Recipes;
-
-/* PLAN:
-- Find dummy data ✅
-- Initialise elements of the page (one tick) and make fully functional (two ticks)
-  - Toolbar (from yesterday) - burger, chews logo, profile pic ✅
-  - 'Back to results' link with <-- arrow ✅
-  - 'You are making' header, perm-marker, primary ✅ALMOST
-  - 'Creamy steak alfredo' nunito, dark ✅
-  - Picture of meal, 80% screen-width ✅
-  - Add to favourites button ✅
-  - 'Things you need' primary, perm-marker, header✅
-  - List of ingredients with measurements, bullet points, nunito, dark✅
-  - 'How to make it' primary, perm-marker, header✅
-  - Recipe instructions, paragraph, nunito, dark
-  - 'Return to top' link, nunito, small, dark✅
-*/

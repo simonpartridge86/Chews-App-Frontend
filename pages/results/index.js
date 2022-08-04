@@ -1,17 +1,27 @@
-import React from "react";
+import meals from "../../libs/recipes.js";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import MainButton from "../../components/MainButton";
-import { StarIcon } from "@chakra-ui/icons";
+import {
+  StarIcon,
+  ViewIcon,
+  RepeatIcon,
+  UpDownIcon,
+  EditIcon,
+} from "@chakra-ui/icons";
 import { Divider } from "@chakra-ui/react";
 import BackButton from "../../components/BackButton";
 
-const mockRecipe = {
-  name: "Creamy Steak Alfredo",
-  imgSrc:
-    "https://images.unsplash.com/photo-1551183053-bf91a1d81141?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1232&q=80",
-};
-
 export default function Results() {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    setIndex(Math.floor(Math.random() * 10));
+  }, []);
+
+  const mealName = meals[index].strMeal;
+  const mealThumb = meals[index].strMealThumb;
+
   const router = useRouter();
   const meal = router.query.meal;
   const ingredients = router.query.ingredients;
@@ -23,33 +33,40 @@ export default function Results() {
       </section>
       <section className="flex flex-col w-[80vw] items-center justify-end space-y-2 max-w-lg">
         <h1 className="font-nunito font-bold text-2xl text-dark-color text-center">
-          Ok, we think you should{" "}
+          You should{" "}
           <span className="font-permanent-marker text-center text-2xl text-dark-color font-bold">
             Chews{" "}
           </span>
-          this recipe:
+          this:
         </h1>
         <h1 className="font-permanent-marker text-center text-2xl text-primary-color">
-          {mockRecipe.name}
+          {mealName}
         </h1>
         <img
-          className="w-[100%] object-cover rounded"
-          src={mockRecipe.imgSrc}
+          className="w-[100%] max-h-[30vh] object-cover rounded"
+          src={mealThumb}
           alt="recipe image"
         />
       </section>
       <section className="flex flex-row justify-between w-[80vw] space-x-2 max-w-lg">
         <MainButton
           buttonText="View Recipe"
+          leftIcon={<ViewIcon />}
           buttonSize="md"
           colorMode="dark"
-          buttonWidth="70%"
+          buttonWidth="80%"
+          onClick={() => {
+            router.push({
+              pathname: "/recipes",
+              query: { meal: meal, mealIndex: index },
+            });
+          }}
         />
         <MainButton
           buttonText={<StarIcon />}
           buttonSize="md"
           colorMode="dark"
-          buttonWidth="30%"
+          buttonWidth="20%"
         />
       </section>
       <section className="flex flex-col w-[80vw] items-center justify-end space-y-2 max-w-lg">
@@ -59,24 +76,35 @@ export default function Results() {
         </h1>
         <section className="flex flex-row justify-between w-[100%] space-x-2">
           <MainButton
-            buttonText="Chews Again"
+            onClick={() => {
+              window.location.reload(false);
+            }}
+            leftIcon={<RepeatIcon />}
+            buttonText={
+              <span className="font-permanent-marker text-center text-lg text-light-color font-bold">
+                Chews
+              </span>
+            }
+            rightIcon="again"
             buttonSize="md"
             colorMode="dark"
             buttonWidth="50%"
           />
           <MainButton
+            leftIcon={<UpDownIcon />}
             buttonText="See All"
             buttonSize="md"
             colorMode="dark"
             buttonWidth="50%"
           />
         </section>
-        {/* <MainButton
-        buttonText="Add Search Filters"
-        buttonSize="xs"
-        colorMode="light"
-        buttonWidth="100%"
-      /> */}
+        <MainButton
+          leftIcon={<EditIcon />}
+          buttonText="Edit Search Filters"
+          buttonSize="sm"
+          colorMode="light"
+          buttonWidth="100%"
+        />
       </section>
     </main>
   );

@@ -9,8 +9,8 @@ export default function Home() {
     <main className="flex flex-col justify-evenly h-[80vh] w-screen items-center">
       <section className="flex flex-col items-center space-y-4 w-screen">
         <ChewsLogo theme={"brand.primary"} size={"4xl"} />
-        <h2 className="text-primary-color font-bold font-nunito">
-          We Choose...You Chew!
+        <h2 className="text-primary-color text-xl font-bold italic font-nunito">
+          We Choose... You Chew!
         </h2>
       </section>
       <section className="flex flex-col items-center space-y-4 w-screen max-w-lg">
