@@ -15,6 +15,7 @@ import {
   FormLabel,
   Switch,
   SimpleGrid,
+  Divider,
 } from "@chakra-ui/react";
 
 export default function FilterModal() {
@@ -26,34 +27,52 @@ export default function FilterModal() {
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent width="80vw">
-          <ModalHeader className="font-nunito">Chews Filters</ModalHeader>
+        <ModalContent
+          width="80vw"
+          flex="flex"
+          flexDir="column"
+          alignItems="center"
+        >
+          <ModalHeader fontFamily={"brand.main"} fontSize={"2xl"}>
+            <span className="font-permanent-marker text-center text-2xl text-primary-color font-normal">
+              Chews{" "}
+            </span>{" "}
+            Filters
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Text className="font-nunito">Dietary Preferences:</Text>
-            <FormControl as={SimpleGrid} columns={{ base: 2, lg: 4 }}>
+            <Text
+              fontFamily={"brand.main"}
+              fontWeight={600}
+              fontSize={"lg"}
+              textColor={"brand.primary"}
+              textAlign={"left"}
+            >
+              Dietary Preferences:
+            </Text>
+            <Divider />
+            <FormControl as={SimpleGrid} columns={2}>
               {dietArray.map((item) => {
                 return (
                   <>
-                    <FormLabel className="font-nunito" htmlFor={item}>
+                    <FormLabel
+                      fontFamily={"brand.main"}
+                      my={"1vh"}
+                      htmlFor={item}
+                    >
                       {item}
                     </FormLabel>
-                    <Switch id={item} />
+                    <Switch colorScheme="teal" my={"1.5vh"} id={item} />
                   </>
                 );
               })}
             </FormControl>
           </ModalBody>
 
-          <ModalFooter className="flex flex-row justify-center w-[100vw] ">
+          <ModalFooter>
             <MainButton
               colorMode={"dark"}
               buttonText="Save"
-              onClick={onClose}
-            />
-            <MainButton
-              colorMode={"dark"}
-              buttonText="Cancel"
               onClick={onClose}
             />
           </ModalFooter>
