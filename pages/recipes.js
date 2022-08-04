@@ -7,9 +7,10 @@ import BackButton from "../components/BackButton";
 import { useRouter } from "next/router";
 
 function Recipes() {
+  const [index, setIndex] = useState(0);
   const router = useRouter();
   const meal = router.query.meal;
-  const index = router.query.mealIndex;
+  setIndex(router.query.mealIndex);
   const mealName = meals[index].strMeal;
   const mealThumb = meals[index].strMealThumb;
   const ingredient1 = meals[index].strIngredient1;
