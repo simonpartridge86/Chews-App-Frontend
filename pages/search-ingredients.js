@@ -25,9 +25,24 @@ export default function SearchIngredients() {
   const meal = router.query.meal;
 
   const {
-    isOpen: isOpenAlert,
-    onOpen: onOpenAlert,
-    onClose: onCloseAlert,
+    isOpen: isOpenAlert1,
+    onOpen: onOpenAlert1,
+    onClose: onCloseAlert1,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenAlert2,
+    onOpen: onOpenAlert2,
+    onClose: onCloseAlert2,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenAlert3,
+    onOpen: onOpenAlert3,
+    onClose: onCloseAlert3,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenAlert4,
+    onOpen: onOpenAlert4,
+    onClose: onCloseAlert4,
   } = useDisclosure();
   const {
     isOpen: isOpenFilter,
@@ -38,6 +53,7 @@ export default function SearchIngredients() {
   const [inputText, setInputText] = useState("");
   const [currentIngredient, setCurrentIngredient] = useState("");
   const [tagsArray, setTagsArray] = useState([]);
+  const [isDisabled, setIsDisabled] = useState(true);
 
   async function fetchIngredients(inputText) {
     const response = await fetch(
@@ -50,28 +66,30 @@ export default function SearchIngredients() {
 
   function addTag(str) {
     if (tagsArray.length > 4) {
-      alert("You can only add a maximum of 5 ingredients!");
+      onOpenAlert1();
       setInputText("");
       setIngredientOptions([]);
+      setIsDisabled(true);
       return;
     }
     if (str === "") {
-      alert(
-        "No ingredient entered, please search for an ingredient and select from dropdown menu"
-      );
+      onOpenAlert2();
       setInputText("");
       setIngredientOptions([]);
+      setIsDisabled(true);
       return;
     }
     if (tagsArray.includes(str)) {
-      alert("This ingredient has already been added");
+      onOpenAlert3();
       setInputText("");
       setIngredientOptions([]);
+      setIsDisabled(true);
       return;
     }
     setTagsArray([...tagsArray, currentIngredient]);
     setInputText("");
     setIngredientOptions([]);
+    setIsDisabled(true);
   }
 
   function deleteTag(index) {
@@ -119,6 +137,10 @@ export default function SearchIngredients() {
           onChange={(e) => {
             setCurrentIngredient(e.target.value);
             console.log(currentIngredient);
+            console.log(currentIngredient);
+            if (currentIngredient != "") {
+              setIsDisabled(false);
+            }
           }}
         >
           {ingredientOptions.map((ingredient) => {
@@ -158,6 +180,7 @@ export default function SearchIngredients() {
           onClick={() => {
             addTag(currentIngredient);
           }}
+          isDisabled={isDisabled}
           leftIcon={<AddIcon />}
           buttonText="Add Ingredient"
           colorMode={"light"}
@@ -187,7 +210,7 @@ export default function SearchIngredients() {
                   pathname: "/results",
                   query: { meal: meal, ingredients: { ...tagsArray } },
                 })
-              : onOpenAlert();
+              : onOpenAlert3();
           }}
         />
         <MainButton
@@ -201,7 +224,30 @@ export default function SearchIngredients() {
           }}
         />
       </VStack>
-      <AlertModal isOpen={isOpenAlert} onClose={onCloseAlert} />
+      <AlertModal
+        isOpen={isOpenAlert1}
+        onClose={onCloseAlert1}
+        headerText="Wait!"
+        bodyText="You can only add a maximum of 5 ingredients!"
+      />
+      <AlertModal
+        isOpen={isOpenAlert2}
+        onClose={onCloseAlert2}
+        headerText="Wait!"
+        bodyText="No ingredient entered. Please search for an ingredient and select from the dropdown menu."
+      />
+      <AlertModal
+        isOpen={isOpenAlert3}
+        onClose={onCloseAlert3}
+        headerText="Wait!"
+        bodyText="This ingredient has already been added."
+      />
+      <AlertModal
+        isOpen={isOpenAlert4}
+        onClose={onCloseAlert4}
+        headerText="Wait!"
+        bodyText="Please add some ingredients first!"
+      />
       <FilterModal isOpen={isOpenFilter} onClose={onCloseFilter} />
     </main>
   );

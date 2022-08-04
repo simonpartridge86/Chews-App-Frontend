@@ -11,16 +11,25 @@ import {
 } from "@chakra-ui/react";
 import MainButton from "./MainButton";
 
-export default function AlertModal({ isOpen, onClose }) {
+export default function AlertModal({ isOpen, onClose, headerText, bodyText }) {
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} motionPreset="slideInRight">
         <ModalOverlay />
         <ModalContent width="80vw" mt="30vh">
-          <ModalHeader>WAIT!</ModalHeader>
+          <ModalHeader
+            color="brand.primary"
+            fontFamily={"brand.logo"}
+            fontWeight="normal"
+            fontSize={"2xl"}
+          >
+            {headerText}
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Text>Please add some ingredients first!</Text>
+            <Text fontFamily={"brand.main"} fontWeight="semibold">
+              {bodyText}
+            </Text>
           </ModalBody>
 
           <ModalFooter>

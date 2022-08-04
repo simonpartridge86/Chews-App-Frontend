@@ -10,7 +10,7 @@ export default function HamburgerMenu() {
   return (
     <Flex>
       <Flex>
-        {/* Desktop */}
+        {/* Desktop size */}
         <Flex display={["none", "none", "flex", "flex"]}>
           <NextLink href="/" passHref>
             <Button as="a" variant="ghost" aria-label="Home" my={5} w="100%">
@@ -20,31 +20,37 @@ export default function HamburgerMenu() {
 
           <NextLink href="/meal-options" passHref>
             <Button as="a" variant="ghost" aria-label="About" my={5} w="100%">
-              Chews A Meal
+              <h1>Chews a Meal</h1>
             </Button>
           </NextLink>
 
-          <NextLink href="/contact" passHref>
-            <Button as="a" variant="ghost" aria-label="Contact" my={5} w="100%">
+          <NextLink href="/favourites" passHref>
+            <Button
+              as="a"
+              variant="ghost"
+              aria-label="Favourites"
+              my={5}
+              w="100%"
+            >
               My Favourites
             </Button>
           </NextLink>
 
-          <NextLink href="/contact" passHref>
-            <Button as="a" variant="ghost" aria-label="Contact" my={5} w="100%">
+          <NextLink href="/profile" passHref>
+            <Button as="a" variant="ghost" aria-label="Profile" my={5} w="100%">
               My Profile
             </Button>
           </NextLink>
         </Flex>
 
-        {/* Mobile */}
+        {/* Mobile Size */}
         <IconButton
           aria-label="Open Menu"
           color={"brand.primary"}
           bgColor={"#fff"}
           size="lg"
           mr={2}
-          icon={<HamburgerIcon />}
+          icon={<HamburgerIcon w={8} h={8} />}
           onClick={() => changeDisplay("flex")}
           display={["flex", "flex", "none", "none"]}
         />
@@ -72,7 +78,7 @@ export default function HamburgerMenu() {
             mt={2}
             mr={2}
             aria-label="Open Menu"
-            size="lg"
+            size="xs"
             icon={
               <Avatar name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
             }

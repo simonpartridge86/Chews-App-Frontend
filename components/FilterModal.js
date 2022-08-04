@@ -67,7 +67,7 @@ export default function FilterModal({ isOpen, onClose }) {
         isOpen={isOpen}
         onClose={onClose}
         isCentered
-        motionPreset="scale"
+        motionPreset="slideInRight"
         scrollBehavior="inside"
       >
         <ModalOverlay />
@@ -85,7 +85,6 @@ export default function FilterModal({ isOpen, onClose }) {
             </span>{" "}
             Filters
           </ModalHeader>
-          <ModalCloseButton />
           <ModalBody className="w-[80%] max-h-[50%]">
             <Text
               fontFamily={"brand.main"}
@@ -168,13 +167,6 @@ export default function FilterModal({ isOpen, onClose }) {
             <MainButton
               colorMode={"dark"}
               buttonText="Save"
-              onClick={onClose}
-              buttonSize="md"
-              buttonWidth={"100px"}
-            />
-            <MainButton
-              colorMode={"light"}
-              buttonText="Cancel"
               onClick={onClose}
               buttonSize="md"
               buttonWidth={"100px"}
