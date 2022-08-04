@@ -18,6 +18,8 @@ export default function MainButton({
   colorMode,
   borderWidthRecipe,
   isDisabled,
+  leftIcon,
+  rightIcon,
 }) {
   if (!borderWidthRecipe) {
     borderWidthRecipe = "2px";
@@ -25,6 +27,8 @@ export default function MainButton({
   if (colorMode === "light") {
     return (
       <Button
+        leftIcon={leftIcon}
+        rightIcon={rightIcon}
         disabled={isDisabled}
         onClick={onClick}
         size={buttonSize}
@@ -52,6 +56,8 @@ export default function MainButton({
   } else if (colorMode === "dark") {
     return (
       <Button
+        leftIcon={leftIcon}
+        rightIcon={rightIcon}
         disabled={isDisabled}
         onClick={onClick}
         size={buttonSize}
