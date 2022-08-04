@@ -1,6 +1,7 @@
 import MainButton from "../components/MainButton";
 import { VStack } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import BackButton from "../components/BackButton";
 
 import React from "react";
 
@@ -9,6 +10,9 @@ export default function MealSelect() {
 
   return (
     <main className="flex flex-col h-[80vh] justify-center items-center">
+      <section className="absolute top-[12vh] left-[2vh]">
+        <BackButton extraText={"to Login"} buttonSize="sm" />
+      </section>
       <VStack spacing={4} align="center">
         <h1 className="font-nunito font-bold text-2xl">
           First,{" "}

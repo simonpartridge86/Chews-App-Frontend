@@ -1,29 +1,10 @@
-import {
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  IconButton,
-  MenuGroup,
-  AbsoluteCenter,
-  Button,
-  Flex,
-  Avatar,
-  Switch,
-} from "@chakra-ui/react";
+import { IconButton, Button, Flex, Avatar } from "@chakra-ui/react";
 
 import { useState } from "react";
-import {
-  HamburgerIcon,
-  AddIcon,
-  ExternalLinkIcon,
-  RepeatIcon,
-  CloseIcon,
-  EditIcon,
-} from "@chakra-ui/icons";
+import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 
 import NextLink from "next/link";
-export default function Hamburger() {
+export default function HamburgerMenu() {
   const [display, changeDisplay] = useState("none");
 
   return (

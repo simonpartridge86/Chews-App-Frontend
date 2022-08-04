@@ -15,6 +15,7 @@ import React from "react";
 import { useState } from "react";
 import MainButton from "../components/MainButton";
 import { useRouter } from "next/router";
+import BackButton from "../components/BackButton";
 
 export default function SearchIngredients() {
   const router = useRouter();
@@ -66,9 +67,16 @@ export default function SearchIngredients() {
 
   return (
     <main className="h-[80vh] w-screen flex flex-col items-center justify-center space-y-6">
-      <VStack width="80%">
-        <h1 className="font-permanent-marker text-center text-3xl text-primary-color font-bold">
-          Add Ingredients:
+      <section className="absolute top-[12vh] left-[2vh]">
+        <BackButton extraText={"to Search Options"} buttonSize="sm" />
+      </section>
+      <VStack width="80%" className="max-w-lg">
+        <h1 className="font-nunito font-bold text-2xl text-center">
+          Time to{" "}
+          <span className="font-permanent-marker text-center text-2xl">
+            Chews{" "}
+          </span>
+          your ingredients:
         </h1>
         <InputGroup>
           <InputLeftElement
@@ -142,8 +150,8 @@ export default function SearchIngredients() {
           buttonSize="lg"
         />
       </VStack>
-      <Divider width="80%" />
-      <VStack width="80%">
+      <Divider width="80%" className="max-w-lg" />
+      <VStack width="80%" className="max-w-lg">
         <MainButton
           buttonText="Chews for Me"
           colorMode={"dark"}

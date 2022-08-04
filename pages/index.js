@@ -1,18 +1,9 @@
-import Head from "next/head";
-import Image from "next/image";
-import Hamburger from "../components/Hamburger/HamburgerButton";
-import styles from "../styles/Home.module.css";
-import ChewsLogo from "../components/chews-logo";
+import ChewsLogo from "../components/ChewsLogo";
 import MainButton from "../components/MainButton";
-
-import Navbar from "../components/navbar";
-import Footer from "../components/footer";
 import { useRouter } from "next/router";
 
 export default function Home() {
   const router = useRouter();
-
-
 
   return (
     <main className="flex flex-col justify-evenly h-[80vh] w-screen items-center">

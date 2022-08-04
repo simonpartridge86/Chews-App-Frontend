@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import MainButton from "../../components/MainButton";
 import { StarIcon } from "@chakra-ui/icons";
 import { Divider } from "@chakra-ui/react";
+import BackButton from "../../components/BackButton";
 
 const mockRecipe = {
   name: "Creamy Steak Alfredo",
@@ -17,6 +18,9 @@ export default function Results() {
   console.log(ingredients);
   return (
     <main className="flex flex-col h-[80vh] w-screen items-center justify-center space-y-2">
+      <section className="absolute top-[12vh] left-[2vh]">
+        <BackButton extraText={"to Search"} buttonSize="sm" />
+      </section>
       <section className="flex flex-col w-[80vw] items-center justify-end space-y-2 max-w-lg">
         <h1 className="font-nunito font-bold text-2xl text-dark-color text-center">
           Ok, we think you should{" "}
@@ -25,7 +29,6 @@ export default function Results() {
           </span>
           this recipe:
         </h1>
-        <Divider />
         <h1 className="font-permanent-marker text-center text-2xl text-primary-color">
           {mockRecipe.name}
         </h1>
