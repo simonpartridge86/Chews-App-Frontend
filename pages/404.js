@@ -1,6 +1,5 @@
 // pages/404.js
 import { VStack, Link } from "@chakra-ui/react";
-import ChewsLogo from "../components/ChewsLogo";
 import MainButton from "../components/MainButton";
 import { useRouter } from "next/router";
 

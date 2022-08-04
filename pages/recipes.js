@@ -8,9 +8,12 @@ import { useRouter } from "next/router";
 
 function Recipes() {
   const [index, setIndex] = useState(0);
+  useEffect(() => {
+    const newIndex = router.query.mealIndex;
+    setIndex(newIndex);
+  }, []);
   const router = useRouter();
-  const meal = router.query.meal;
-  setIndex(router.query.mealIndex);
+  // const meal = router.query.meal;
   const mealName = meals[index].strMeal;
   const mealThumb = meals[index].strMealThumb;
   const ingredient1 = meals[index].strIngredient1;
@@ -33,7 +36,7 @@ function Recipes() {
         <img
           src={mealThumb}
           alt={mealName}
-          className="w-[100%] max-h-[30vh] object-cover rounded"
+          className="w-[100%] max-h-[25vh] object-cover rounded"
         ></img>
         <MainButton
           buttonWidth="100%"

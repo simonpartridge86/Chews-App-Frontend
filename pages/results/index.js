@@ -43,7 +43,7 @@ export default function Results() {
           {mealName}
         </h1>
         <img
-          className="w-[100%] max-h-[30vh] object-cover rounded"
+          className="w-[100%] max-h-[25vh] object-cover rounded"
           src={mealThumb}
           alt="recipe image"
         />
