@@ -11,8 +11,11 @@ import {
 } from "@chakra-ui/icons";
 import { Divider } from "@chakra-ui/react";
 import BackButton from "../../components/BackButton";
+import { useDisclosure } from "@chakra-ui/react";
+import FilterModal from "../../components/FilterModal.js";
 
 export default function Results() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -104,8 +107,12 @@ export default function Results() {
           buttonSize="sm"
           colorMode="light"
           buttonWidth="100%"
+          onClick={() => {
+            onOpen();
+          }}
         />
       </section>
+      <FilterModal isOpen={isOpen} onClose={onClose} />
     </main>
   );
 }

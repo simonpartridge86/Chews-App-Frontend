@@ -10,27 +10,30 @@ import {
   TagCloseButton,
   TagLabel,
   VStack,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
   useDisclosure,
-  Text,
 } from "@chakra-ui/react";
 import React from "react";
 import { useState } from "react";
 import MainButton from "../components/MainButton";
 import { useRouter } from "next/router";
 import BackButton from "../components/BackButton";
+import AlertModal from "../components/AlertModal";
+import FilterModal from "../components/FilterModal";
 
 export default function SearchIngredients() {
   const router = useRouter();
   const meal = router.query.meal;
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenAlert,
+    onOpen: onOpenAlert,
+    onClose: onCloseAlert,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenFilter,
+    onOpen: onOpenFilter,
+    onClose: onCloseFilter,
+  } = useDisclosure();
   const [ingredientOptions, setIngredientOptions] = useState([]);
   const [inputText, setInputText] = useState("");
   const [currentIngredient, setCurrentIngredient] = useState("");
@@ -184,7 +187,7 @@ export default function SearchIngredients() {
                   pathname: "/results",
                   query: { meal: meal, ingredients: { ...tagsArray } },
                 })
-              : onOpen();
+              : onOpenAlert();
           }}
         />
         <MainButton
@@ -193,27 +196,13 @@ export default function SearchIngredients() {
           buttonSize="sm"
           colorMode="light"
           buttonWidth="100%"
+          onClick={() => {
+            onOpenFilter();
+          }}
         />
       </VStack>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent width="80vw" mt="30vh">
-          <ModalHeader>WAIT!</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Text>Please add some ingredients first!</Text>
-          </ModalBody>
-
-          <ModalFooter>
-            <MainButton
-              buttonText="OK"
-              colorMode="dark"
-              mr={3}
-              onClick={onClose}
-            />
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      <AlertModal isOpen={isOpenAlert} onClose={onCloseAlert} />
+      <FilterModal isOpen={isOpenFilter} onClose={onCloseFilter} />
     </main>
   );
 }

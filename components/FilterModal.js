@@ -1,4 +1,13 @@
-import React, { useState } from "react";
+/*
+Usage Notes:
+- In page where FilterModal is used:
+  - import useDisclosure from chakra: "import { useDisclosure } from "@chakra-ui/react";"
+  - add following inside page function: "const { isOpen, onOpen, onClose } = useDisclosure();"
+  - add following props: <FilterModal isOpen={isOpen} onClose={onClose} />
+  - add a button to the page as follows: <button onClick={onOpen}>Open Modal</button>
+*/
+
+import React, { useState, useEffect } from "react";
 import MainButton from "./MainButton";
 import {
   Modal,
@@ -8,94 +17,52 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  useDisclosure,
-  Button,
   Text,
   Switch,
   Divider,
 } from "@chakra-ui/react";
+import { dietArray, cuisineArray } from "../libs/filters.js";
 
-const dietArray = [
-  {
-    filter: "Vegan",
-    isChecked: false,
-  },
-  {
-    filter: "Gluten-free",
-    isChecked: false,
-  },
-  {
-    filter: "Vegetarian",
-    isChecked: false,
-  },
-  {
-    filter: "Dairy-free",
-    isChecked: false,
-  },
-];
-const cuisineArray = [
-  {
-    filter: "Italian",
-    isChecked: false,
-  },
-  {
-    filter: "Chinese",
-    isChecked: false,
-  },
-  {
-    filter: "Indian",
-    isChecked: false,
-  },
-  {
-    filter: "British",
-    isChecked: false,
-  },
-  {
-    filter: "American",
-    isChecked: false,
-  },
-  {
-    filter: "Moroccan",
-    isChecked: false,
-  },
-  {
-    filter: "Spanish",
-    isChecked: false,
-  },
-  {
-    filter: "Mexican",
-    isChecked: false,
-  },
-  {
-    filter: "Thai",
-    isChecked: false,
-  },
-];
+export default function FilterModal({ isOpen, onClose }) {
+  const [dietFilters, setDietFilters] = useState([]);
+  const [cuisineFilters, setCuisineFilters] = useState([]);
+  useEffect(() => {
+    if (localStorage.getItem("diet") === null) {
+      setDietFilters([...dietArray]);
+    } else {
+      const storedDietFilters = JSON.parse(localStorage.getItem("diet"));
+      setDietFilters([...storedDietFilters]);
+    }
 
-const filterArray = () => {
-  console.log(
-    cuisineArray.map((item) => {
-      return { filter: item, isChecked: false };
-    })
-  );
-};
+    if (localStorage.getItem("cuisine") === null) {
+      setCuisineFilters([...cuisineArray]);
+    } else {
+      const storedCuisineFilters = JSON.parse(localStorage.getItem("cuisine"));
+      setCuisineFilters([...storedCuisineFilters]);
+    }
+  }, []);
 
-export default function FilterModal() {
-  const [dietFilters, setDietFilters] = useState(filterArray());
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  function onChange(e, item) {
-    const index = filters.findIndex((object) => {
+  function onChangeDiet(e, arr, item) {
+    const index = arr.findIndex((object) => {
       return object.filter === item;
     });
-    const newArray = [...filters];
+    const newArray = [...arr];
     newArray[index].isChecked = e.target.checked;
-    setFilters(newArray);
-    console.log(filters);
+    setDietFilters(newArray);
+    console.log(dietFilters);
   }
+  function onChangeCuisine(e, arr, item) {
+    const index = arr.findIndex((object) => {
+      return object.filter === item;
+    });
+    const newArray = [...arr];
+    newArray[index].isChecked = e.target.checked;
+    setCuisineFilters(newArray);
+    console.log(cuisineFilters);
+  }
+
   return (
     <>
-      <Button onClick={onOpen}>Open Modal</Button>
-
       <Modal
         isOpen={isOpen}
         onClose={onClose}
@@ -131,22 +98,27 @@ export default function FilterModal() {
             </Text>
             <Divider />
             <section className="w-[100%] flex flex-col mt-[1vh]">
-              {dietArray.map((item) => {
+              {dietFilters.map((object) => {
                 return (
                   <div
                     className="flex flex-row items-center justify-between"
-                    key={item}
+                    key={object.filter}
                   >
-                    <label fontFamily={"brand.main"} htmlFor={item}>
-                      {item}
+                    <label fontFamily={"brand.main"} htmlFor={object.filter}>
+                      {object.filter}
                     </label>
 
                     <Switch
                       colorScheme="red"
-                      id={item}
+                      id={object.filter}
                       onChange={(e) => {
-                        onChange(e, item);
+                        onChangeDiet(e, dietFilters, object.filter);
+                        localStorage.setItem(
+                          "diet",
+                          JSON.stringify(dietFilters)
+                        );
                       }}
+                      defaultChecked={object.isChecked}
                     />
                   </div>
                 );
@@ -160,27 +132,31 @@ export default function FilterModal() {
               textAlign={"left"}
               marginTop={"2vh"}
             >
-              Dietary Preferences:
+              Cuisine Preferences:
             </Text>
             <Divider />
             <section className="w-[100%] flex flex-col mt-[1vh]">
-              {cuisineArray.map((item) => {
+              {cuisineFilters.map((object) => {
                 return (
                   <div
                     className="flex flex-row items-center justify-between"
-                    key={item}
+                    key={object.filter}
                   >
-                    <label fontFamily={"brand.main"} htmlFor={item}>
-                      {item}
+                    <label fontFamily={"brand.main"} htmlFor={object.filter}>
+                      {object.filter}
                     </label>
 
                     <Switch
                       colorScheme="red"
-                      id={item}
+                      id={object.filter}
                       onChange={(e) => {
-                        onChange(e, item);
+                        onChangeCuisine(e, cuisineFilters, object.filter);
+                        localStorage.setItem(
+                          "cuisine",
+                          JSON.stringify(cuisineFilters)
+                        );
                       }}
-                      isChecked={true}
+                      defaultChecked={object.isChecked}
                     />
                   </div>
                 );
