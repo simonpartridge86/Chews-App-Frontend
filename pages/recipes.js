@@ -16,7 +16,7 @@ function Recipes() {
   const newIndex = router.query.mealIndex;
 
   useEffect(() => {
-    setTimeout(() => setLoading(true), 2000);
+    setTimeout(() => setLoading(true), 500);
     setIndex(newIndex);
     setMeal({
       name: meals[index].strMeal,

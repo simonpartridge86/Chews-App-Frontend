@@ -35,7 +35,7 @@ export default function Results() {
       ingredient3: meals[index].strIngredient3,
       instructions: meals[index].strInstructions,
     });
-    setTimeout(() => setLoading(true), 2000);
+    setTimeout(() => setLoading(true), 500);
   }, []);
 
   return (
