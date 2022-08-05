@@ -17,8 +17,8 @@ import { Divider } from "@chakra-ui/react";
 
 export default function NavBar() {
   return (
-    <>
-      <div className="flex flex-row justify-around items-center h-[10vh]">
+    <div className="fixed w-screen bg-light-color z-10">
+      <div className="flex flex-row justify-between items-center h-[10vh] mx-[2vh]">
         <HamburgerMenu />
         <ChewsLogo theme={"brand.primary"} size={"2xl"} />
         <IconButton
@@ -33,7 +33,7 @@ export default function NavBar() {
         />
       </div>
       <Divider />
-    </>
+    </div>
   );
 }
 //<picture><img src= "./pic.jpg" alt="girl with sweets"></img></picture>
