@@ -1,9 +1,8 @@
 import ChewsLogo from "../components/ChewsLogo";
-import MainButton from "../components/MainButton";
 import { useRouter } from "next/router";
 import { Button } from "@chakra-ui/react";
 
-export default function Home() {
+export default function LogIn() {
   const router = useRouter();
 
   return (
@@ -48,7 +47,7 @@ export default function Home() {
           }}
           onClick={() => {
             router.push({
-              pathname: "/meal-select",
+              pathname: "/home",
             });
           }}
         >
