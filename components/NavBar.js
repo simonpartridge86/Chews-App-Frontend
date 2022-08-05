@@ -10,30 +10,59 @@ Things to do:
 - Allow dark mode
 */
 
-import { IconButton, Avatar } from "@chakra-ui/react";
-import ChewsLogo from "./ChewsLogo";
+import { IconButton, Avatar, Flex } from "@chakra-ui/react";
 import HamburgerMenu from "./HamburgerMenu";
 import { Divider } from "@chakra-ui/react";
 
 export default function NavBar() {
   return (
-    <div className="fixed w-screen bg-light-color z-10">
-      <div className="flex flex-row justify-between items-center h-[10vh] mx-[2vh]">
-        <HamburgerMenu />
-        <ChewsLogo theme={"brand.primary"} size={"2xl"} />
-        <IconButton
-          bgColor="brand.light"
-          color={"none"}
-          mt={2}
-          mr={2}
-          aria-label="Open Menu"
-          size="md"
-          icon={<Avatar name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />}
-          onClick={() => changeDisplay("none")}
-        />
-      </div>
+    <section className="fixed w-screen bg-light-color z-10">
+      <Flex display={["flex", "flex", "none", "none"]}>
+        <section className="flex flex-row justify-between items-center h-[10vh] w-screen">
+          <section className="flex w-[10vh] justify-center items-center">
+            <img
+              className="w-[6vh] h-[6vh]"
+              src={"/profileIcon.png"}
+              alt="placeholder profile pic"
+            />
+          </section>
+          <section className="flex w-[30vh] justify-center items-center">
+            <h1
+              className="text-center font-permanent-marker text-center
+          text-primary-color font-normal text-primary-color text-5xl"
+            >
+              Chews
+            </h1>
+          </section>
+          <section className="flex w-[10vh] justify-center items-center">
+            <HamburgerMenu />
+          </section>
+        </section>
+      </Flex>
+      <Flex display={["none", "none", "flex", "flex"]}>
+        <section className="flex flex-row justify-between items-center h-[10vh] w-screen">
+          <section className="flex w-[10vh] justify-center items-center">
+            <img
+              className="w-[6vh] h-[6vh]"
+              src={"/profileIcon.png"}
+              alt="placeholder profile pic"
+            />
+          </section>
+          <section className="flex w-[30vh] justify-center items-center">
+            <h1
+              className="text-center font-permanent-marker text-center
+          text-primary-color font-normal text-primary-color text-5xl"
+            >
+              Chews
+            </h1>
+          </section>
+          <section className="flex w-[10vh] justify-center items-center">
+            <HamburgerMenu />
+          </section>
+        </section>
+      </Flex>
       <Divider />
-    </div>
+    </section>
   );
 }
 //<picture><img src= "./pic.jpg" alt="girl with sweets"></img></picture>
