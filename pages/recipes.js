@@ -55,6 +55,7 @@ function Recipes() {
               leftIcon={<StarIcon />}
               buttonText={"Save to Favourites"}
               colorMode="dark"
+              isDisabled={true}
             />
           </section>
           <section className="flex flex-col w-[80vw] items-center space-y-2 my-[2vh] max-w-lg">

@@ -1,152 +1,175 @@
-import { IconButton, Button, Flex, Avatar } from "@chakra-ui/react";
+import { IconButton, Button, Flex, Avatar, background } from "@chakra-ui/react";
 
 import { useState } from "react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 
 import NextLink from "next/link";
 export default function HamburgerMenu() {
-  const [display, changeDisplay] = useState("none");
+  const [display, setDisplay] = useState("none");
+  const [isBurgerOpen, setIsBurgerOpen] = useState(false);
 
   return (
     <Flex>
       <Flex>
-        {/* Desktop size */}
-        <Flex display={["none", "none", "flex", "flex"]}>
-          <NextLink href="/" passHref>
-            <Button as="a" variant="ghost" aria-label="Home" my={5} w="100%">
+        {/* Desktop view */}
+        <Flex
+          display={["none", "none", "flex", "flex"]}
+          position="fixed"
+          top="0"
+          right="0"
+          flex="row"
+          justifyContent={"flex-end"}
+          alignItems="center"
+          width={"40vw"}
+          height="10vh"
+          gap={"2vh"}
+          mr={"5vh"}
+        >
+          <NextLink href="/home" passHref className="h-[10vh] align-middle">
+            <Button
+              as="a"
+              variant="ghost"
+              aria-label="Home"
+              my={5}
+              size="lg"
+              fontFamily={"brand.main"}
+              fontSize="xl"
+              _hover={{
+                boxShadow: "md",
+                textColor: "brand.light",
+                bgColor: "brand.primary",
+              }}
+            >
               Home
             </Button>
           </NextLink>
 
-          <NextLink href="/meal-options" passHref>
-            <Button as="a" variant="ghost" aria-label="About" my={5} w="100%">
-              <h1>Chews a Meal</h1>
-            </Button>
-          </NextLink>
-
-          <NextLink href="/favourites" passHref>
+          <NextLink href="/meal-select" passHref>
             <Button
               as="a"
               variant="ghost"
-              aria-label="Favourites"
-              my={5}
-              w="100%"
+              aria-label="Chews a Meal"
+              size="lg"
+              fontFamily={"brand.main"}
+              fontSize="xl"
+              _hover={{
+                boxShadow: "md",
+                textColor: "brand.light",
+                bgColor: "brand.primary",
+              }}
+              leftIcon={
+                <span className="font-permanent-marker text-center text-2xl font-normal">
+                  Chews
+                </span>
+              }
             >
-              My Favourites
-            </Button>
-          </NextLink>
-
-          <NextLink href="/profile" passHref>
-            <Button as="a" variant="ghost" aria-label="Profile" my={5} w="100%">
-              My Profile
+              a Meal
             </Button>
           </NextLink>
         </Flex>
 
-        {/* Mobile Size */}
+        {/* Mobile View */}
         <IconButton
           aria-label="Open Menu"
           color={"brand.primary"}
-          bgColor={"#fff"}
+          bgColor={"brand.light"}
           size="lg"
           mr={2}
+          _hover={{
+            bgColor: "brand.primary",
+            color: "brand.light",
+          }}
           icon={<HamburgerIcon w={8} h={8} />}
-          onClick={() => changeDisplay("flex")}
+          onClick={() => {
+            if (!isBurgerOpen) {
+              setDisplay("flex");
+              setIsBurgerOpen(true);
+            } else {
+              setDisplay("none");
+              setIsBurgerOpen(false);
+            }
+          }}
           display={["flex", "flex", "none", "none"]}
         />
       </Flex>
 
-      {/* Mobile Content */}
+      {/* Mobile Dropdown content */}
       <Flex
         bgColor={"brand.primary"}
-        color={"#fff"}
+        color={"brand.light"}
         w="100vw"
         display={display}
+        flex={"column"}
+        justifyContent={"center"}
         zIndex={20}
         h="75vh"
         pos="fixed"
         top="0"
         left="0"
-        z-index={20}
+        pt="10vh"
         overflowY="auto"
         flexDir="column"
       >
-        <Flex justify="flex-end">
-          <IconButton
-            bgColor="brand.primary"
-            color={"#000"}
-            mt={2}
-            mr={2}
-            aria-label="Open Menu"
-            size="xs"
-            icon={
-              <Avatar name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
-            }
-            onClick={() => changeDisplay("none")}
-          />
-        </Flex>
-
-        <Flex flexDir="column" align="center">
-          <NextLink href="/" passHref>
+        <Flex flexDir="column" align="center" paddingTop={"5vh"}>
+          <NextLink href="/home" passHref>
             <Button
-              onClick={() => changeDisplay("none")}
+              onClick={() => setDisplay("none")}
               as="a"
               variant="ghost"
               aria-label="Home"
-              my={5}
               w="100%"
+              h="10vh"
+              fontFamily={"brand.main"}
+              fontSize="xl"
+              _hover={{
+                fontSize: "3xl",
+                boxShadow: "md",
+              }}
             >
               Home
             </Button>
           </NextLink>
 
-          <NextLink href="/about" passHref>
+          <NextLink href="/meal-select" passHref>
             <Button
-              onClick={() => changeDisplay("none")}
+              onClick={() => setDisplay("none")}
               as="a"
               variant="ghost"
-              aria-label="About"
-              my={5}
+              aria-label="Chews a Meal"
               w="100%"
+              h="10vh"
+              fontFamily={"brand.main"}
+              fontSize="xl"
+              leftIcon={
+                <span className="font-permanent-marker text-center text-2xl text-light-color font-normal">
+                  Chews
+                </span>
+              }
+              _hover={{
+                fontSize: "3xl",
+                boxShadow: "md",
+              }}
             >
-              Chews A Meal
+              a Meal
             </Button>
           </NextLink>
-
-          <NextLink href="/contact" passHref>
-            <Button
-              onClick={() => changeDisplay("none")}
-              as="a"
-              variant="ghost"
-              aria-label="Contact"
-              my={5}
-              w="100%"
-            >
-              My Favourites
-            </Button>
-          </NextLink>
-
-          <NextLink href="/contact" passHref>
-            <Button
-              onClick={() => changeDisplay("none")}
-              as="a"
-              variant="ghost"
-              aria-label="Contact"
-              my={5}
-              w="100%"
-            >
-              My Profile
-            </Button>
-          </NextLink>
-
-          <IconButton
-            bgColor="brand.primary"
-            color={"white"}
-            aria-label="Open Menu"
-            size="lg"
-            icon={<CloseIcon />}
-            onClick={() => changeDisplay("none")}
-          />
+          <section className="flex h-[20vh] items-center">
+            <IconButton
+              bgColor="brand.primary"
+              color={"white"}
+              aria-label="Open Menu"
+              size="lg"
+              icon={<CloseIcon />}
+              _hover={{
+                fontSize: "2xl",
+                boxShadow: "md",
+              }}
+              onClick={() => {
+                setDisplay("none");
+                setIsBurgerOpen(false);
+              }}
+            />
+          </section>
         </Flex>
       </Flex>
     </Flex>

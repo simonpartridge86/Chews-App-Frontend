@@ -53,7 +53,7 @@ export default function SearchIngredients() {
   const [inputText, setInputText] = useState("");
   const [currentIngredient, setCurrentIngredient] = useState("");
   const [tagsArray, setTagsArray] = useState([]);
-  const [isDisabled, setIsDisabled] = useState(true);
+  // const [isDisabled, setIsDisabled] = useState(true);
 
   async function fetchIngredients(inputText) {
     const response = await fetch(
@@ -65,31 +65,31 @@ export default function SearchIngredients() {
   }
 
   function addTag(str) {
-    if (tagsArray.length > 4) {
+    if (tagsArray.length > 2) {
       onOpenAlert1();
       setInputText("");
       setIngredientOptions([]);
-      setIsDisabled(true);
+      // setIsDisabled(true);
       return;
     }
     if (str === "") {
       onOpenAlert2();
       setInputText("");
       setIngredientOptions([]);
-      setIsDisabled(true);
+      // setIsDisabled(true);
       return;
     }
     if (tagsArray.includes(str)) {
       onOpenAlert3();
       setInputText("");
       setIngredientOptions([]);
-      setIsDisabled(true);
+      // setIsDisabled(true);
       return;
     }
     setTagsArray([...tagsArray, currentIngredient]);
     setInputText("");
     setIngredientOptions([]);
-    setIsDisabled(true);
+    // setIsDisabled(true);
   }
 
   function deleteTag(index) {
@@ -135,12 +135,8 @@ export default function SearchIngredients() {
           id="ingredients"
           fontFamily={"brand.main"}
           onChange={(e) => {
-            setCurrentIngredient(e.target.value);
-            console.log(currentIngredient);
-            console.log(currentIngredient);
-            if (currentIngredient != "") {
-              setIsDisabled(false);
-            }
+            const newIngredient = e.target.value;
+            setCurrentIngredient(newIngredient);
           }}
         >
           {ingredientOptions.map((ingredient) => {
@@ -180,7 +176,6 @@ export default function SearchIngredients() {
           onClick={() => {
             addTag(currentIngredient);
           }}
-          isDisabled={isDisabled}
           leftIcon={<AddIcon />}
           buttonText="Add Ingredient"
           colorMode={"light"}
@@ -210,7 +205,7 @@ export default function SearchIngredients() {
                   pathname: "/results",
                   query: { meal: mealType, ingredients: { ...tagsArray } },
                 })
-              : onOpenAlert3();
+              : onOpenAlert4();
           }}
         />
         <MainButton
@@ -228,7 +223,7 @@ export default function SearchIngredients() {
         isOpen={isOpenAlert1}
         onClose={onCloseAlert1}
         headerText="Wait!"
-        bodyText="You can only add a maximum of 5 ingredients!"
+        bodyText="You can only add a maximum of 3 ingredients!"
       />
       <AlertModal
         isOpen={isOpenAlert2}
