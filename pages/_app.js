@@ -1,9 +1,8 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { extendTheme } from "@chakra-ui/react";
 import Layout from "../components/Layout";
+import React from "react";
 import "../styles/globals.css";
-//import "@fontsource/permanent-marker"
-//import "@fontsource/nunito"
 
 const colors = {
   brand: {
@@ -22,12 +21,15 @@ const fonts = {
 
 const theme = extendTheme({ colors, fonts });
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps, ...appProps }) {
+  const isLayoutNotNeeded = [`/`].includes(appProps.router.pathname);
+  const LayoutComponent = isLayoutNotNeeded ? React.Fragment : Layout;
+
   return (
     <ChakraProvider theme={theme}>
-      <Layout>
+      <LayoutComponent>
         <Component {...pageProps} />
-      </Layout>
+      </LayoutComponent>
     </ChakraProvider>
   );
 }

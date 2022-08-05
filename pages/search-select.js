@@ -27,14 +27,14 @@ export default function SearchSelect() {
         <Divider width={"80vw"} className="max-w-md" />
         <h1 className="font-nunito font-bold text-2xl text-center">
           Now,{" "}
-          <span className="font-permanent-marker text-center text-2xl">
+          <span className="font-permanent-marker text-center text-2xl text-primary-color font-normal">
             Chews{" "}
           </span>
           a search option:
         </h1>
         <MainButton
           buttonText={
-            <span className="font-permanent-marker text-center text-xl text-light-color font-bold">
+            <span className="font-permanent-marker text-center text-xl text-light-color font-normal">
               Chews
             </span>
           }
@@ -54,7 +54,7 @@ export default function SearchSelect() {
         </MainButton>
         <MainButton
           leftIcon={
-            <span className="font-permanent-marker text-center text-xl text-light-color font-bold">
+            <span className="font-permanent-marker text-center text-xl text-light-color font-normal">
               Chews
             </span>
           }

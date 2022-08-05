@@ -34,7 +34,7 @@ export default function Results() {
       <section className="flex flex-col w-[80vw] items-center justify-end space-y-2 max-w-lg">
         <h1 className="font-nunito font-bold text-2xl text-dark-color text-center">
           You should{" "}
-          <span className="font-permanent-marker text-center text-2xl text-dark-color font-bold">
+          <span className="font-permanent-marker text-center text-2xl text-primary-color font-normal">
             Chews{" "}
           </span>
           this:
@@ -81,7 +81,7 @@ export default function Results() {
             }}
             leftIcon={<RepeatIcon />}
             buttonText={
-              <span className="font-permanent-marker text-center text-lg text-light-color font-bold">
+              <span className="font-permanent-marker text-center text-lg text-light-color font-normal">
                 Chews
               </span>
             }
