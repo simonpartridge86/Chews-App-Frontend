@@ -22,7 +22,7 @@ import FilterModal from "../components/FilterModal";
 
 export default function SearchIngredients() {
   const router = useRouter();
-  const meal = router.query.meal;
+  const mealType = router.query.meal;
 
   const {
     isOpen: isOpenAlert1,
@@ -208,7 +208,7 @@ export default function SearchIngredients() {
             tagsArray.length > 0
               ? router.push({
                   pathname: "/results",
-                  query: { meal: meal, ingredients: { ...tagsArray } },
+                  query: { meal: mealType, ingredients: { ...tagsArray } },
                 })
               : onOpenAlert3();
           }}

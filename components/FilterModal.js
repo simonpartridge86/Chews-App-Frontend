@@ -85,6 +85,7 @@ export default function FilterModal({ isOpen, onClose }) {
             </span>{" "}
             Filters
           </ModalHeader>
+          <ModalCloseButton />
           <ModalBody className="w-[80%] max-h-[50%]">
             <Text
               fontFamily={"brand.main"}
