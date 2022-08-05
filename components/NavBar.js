@@ -10,7 +10,7 @@ Things to do:
 - Allow dark mode
 */
 
-import { IconButton, Avatar, Flex } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import HamburgerMenu from "./HamburgerMenu";
 import { Divider } from "@chakra-ui/react";
 
@@ -30,6 +30,9 @@ export default function NavBar() {
             <h1
               className="text-center font-permanent-marker text-center
           text-primary-color font-normal text-primary-color text-5xl"
+              onClick={() => {
+                router.push("/home");
+              }}
             >
               Chews
             </h1>

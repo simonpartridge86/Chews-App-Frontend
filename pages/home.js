@@ -22,17 +22,19 @@ export default function Home() {
         </span>
         " your next meal for you!
       </h2>
-      <MainButton
-        buttonText="Get Started"
-        buttonSize="lg"
-        colorMode="dark"
-        buttonWidth="80%"
-        onClick={() => {
-          router.push({
-            pathname: "/meal-select",
-          });
-        }}
-      />
+      <section className="w-[75vw] max-w-lg">
+        <MainButton
+          buttonText="Get Started"
+          buttonSize="lg"
+          colorMode="dark"
+          buttonWidth="100%"
+          onClick={() => {
+            router.push({
+              pathname: "/meal-select",
+            });
+          }}
+        />
+      </section>
     </main>
   );
 }

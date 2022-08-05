@@ -24,7 +24,7 @@ export default function Custom404() {
           colorMode="dark"
           onClick={() => {
             router.push({
-              pathname: "/",
+              pathname: "/home",
             });
           }}
         />

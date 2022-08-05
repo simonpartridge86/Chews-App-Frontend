@@ -18,15 +18,14 @@ import LoadingScreen from "../../components/LoadingScreen.js";
 export default function Results() {
   const [loading, setLoading] = useState(false);
   const [meal, setMeal] = useState({});
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(Math.floor(Math.random() * 10));
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const router = useRouter();
   const mealType = router.query.meal;
-  const ingredients = router.query.ingredients;
+  // const ingredients = router.query.ingredients;
 
   useEffect(() => {
-    setIndex(Math.floor(Math.random() * 10));
     setMeal({
       name: meals[index].strMeal,
       thumb: meals[index].strMealThumb,
@@ -35,7 +34,7 @@ export default function Results() {
       ingredient3: meals[index].strIngredient3,
       instructions: meals[index].strInstructions,
     });
-    setTimeout(() => setLoading(true), 500);
+    setTimeout(setLoading(true), 500);
   }, []);
 
   return (
@@ -83,6 +82,7 @@ export default function Results() {
               buttonSize="md"
               colorMode="dark"
               buttonWidth="20%"
+              isDisabled={true}
             />
           </section>
           <section className="flex flex-col w-[80vw] items-center justify-end space-y-2 max-w-lg">
@@ -112,6 +112,7 @@ export default function Results() {
                 buttonSize="md"
                 colorMode="dark"
                 buttonWidth="50%"
+                isDisabled={true}
               />
             </section>
             <MainButton
