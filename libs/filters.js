@@ -1,3 +1,5 @@
+//FILTERS - default false settings used for FilterModal component
+
 export const dietArray = [
   {
     filter: "Vegan",

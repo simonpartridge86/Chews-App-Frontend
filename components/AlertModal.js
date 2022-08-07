@@ -1,3 +1,19 @@
+// ALERTMODAL COMPONENT - used to display alerts for invalid inputs - uses customized Chakra UI modal component
+
+/*
+Usage Notes:
+- In page file where FilterModal is used:
+  - import useDisclosure from chakra: "import { useDisclosure } from "@chakra-ui/react";"
+  - add following inside page function: "const { isOpen, onOpen, onClose } = useDisclosure();"
+  - include "onOpen" in the onClick function of a relevant button on the page;
+*/
+
+/* Prop notes: 
+isOpen/onClose = "isOpen" and "onClose" are functions that need to be passed from the Chakra UI hook "useDisclosure";
+headerText = text that appears in the modal title;
+bodyText = text that appears in the modal body;
+*/
+
 import React from "react";
 import {
   Modal,

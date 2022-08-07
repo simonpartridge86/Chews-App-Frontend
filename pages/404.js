@@ -1,10 +1,12 @@
-// pages/404.js
-import { VStack, Link } from "@chakra-ui/react";
-import MainButton from "../components/MainButton";
+// 404 page - displays custom 404 page on any non-existent paths
+
 import { useRouter } from "next/router";
+import { VStack } from "@chakra-ui/react";
+import MainButton from "../components/MainButton";
 
 export default function Custom404() {
   const router = useRouter();
+
   return (
     <main className="flex flex-col justify-center items-center w-screen h-[80vh]">
       <VStack spacing={5} align="center" className="max-w-lg">

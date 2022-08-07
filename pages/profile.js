@@ -1,3 +1,5 @@
+// Profile page - displays profile details when logged in
+
 import React from "react";
 
 export default function Profile() {

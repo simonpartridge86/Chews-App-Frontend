@@ -1,9 +1,10 @@
-import { IconButton, Button, Flex, Avatar, background } from "@chakra-ui/react";
+// HAMBURGERMENU COMPONENT - used to add menu items to NavBar component - contains both burger menu for small screens and expanded menu for large screens
 
 import { useState } from "react";
+import NextLink from "next/link";
+import { IconButton, Button, Flex } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 
-import NextLink from "next/link";
 export default function HamburgerMenu() {
   const [display, setDisplay] = useState("none");
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
@@ -11,7 +12,7 @@ export default function HamburgerMenu() {
   return (
     <Flex>
       <Flex>
-        {/* Desktop view */}
+        {/* Expanded view on larger screens */}
         <Flex
           display={["none", "none", "flex", "flex"]}
           position="fixed"
@@ -68,7 +69,7 @@ export default function HamburgerMenu() {
           </NextLink>
         </Flex>
 
-        {/* Mobile View */}
+        {/* Hamburger menu view on small screens */}
         <IconButton
           aria-label="Open Menu"
           color={"brand.primary"}
@@ -93,7 +94,7 @@ export default function HamburgerMenu() {
         />
       </Flex>
 
-      {/* Mobile Dropdown content */}
+      {/* Dropdown menu content on small screens */}
       <Flex
         bgColor={"brand.primary"}
         color={"brand.light"}
@@ -113,7 +114,10 @@ export default function HamburgerMenu() {
         <Flex flexDir="column" align="center" paddingTop={"5vh"}>
           <NextLink href="/home" passHref>
             <Button
-              onClick={() => setDisplay("none")}
+              onClick={() => {
+                setDisplay("none");
+                setIsBurgerOpen(false);
+              }}
               as="a"
               variant="ghost"
               aria-label="Home"
@@ -132,7 +136,10 @@ export default function HamburgerMenu() {
 
           <NextLink href="/meal-select" passHref>
             <Button
-              onClick={() => setDisplay("none")}
+              onClick={() => {
+                setDisplay("none");
+                setIsBurgerOpen(false);
+              }}
               as="a"
               variant="ghost"
               aria-label="Chews a Meal"

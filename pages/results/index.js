@@ -1,7 +1,8 @@
-import meals from "../../libs/recipeData.js";
+// Results page - displays random recipe from local data
+
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import MainButton from "../../components/MainButton";
+import { useDisclosure, Divider } from "@chakra-ui/react";
 import {
   StarIcon,
   ViewIcon,
@@ -9,23 +10,25 @@ import {
   UpDownIcon,
   EditIcon,
 } from "@chakra-ui/icons";
-import { Divider } from "@chakra-ui/react";
 import BackButton from "../../components/BackButton";
-import { useDisclosure } from "@chakra-ui/react";
-import FilterModal from "../../components/FilterModal.js";
-import LoadingScreen from "../../components/LoadingScreen.js";
+import FilterModal from "../../components/FilterModal";
+import LoadingScreen from "../../components/LoadingScreen";
+import MainButton from "../../components/MainButton";
+import meals from "../../libs/recipeData.js";
 
 export default function Results() {
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [meal, setMeal] = useState({});
-  const [index, setIndex] = useState(Math.floor(Math.random() * 10));
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [index, setIndex] = useState(Math.floor(Math.random() * 10));
 
   const router = useRouter();
   const mealType = router.query.meal;
-  // const ingredients = router.query.ingredients;
+  // add the following to get ingredients from router object: "const ingredients = router.query.ingredients;"
 
+  //useEffect removes loading screen after set time (remove setTimeout if actual loading times are long) and sets meal to random meal from libs
   useEffect(() => {
+    setTimeout(() => setIsLoading(true), 500);
     setMeal({
       name: meals[index].strMeal,
       thumb: meals[index].strMealThumb,
@@ -34,12 +37,11 @@ export default function Results() {
       ingredient3: meals[index].strIngredient3,
       instructions: meals[index].strInstructions,
     });
-    setTimeout(setLoading(true), 500);
   }, []);
 
   return (
     <>
-      {!loading ? (
+      {!isLoading ? (
         <LoadingScreen />
       ) : (
         <main className="flex flex-col h-[80vh] w-screen items-center justify-center space-y-2">

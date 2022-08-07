@@ -1,4 +1,4 @@
-//mock ingredients data for "Search by Ingredients" page - taken from TheMealDB (www.themealdb.com/api/json/v1/1/list.php?i=list)
+//INGREDIENTDATA - mock ingredients data for "Search by Ingredients" page - taken from TheMealDB (www.themealdb.com/api/json/v1/1/list.php?i=list)
 
 export const ingredients = [
   "Ackee",

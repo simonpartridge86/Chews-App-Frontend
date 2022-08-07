@@ -1,4 +1,7 @@
-import { Search2Icon, AddIcon, EditIcon } from "@chakra-ui/icons";
+// Search-Ingredients page - allows user to add ingredients and additional filters to their search
+
+import React, { useState } from "react";
+import { useRouter } from "next/router";
 import {
   Divider,
   HStack,
@@ -12,10 +15,8 @@ import {
   VStack,
   useDisclosure,
 } from "@chakra-ui/react";
-import React from "react";
-import { useState } from "react";
+import { Search2Icon, AddIcon, EditIcon } from "@chakra-ui/icons";
 import MainButton from "../components/MainButton";
-import { useRouter } from "next/router";
 import BackButton from "../components/BackButton";
 import AlertModal from "../components/AlertModal";
 import FilterModal from "../components/FilterModal";
@@ -24,6 +25,7 @@ export default function SearchIngredients() {
   const router = useRouter();
   const mealType = router.query.meal;
 
+  // useDisclosure hooks for alert and filter modals
   const {
     isOpen: isOpenAlert1,
     onOpen: onOpenAlert1,
@@ -49,12 +51,14 @@ export default function SearchIngredients() {
     onOpen: onOpenFilter,
     onClose: onCloseFilter,
   } = useDisclosure();
+
+  // Various useState hooks to store user inputs and selected ingredients
   const [ingredientOptions, setIngredientOptions] = useState([]);
   const [inputText, setInputText] = useState("");
   const [currentIngredient, setCurrentIngredient] = useState("");
   const [tagsArray, setTagsArray] = useState([]);
-  // const [isDisabled, setIsDisabled] = useState(true);
 
+  // fetchIngredients function fetches ingredients list from Edamam API based on user input - UPDATE TO THEMEALDB INGREDIENTS
   async function fetchIngredients(inputText) {
     const response = await fetch(
       `https://api.edamam.com/auto-complete?app_id=5cca2bea&app_key=%2061c41e444a3a1fa44fc42fcbe169faad&q=${inputText}`
@@ -64,34 +68,32 @@ export default function SearchIngredients() {
     setIngredientOptions(newData);
   }
 
+  // addTag function validates user input before adding new tag to ingredients list, and resets input on text input and dropdown menu
   function addTag(str) {
     if (tagsArray.length > 2) {
       onOpenAlert1();
       setInputText("");
       setIngredientOptions([]);
-      // setIsDisabled(true);
       return;
     }
     if (str === "") {
       onOpenAlert2();
       setInputText("");
       setIngredientOptions([]);
-      // setIsDisabled(true);
       return;
     }
     if (tagsArray.includes(str)) {
       onOpenAlert3();
       setInputText("");
       setIngredientOptions([]);
-      // setIsDisabled(true);
       return;
     }
     setTagsArray([...tagsArray, currentIngredient]);
     setInputText("");
     setIngredientOptions([]);
-    // setIsDisabled(true);
   }
 
+  // deleteTag function is added to ingredient tag close button to allow ingredients to be deleted from the list
   function deleteTag(index) {
     setTagsArray([...tagsArray.slice(0, index), ...tagsArray.slice(index + 1)]);
   }
@@ -247,17 +249,3 @@ export default function SearchIngredients() {
     </main>
   );
 }
-
-/*
-Bug fixing:
-- Stop blank tags getting added ✅
-- Stop repeat tags getting added (maybe add alert) ✅
-- limit number of tags to 5ish ✅
-- When clicking Add Ingredient - clear text input and return select input to "Chews from list" ✅
-- make tags deletable by clicking cross ✅
-
-- Limit number of suggestions to 5? ✅
-- Connect "Chews for Me" button to results page 
-- Tags are indented on second+ line
-
-*/

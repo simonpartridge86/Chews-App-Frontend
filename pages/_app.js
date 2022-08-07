@@ -1,9 +1,9 @@
-import { ChakraProvider } from "@chakra-ui/react";
-import { extendTheme } from "@chakra-ui/react";
-import Layout from "../components/Layout";
 import React from "react";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import Layout from "../components/Layout";
 import "../styles/globals.css";
 
+// Custom colors and fonts added to Chakra UI theme
 const colors = {
   brand: {
     primary: "#FD2B46",
@@ -11,17 +11,16 @@ const colors = {
     dark: "#32373B",
   },
 };
-
 const fonts = {
   brand: {
     logo: `'Permanent-Marker', sans-serif`,
     main: `'Nunito', sans-serif`,
   },
 };
-
 const theme = extendTheme({ colors, fonts });
 
 function MyApp({ Component, pageProps, ...appProps }) {
+  // following ensures that Layout is not displayed on login page
   const isLayoutNotNeeded = [`/`].includes(appProps.router.pathname);
   const LayoutComponent = isLayoutNotNeeded ? React.Fragment : Layout;
 
@@ -33,4 +32,5 @@ function MyApp({ Component, pageProps, ...appProps }) {
     </ChakraProvider>
   );
 }
+
 export default MyApp;

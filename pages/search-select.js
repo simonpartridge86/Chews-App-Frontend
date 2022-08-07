@@ -1,18 +1,21 @@
-import { useRouter } from "next/router";
-import MainButton from "../components/MainButton";
-import { Divider, VStack } from "@chakra-ui/react";
+// Search-select page - allows user to choose between viewing random recipe or searching by ingredients
+
 import React from "react";
+import { useRouter } from "next/router";
+import { Divider, VStack } from "@chakra-ui/react";
+import MainButton from "../components/MainButton";
 import BackButton from "../components/BackButton";
 
 export default function SearchSelect() {
   const router = useRouter();
+
+  // Below adds fallback to "Main dish" in case user navigates to this page directly, rather than from meal-select page
   let selectedMeal;
   if (router.query.meal) {
     selectedMeal = router.query.meal;
   } else {
     selectedMeal = "main dish";
   }
-  const meal = router.query.meal;
 
   return (
     <main className="flex flex-col h-[80vh] justify-center items-center">

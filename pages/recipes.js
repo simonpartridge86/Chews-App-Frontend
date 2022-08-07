@@ -1,23 +1,25 @@
-import meals from "../libs/recipeData.js";
+// Recipes page - displays full recipe taken from results page
+
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { UnorderedList, ListItem } from "@chakra-ui/react";
 import { StarIcon, ArrowUpIcon } from "@chakra-ui/icons";
-import React, { useEffect, useState } from "react";
 import MainButton from "../components/MainButton";
 import BackButton from "../components/BackButton";
-import { useRouter } from "next/router";
-import LoadingScreen from "../components/LoadingScreen.js";
+import LoadingScreen from "../components/LoadingScreen";
+import meals from "../libs/recipeData.js";
 
 function Recipes() {
-  const [loading, setLoading] = useState(false);
-  const [index, setIndex] = useState(0);
-  const [meal, setMeal] = useState({});
   const router = useRouter();
   const mealType = router.query.meal;
   const newIndex = router.query.mealIndex;
 
+  const [loading, setLoading] = useState(false);
+  const [index, setIndex] = useState(newIndex);
+  const [meal, setMeal] = useState({});
+
   useEffect(() => {
     setTimeout(() => setLoading(true), 500);
-    setIndex(newIndex);
     setMeal({
       name: meals[index].strMeal,
       thumb: meals[index].strMealThumb,

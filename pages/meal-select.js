@@ -1,9 +1,10 @@
-import MainButton from "../components/MainButton";
-import { VStack } from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import BackButton from "../components/BackButton";
+// Meal-Select page - allows user to select meal option (Breakfast, Main or Dessert)
 
 import React from "react";
+import { useRouter } from "next/router";
+import { VStack } from "@chakra-ui/react";
+import MainButton from "../components/MainButton";
+import BackButton from "../components/BackButton";
 
 export default function MealSelect() {
   const router = useRouter();

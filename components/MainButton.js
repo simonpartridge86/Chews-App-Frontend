@@ -1,13 +1,15 @@
+// MAINBUTTON COMPONENT - used for stylized buttons throughout the app
+
 import { Button } from "@chakra-ui/react";
 
 /*
 Prop Notes:
- - buttonWidth = to adjust width of button to your needs
+ - buttonWidth = to adjust width of button to your needs (not required)
  - buttonSize = options are lg, md, sm, xs (will also adjust text size)
- - buttonText = whatever text you want to appear on the button
- - onClick = whatever onClick callback function you are passing to this button
- - colorMode = add "light" for white button with red features, otherwise add"dark" for a standard red button
- - isDisabled = takes boolean to determine whether button is enabled or disable (true = disabled), defaults to false
+ - buttonText = the text you want to appear on the button
+ - onClick = the onClick callback function you want to pass to the button
+ - colorMode = add "light" for white button with red details, otherwise add "dark" for a standard red button with white details
+ - isDisabled = takes boolean to determine whether button is enabled or disabled (true = disabled), defaults to false
 */
 
 export default function MainButton({
