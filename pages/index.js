@@ -1,6 +1,8 @@
-import ChewsLogo from "../components/ChewsLogo";
+// Root directory - displays Login options to user
+
 import { useRouter } from "next/router";
 import { Button } from "@chakra-ui/react";
+import ChewsLogo from "../components/ChewsLogo";
 
 export default function LogIn() {
   const router = useRouter();

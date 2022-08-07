@@ -1,4 +1,5 @@
-// NAVBAR COMPONENT
+// NAVBAR COMPONENT - for use on all pages through Layout Component - set to take up top 10vh of screen
+// includes HamburgerMenu, logo text, profile pic and horizontal closing line underneath
 /*
 Component contains the navigation bar, with a burger menu, logo, and profile pic, as well as a horizontal line underneath
 The height is set to 10% of the user's screen. Revise this if unsuitable design.
@@ -16,7 +17,7 @@ import { Divider } from "@chakra-ui/react";
 
 export default function NavBar() {
   return (
-    <section className="fixed w-screen bg-light-color z-10">
+    <nav className="fixed w-screen bg-light-color z-10">
       <Flex display={["flex", "flex", "none", "none"]}>
         <section className="flex flex-row justify-between items-center h-[10vh] w-screen">
           <section className="flex w-[10vh] justify-center items-center">
@@ -65,7 +66,6 @@ export default function NavBar() {
         </section>
       </Flex>
       <Divider />
-    </section>
+    </nav>
   );
 }
-//<picture><img src= "./pic.jpg" alt="girl with sweets"></img></picture>

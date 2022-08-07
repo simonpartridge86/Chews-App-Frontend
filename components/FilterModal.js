@@ -1,10 +1,16 @@
+// FILTERMODAL COMPONENT - used to display filters on any page
+
 /*
 Usage Notes:
-- In page where FilterModal is used:
+- In page file where FilterModal is used:
   - import useDisclosure from chakra: "import { useDisclosure } from "@chakra-ui/react";"
   - add following inside page function: "const { isOpen, onOpen, onClose } = useDisclosure();"
-  - add following props: <FilterModal isOpen={isOpen} onClose={onClose} />
-  - add a button to the page as follows: <button onClick={onOpen}>Open Modal</button>
+  - add following props: <FilterModal isOpen={isOpen} onClose={onClose} />;
+  - include "onOpen" in the onClick function of a relevant button on the page;
+*/
+
+/* Prop notes:
+isOpen/onClose = "isOpen" and "onClose" are functions that need to be passed from the Chakra UI hook "useDisclosure";
 */
 
 import React, { useState, useEffect } from "react";
@@ -24,8 +30,10 @@ import {
 import { dietArray, cuisineArray } from "../libs/filters.js";
 
 export default function FilterModal({ isOpen, onClose }) {
-  const [dietFilters, setDietFilters] = useState([]);
-  const [cuisineFilters, setCuisineFilters] = useState([]);
+  const [dietFilters, setDietFilters] = useState([]); // used to store selected diet filters
+  const [cuisineFilters, setCuisineFilters] = useState([]); // used to store selected cuisine filters
+
+  // useEffect sets the diet and cuisine filters, either as the default "all false" settings from libs, or from localstorage if they exist
   useEffect(() => {
     if (localStorage.getItem("diet") === null) {
       setDietFilters([...dietArray]);
@@ -42,6 +50,7 @@ export default function FilterModal({ isOpen, onClose }) {
     }
   }, []);
 
+  // onChangeDiet and onChangeCuisine functions update the respective filter array states based on changes to switches in the filter modal
   function onChangeDiet(e, arr, item) {
     const index = arr.findIndex((object) => {
       return object.filter === item;
@@ -51,6 +60,7 @@ export default function FilterModal({ isOpen, onClose }) {
     setDietFilters(newArray);
     console.log(dietFilters);
   }
+
   function onChangeCuisine(e, arr, item) {
     const index = arr.findIndex((object) => {
       return object.filter === item;

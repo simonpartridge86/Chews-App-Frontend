@@ -1,3 +1,6 @@
+// RECIPECARD COMPONENT - used to display recipes in a list format
+
+import { useEffect, useState } from "react";
 import {
   Center,
   Flex,
@@ -6,16 +9,16 @@ import {
   Stack,
   useColorModeValue,
 } from "@chakra-ui/react";
-import meals from "../libs/recipeData.js";
-import MainButton from "./MainButton";
 import { StarIcon } from "@chakra-ui/icons";
-import { useEffect, useState } from "react";
+import MainButton from "./MainButton";
+import meals from "../libs/recipeData.js";
 
 export default function RecipeCard() {
   const [index, setIndex] = useState(0);
   const [randomDescription, setRandomDescription] = useState(0);
+
+  //useEffect is necessary for random num generation in nextjs
   useEffect(() => {
-    //useEffect is necessary for random num generation in nextjs
     setRandomDescription(Math.floor(Math.random() * 3));
     setIndex(Math.floor(Math.random() * 10));
   }, []);

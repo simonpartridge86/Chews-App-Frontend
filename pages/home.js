@@ -1,11 +1,14 @@
+// Home page - displays intro text and "Get Started" button
+
 import React from "react";
+import { useRouter } from "next/router";
 import ChewsLogo from "../components/ChewsLogo";
 import MainButton from "../components/MainButton";
-import { useRouter } from "next/router";
 import BackButton from "../components/BackButton";
 
 export default function Home() {
   const router = useRouter();
+
   return (
     <main className="flex flex-col h-[80vh] justify-center items-center space-y-14">
       <section className="absolute top-[12vh] left-[2vh]">

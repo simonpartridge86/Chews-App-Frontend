@@ -1,5 +1,4 @@
-//mock recipes data taken from TheMealDB
-
+//RECIPEDATA - mock recipe data for "Results" and "Recipes" page - taken from TheMealDB (https://www.themealdb.com/api.php)
 const meals = [
   {
     idMeal: "52841",

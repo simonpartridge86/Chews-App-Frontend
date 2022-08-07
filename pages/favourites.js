@@ -1,3 +1,5 @@
+// Favourites page - displays list of favourites page
+
 import React from "react";
 import RecipeCard from "../components/RecipeCard";
 
