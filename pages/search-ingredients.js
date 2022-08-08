@@ -69,7 +69,7 @@ export default function SearchIngredients() {
     // FUTURE URL `https://chews-database.herokuapp.com/ingredients-list/${inputText}`
 
     const data = await response.json();
-    setIngredientOptions(data.payload);
+    return data.payload;
   }
 
   // addTag function validates user input before adding new tag to ingredients list, and resets input on text input and dropdown menu
@@ -124,9 +124,10 @@ export default function SearchIngredients() {
             type="text"
             placeholder="Type ingredients here"
             fontFamily={"brand.main"}
-            onChange={(e) => {
+            onChange={async (e) => {
               setInputText(e.target.value);
-              fetchIngredients(inputText);
+              const searchIngredient = await fetchIngredients(inputText);
+              setIngredientOptions(searchIngredient);
             }}
             value={inputText}
           />
@@ -209,7 +210,7 @@ export default function SearchIngredients() {
             tagsArray.length > 0
               ? router.push({
                   pathname: "/results",
-                  query: { meal: mealType, ingredients: { ...tagsArray } },
+                  query: { meal: mealType, ingredients: tagsArray.join() },
                 })
               : onOpenAlert4();
           }}

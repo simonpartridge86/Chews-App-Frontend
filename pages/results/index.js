@@ -24,7 +24,28 @@ export default function Results() {
 
   const router = useRouter();
   const mealType = router.query.meal;
-  // add the following to get ingredients from router object: "const ingredients = router.query.ingredients;"
+  const ingredients = router.query.ingredients;
+
+  async function fetchMealByIngredients(ingredients) {
+    console.log(ingredients);
+    const response = await fetch(
+      `http://localhost:3000/filtered/${ingredients}`
+    );
+
+    // FUTURE URL `https://chews-database.herokuapp.com//filtered/${ingredients}`
+
+    const data = await response.json();
+    return data.payload[0];
+  }
+
+  if (ingredients) {
+    const fetchedMeals = fetchMealByIngredients(ingredients);
+    setMeal(fetchedMeals[0]);
+  } else {
+    //return random result
+  }
+
+  //what happens when no result is found
 
   //useEffect removes loading screen after set time (remove setTimeout if actual loading times are long) and sets meal to random meal from libs
   useEffect(() => {
