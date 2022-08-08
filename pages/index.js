@@ -31,8 +31,13 @@ export default function LogIn() {
             color: "brand.light",
           }}
           _hover={{ transform: "translateY(-1px)" }}
-        >
-          <a href="/api/auth/login">Log In / Sign Up</a>
+          onClick={() => {
+            router.push({
+              pathname: "/api/auth/login",
+            });
+          }}       
+          >
+         Log In / Sign Up
         </Button>
         <Button
           bg="brand.primary"
