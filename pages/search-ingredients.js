@@ -61,11 +61,12 @@ export default function SearchIngredients() {
   // fetchIngredients function fetches ingredients list from Edamam API based on user input - UPDATE TO THEMEALDB INGREDIENTS
   async function fetchIngredients(inputText) {
     const response = await fetch(
-      `https://api.edamam.com/auto-complete?app_id=5cca2bea&app_key=%2061c41e444a3a1fa44fc42fcbe169faad&q=${inputText}`
+      `http://localhost:3000/ingredients-list/${inputText}`
     );
+    // OLD URL `https://api.edamam.com/auto-complete?app_id=5cca2bea&app_key=%2061c41e444a3a1fa44fc42fcbe169faad&q=${inputText}`
     const data = await response.json();
-    const newData = [...data.slice(0, 5)];
-    setIngredientOptions(newData);
+    //const newData = [...data.slice(0, 5)];
+    setIngredientOptions(data.payload);
   }
 
   // addTag function validates user input before adding new tag to ingredients list, and resets input on text input and dropdown menu
