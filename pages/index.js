@@ -3,6 +3,7 @@
 import { useRouter } from "next/router";
 import { Button } from "@chakra-ui/react";
 import ChewsLogo from "../components/ChewsLogo";
+import Link from "next/link";
 
 export default function LogIn() {
   const router = useRouter();
@@ -31,7 +32,7 @@ export default function LogIn() {
           }}
           _hover={{ transform: "translateY(-1px)" }}
         >
-          Log In / Sign Up
+          <a href="/api/auth/login">Log In / Sign Up</a>
         </Button>
         <Button
           bg="brand.primary"

@@ -2,6 +2,8 @@ import React from "react";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import Layout from "../components/Layout";
 import "../styles/globals.css";
+import { UserProvider } from '@auth0/nextjs-auth0';
+
 
 // Custom colors and fonts added to Chakra UI theme
 const colors = {
@@ -25,11 +27,15 @@ function MyApp({ Component, pageProps, ...appProps }) {
   const LayoutComponent = isLayoutNotNeeded ? React.Fragment : Layout;
 
   return (
+    <UserProvider>
     <ChakraProvider theme={theme}>
       <LayoutComponent>
-        <Component {...pageProps} />
+        
+          <Component {...pageProps} />
+        
       </LayoutComponent>
     </ChakraProvider>
+    </UserProvider>
   );
 }
 
