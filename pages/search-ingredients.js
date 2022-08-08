@@ -60,16 +60,20 @@ export default function SearchIngredients() {
 
   // fetchIngredients function fetches ingredients list from Edamam API based on user input - UPDATE TO THEMEALDB INGREDIENTS
   async function fetchIngredients(inputText) {
-    // Change the url to FUTURE URL when backend is ready
-    const response = await fetch(
-      `http://localhost:3000/ingredients-list/${inputText}`
-    );
+    if(inputText) {
+      // Change the url to FUTURE URL when backend is ready
+      const response = await fetch(
+        `http://localhost:3000/ingredients-list/${inputText}`
+      );
+    
+      // OLD URL `https://api.edamam.com/auto-complete?app_id=5cca2bea&app_key=%2061c41e444a3a1fa44fc42fcbe169faad&q=${inputText}`
+      // FUTURE URL `https://chews-database.herokuapp.com/ingredients-list/${inputText}`
 
-    // OLD URL `https://api.edamam.com/auto-complete?app_id=5cca2bea&app_key=%2061c41e444a3a1fa44fc42fcbe169faad&q=${inputText}`
-    // FUTURE URL `https://chews-database.herokuapp.com/ingredients-list/${inputText}`
-
-    const data = await response.json();
-    return data.payload;
+      const data = await response.json();
+      return data.payload;
+    } else {
+      return [];
+    }
   }
 
   // addTag function validates user input before adding new tag to ingredients list, and resets input on text input and dropdown menu
@@ -126,7 +130,7 @@ export default function SearchIngredients() {
             fontFamily={"brand.main"}
             onChange={async (e) => {
               setInputText(e.target.value);
-              const searchIngredient = await fetchIngredients(inputText);
+              const searchIngredient = await fetchIngredients(e.target.value);
               setIngredientOptions(searchIngredient);
             }}
             value={inputText}
