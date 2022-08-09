@@ -40,37 +40,37 @@ export default function Results() {
   }
 
   const router = useRouter();
-  const mealType = router.query.meal;
-  //const ingredients = router.query.ingredients;
 
   async function fetchRandomMeal() {
+    const mealType = await router.query.meal;
     const response = await fetch(
-      `http://localhost:3000/random-meal?meal=breakfast`
+      `http://localhost:3000/random-meal?meal=${mealType}`
     );
 
-    // FUTURE URL `https://chews-database.herokuapp.com//filtered/${ingredients}`
+    // FUTURE URL `https://chews-database.herokuapp.com/
 
     const data = await response.json();
     return data.payload;
   }
 
   useEffect(() => {
-    const getMeal = async () => {
-      const fetchedMeal = await fetchRandomMeal();
-      console.log(fetchedMeal);
-      setMeal({
-        id: fetchedMeal[0].id,
-        name: fetchedMeal[0].name,
-        thumb: fetchedMeal[0].image,
-        ingredients: fetchedMeal[0].ingredients,
-        measures: fetchedMeal[0].measures,
-        instructions: fetchedMeal[0].instructions,
-      });
-    };
+    if (router.query.meal) {
+      const getMeal = async () => {
+        const fetchedMeal = await fetchRandomMeal();
+        setMeal({
+          id: fetchedMeal[0].id,
+          name: fetchedMeal[0].name,
+          thumb: fetchedMeal[0].image,
+          ingredients: fetchedMeal[0].ingredients,
+          measures: fetchedMeal[0].measures,
+          instructions: fetchedMeal[0].instructions,
+        });
+      };
 
-    setTimeout(() => setIsLoading(true), 500);
-    getMeal();
-  }, []);
+      setTimeout(() => setIsLoading(true), 500);
+      getMeal();
+    }
+  }, [router.query.meal]);
 
   return (
     <>
