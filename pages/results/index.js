@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useDisclosure, Divider, EASINGS } from "@chakra-ui/react";
+import { useDisclosure, Divider, Collapse } from "@chakra-ui/react";
 import {
   StarIcon,
   ViewIcon,
@@ -14,6 +14,8 @@ import BackButton from "../../components/BackButton";
 import FilterModal from "../../components/FilterModal";
 import LoadingScreen from "../../components/LoadingScreen";
 import MainButton from "../../components/MainButton";
+import RecipeView from "../../components/RecipeView";
+// import meals from "../../libs/recipeData";
 // import meals from "../../libs/recipeData.js";
 
 export default function Results() {
@@ -27,8 +29,15 @@ export default function Results() {
   };
   const [isLoading, setIsLoading] = useState(false);
   const [meal, setMeal] = useState(mealObject);
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  // const [index, setIndex] = useState(Math.floor(Math.random() * 10));
+  const [buttonText, setButtonText] = useState("View Recipe");
+  const { isOpen: isFilterOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen: isCollapseOpen, onToggle } = useDisclosure();
+
+  function changeButtonText() {
+    isCollapseOpen
+      ? setButtonText("View Recipe")
+      : setButtonText("Hide Recipe");
+  }
 
   const router = useRouter();
   const mealType = router.query.meal;
@@ -68,7 +77,7 @@ export default function Results() {
       {!isLoading ? (
         <LoadingScreen />
       ) : (
-        <main className="flex flex-col h-[80vh] w-screen items-center justify-center space-y-2">
+        <main className="flex flex-col min-h-[80vh] w-screen items-center justify-center space-y-2">
           <section className="absolute top-[12vh] left-[2vh]">
             <BackButton extraText={"to Search"} buttonSize="sm" />
           </section>
@@ -91,16 +100,14 @@ export default function Results() {
           </section>
           <section className="flex flex-row justify-between w-[80vw] space-x-2 max-w-lg">
             <MainButton
-              buttonText="View Recipe"
+              buttonText={buttonText}
               leftIcon={<ViewIcon />}
               buttonSize="md"
               colorMode="dark"
               buttonWidth="80%"
               onClick={() => {
-                router.push({
-                  pathname: "/recipes",
-                  query: { meal: mealType, mealIndex: meal.id },
-                });
+                onToggle();
+                changeButtonText();
               }}
             />
             <MainButton
@@ -112,6 +119,14 @@ export default function Results() {
             />
           </section>
           <section className="flex flex-col w-[80vw] items-center justify-end space-y-2 max-w-lg">
+            <Collapse in={isCollapseOpen} animateOpacity>
+              <RecipeView
+                ingredients={meal.ingredients}
+                measures={meal.measures}
+                instructions={meal.instructions}
+              />
+            </Collapse>
+
             <Divider />
             <h1 className="font-nunito font-bold text-center text-2xl text-dark-color">
               Prefer something else?
@@ -147,12 +162,10 @@ export default function Results() {
               buttonSize="sm"
               colorMode="light"
               buttonWidth="100%"
-              onClick={() => {
-                onOpen();
-              }}
+              onClick={onOpen}
             />
           </section>
-          <FilterModal isOpen={isOpen} onClose={onClose} />
+          <FilterModal isOpen={isFilterOpen} onClose={onClose} />
         </main>
       )}{" "}
     </>
