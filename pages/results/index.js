@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useDisclosure, Divider } from "@chakra-ui/react";
+import { useDisclosure, Divider, EASINGS } from "@chakra-ui/react";
 import {
   StarIcon,
   ViewIcon,
@@ -14,50 +14,53 @@ import BackButton from "../../components/BackButton";
 import FilterModal from "../../components/FilterModal";
 import LoadingScreen from "../../components/LoadingScreen";
 import MainButton from "../../components/MainButton";
-import meals from "../../libs/recipeData.js";
+// import meals from "../../libs/recipeData.js";
 
 export default function Results() {
+  const mealObject = {
+    id: "",
+    name: "",
+    thumb: "",
+    ingredients: [],
+    measures: [],
+    instructions: [],
+  };
   const [isLoading, setIsLoading] = useState(false);
-  const [meal, setMeal] = useState({});
+  const [meal, setMeal] = useState(mealObject);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [index, setIndex] = useState(Math.floor(Math.random() * 10));
+  // const [index, setIndex] = useState(Math.floor(Math.random() * 10));
 
   const router = useRouter();
   const mealType = router.query.meal;
-  const ingredients = router.query.ingredients;
+  //const ingredients = router.query.ingredients;
 
-  async function fetchMealByIngredients(ingredients) {
-    console.log(ingredients);
+  async function fetchRandomMeal() {
     const response = await fetch(
-      `http://localhost:3000/filtered/${ingredients}`
+      `http://localhost:3000/random-meal?meal=breakfast`
     );
 
     // FUTURE URL `https://chews-database.herokuapp.com//filtered/${ingredients}`
 
     const data = await response.json();
-    return data.payload[0];
+    return data.payload;
   }
 
-  if (ingredients) {
-    const fetchedMeals = fetchMealByIngredients(ingredients);
-    setMeal(fetchedMeals[0]);
-  } else {
-    //return random result
-  }
-
-  //what happens when no result is found
-
-  //useEffect removes loading screen after set time (remove setTimeout if actual loading times are long) and sets meal to random meal from libs
   useEffect(() => {
+    const getMeal = async () => {
+      const fetchedMeal = await fetchRandomMeal();
+      console.log(fetchedMeal);
+      setMeal({
+        id: fetchedMeal[0].id,
+        name: fetchedMeal[0].name,
+        thumb: fetchedMeal[0].image,
+        ingredients: fetchedMeal[0].ingredients,
+        measures: fetchedMeal[0].measures,
+        instructions: fetchedMeal[0].instructions,
+      });
+    };
+
     setTimeout(() => setIsLoading(true), 500);
-    setMeal({
-      name: meals[index].strMeal,
-      thumb: meals[index].strMealThumb,
-      ingredient1: meals[index].strIngredient1,
-      ingredient2: meals[index].strIngredient2,
-      ingredient3: meals[index].strIngredient3,
-      instructions: meals[index].strInstructions,
-    });
+    getMeal();
   }, []);
 
   return (
@@ -96,7 +99,7 @@ export default function Results() {
               onClick={() => {
                 router.push({
                   pathname: "/recipes",
-                  query: { meal: mealType, mealIndex: index },
+                  query: { meal: mealType, mealIndex: meal.id },
                 });
               }}
             />
