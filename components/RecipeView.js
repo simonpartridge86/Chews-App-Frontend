@@ -9,7 +9,7 @@ export default function RecipeView({ ingredients, measures, instructions }) {
       </h2>
       <UnorderedList className="w-[90%] font-bold text-dark-color font-nunito">
         {ingredients.map((e, i) => {
-          return <ListItem key={e}>{`${e}, ${measures[i]}`}</ListItem>;
+          return <ListItem key={i}>{`${e}, ${measures[i]}`}</ListItem>;
         })}
       </UnorderedList>
       <h2 className="text-primary-color font-permanent-marker text-2xl">
