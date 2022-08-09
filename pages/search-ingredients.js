@@ -1,6 +1,6 @@
 // Search-Ingredients page - allows user to add ingredients and additional filters to their search
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import {
   Divider,
@@ -62,6 +62,7 @@ export default function SearchIngredients() {
 
   // fetchIngredients function fetches ingredients list from Edamam API based on user input - UPDATE TO THEMEALDB INGREDIENTS
   async function fetchIngredients(inputText) {
+    console.log(inputText);
     // Change the url to FUTURE URL when backend is ready
     const response = await fetch(
       `http://localhost:3000/ingredients-list/${inputText}`
@@ -104,6 +105,16 @@ export default function SearchIngredients() {
     setTagsArray([...tagsArray.slice(0, index), ...tagsArray.slice(index + 1)]);
   }
 
+  useEffect(() => {
+    if (inputText && /^[a-zA-Z]/.test(inputText)) {
+      const getIngredients = async () => {
+        const searchIngredient = await fetchIngredients(inputText);
+        setIngredientOptions(searchIngredient);
+      };
+      getIngredients();
+    }
+  }, [inputText]);
+
   if (isLoading) return <LoadingScreen />;
   return (
     <main className="h-[80vh] w-screen flex flex-col items-center justify-center space-y-6">
@@ -129,8 +140,6 @@ export default function SearchIngredients() {
             fontFamily={"brand.main"}
             onChange={async (e) => {
               setInputText(e.target.value);
-              const searchIngredient = await fetchIngredients(inputText);
-              setIngredientOptions(searchIngredient);
             }}
             value={inputText}
           />

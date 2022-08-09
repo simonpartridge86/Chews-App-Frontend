@@ -81,7 +81,7 @@ export default function Results({ meals }) {
   // }, [router.query.meal, count]);
 
   // if (!meal) return <LoadingScreen />;
-  if (!meal) return <NoResultsDisplay />;
+  if (!meal) return <NoResultsDisplay hasHistory={true} setCount={setCount} />;
   return (
     <main className="flex flex-col min-h-[80vh] w-screen items-center justify-center space-y-2">
       <section className="absolute top-[12vh] left-[2vh]">
