@@ -4,8 +4,10 @@ import { useState } from "react";
 import NextLink from "next/link";
 import { IconButton, Button, Flex } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import { useUser } from '@auth0/nextjs-auth0';
 
 export default function HamburgerMenu() {
+  const { user, error, isLoading } = useUser();
   const [display, setDisplay] = useState("none");
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
 
@@ -14,7 +16,7 @@ export default function HamburgerMenu() {
       <Flex>
         {/* Expanded view on larger screens */}
         <Flex
-          display={["none", "none", "flex", "flex"]}
+          display={["none", "none", "none", "flex"]}
           position="fixed"
           top="0"
           right="0"
@@ -67,6 +69,7 @@ export default function HamburgerMenu() {
               a Meal
             </Button>
           </NextLink>
+          
         </Flex>
 
         {/* Hamburger menu view on small screens */}
@@ -90,7 +93,7 @@ export default function HamburgerMenu() {
               setIsBurgerOpen(false);
             }
           }}
-          display={["flex", "flex", "none", "none"]}
+          display={["flex", "flex", "flex", "none"]}
         />
       </Flex>
 
@@ -160,6 +163,27 @@ export default function HamburgerMenu() {
               a Meal
             </Button>
           </NextLink>
+          { user && 
+            <NextLink href='/api/auth/logout' passHref>
+                 <Button
+                bg="brand.light"
+                size="xs"
+                rounded="md"
+                width="75%"
+                fontFamily="brand.main"
+                fontWeight="600"
+                fontSize="lg"
+                color="brand.primary"
+                _active={{
+                  bg: "brand.primary",
+                  color: "brand.light",
+                }}
+                _hover={{ transform: "translateY(-1px)" }}       
+                >
+              LOGOUT
+              </Button>
+            </NextLink>
+            }
           <section className="flex h-[20vh] items-center">
             <IconButton
               bgColor="brand.primary"

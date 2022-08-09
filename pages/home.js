@@ -15,28 +15,7 @@ export default function Home() {
       <section className="absolute top-[12vh] left-[2vh]">
         <BackButton extraText={"to Login"} buttonSize="sm" />
       </section>
-      <Button
-          bg="brand.light"
-          size="lg"
-          rounded="md"
-          width="75%"
-          fontFamily="brand.main"
-          fontWeight="600"
-          fontSize="lg"
-          color="brand.primary"
-          _active={{
-            bg: "brand.primary",
-            color: "brand.light",
-          }}
-          _hover={{ transform: "translateY(-1px)" }}
-          onClick={() => {
-            router.push({
-              pathname: "/api/auth/logout",
-            });
-          }}       
-          >
-        LOGOUT
-        </Button>
+      
       <section className="flex flex-col items-center space-y-4 w-screen">
         <h1 className="font-nunito font-bold text-2xl">Welcome to</h1>
         <ChewsLogo theme={"brand.primary"} size={"4xl"} />

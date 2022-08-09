@@ -20,7 +20,7 @@ export default function NavBar() {
     <nav className="fixed w-screen bg-light-color z-10">
       <Flex display={["flex", "flex", "none", "none"]}>
         <section className="flex flex-row justify-between items-center h-[10vh] w-screen">
-          <section className="flex w-[10vh] justify-center items-center">
+          <section className="flex w-[10vw] h-[10vh] justify-center items-center">
             <img
               className="w-[6vh] h-[6vh]"
               src={"/profileIcon.png"}
