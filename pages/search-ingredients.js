@@ -209,7 +209,7 @@ export default function SearchIngredients() {
           onClick={() => {
             tagsArray.length > 0
               ? router.push({
-                  pathname: "/results",
+                  pathname: "/results/byIngredients",
                   query: { meal: mealType, ingredients: tagsArray.join() },
                 })
               : onOpenAlert4();
