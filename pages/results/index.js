@@ -1,6 +1,6 @@
 // Results page - displays random recipe from local data
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { useDisclosure, Divider, Collapse } from "@chakra-ui/react";
 import {
@@ -15,9 +15,10 @@ import FilterModal from "../../components/FilterModal";
 import LoadingScreen from "../../components/LoadingScreen";
 import MainButton from "../../components/MainButton";
 import RecipeView from "../../components/RecipeView";
+import NoResultsDisplay from "../../components/NoResultsDisplay";
 
-export default function Results() {
-  const [meal, setMeal] = useState();
+export default function Results({ initialMeal }) {
+  const [meal, setMeal] = useState(initialMeal);
   const [buttonText, setButtonText] = useState("View Recipe");
   const { isOpen: isFilterOpen, onOpen, onClose } = useDisclosure();
   const { isOpen: isCollapseOpen, onToggle } = useDisclosure();
@@ -31,7 +32,7 @@ export default function Results() {
   const router = useRouter();
 
   async function fetchRandomMeal() {
-    const mealType = await router.query.meal;
+    const mealType = router.query.meal;
     if (mealType === "main dish") {
       const response = await fetch(
         `http://localhost:3000/random-meal?meal=main`
@@ -40,7 +41,7 @@ export default function Results() {
       // FUTURE URL `https://chews-database.herokuapp.com/
 
       const data = await response.json();
-      console.log("Data 1:", data.payload[0]);
+      console.log("Meal:", data.payload[0]);
       return data.payload[0];
     }
     const response = await fetch(
@@ -50,7 +51,7 @@ export default function Results() {
     // FUTURE URL `https://chews-database.herokuapp.com/
 
     const data = await response.json();
-    console.log("Data 2:", data.payload[0]);
+    console.log("Meal", data.payload[0]);
     return data.payload[0];
   }
 
@@ -66,14 +67,16 @@ export default function Results() {
     });
   }
 
-  useEffect(() => {
-    if (router.query.meal) {
-      getMeal();
-      console.log("Full meal:", meal);
-    }
-  }, [router.query.meal]);
+  // useLayoutEffect(() => {
+  //   if (!router.isReady) {
+  //     return;
+  //   }
+  //   getMeal();
+  // }, [router.isReady]);
 
-  if (!meal) return <LoadingScreen />;
+  // if (!meal) return <LoadingScreen />;
+
+  if (!meal) return <NoResultsDisplay />;
   return (
     <main className="flex flex-col min-h-[80vh] w-screen items-center justify-center space-y-2">
       <section className="absolute top-[12vh] left-[2vh]">
@@ -166,4 +169,30 @@ export default function Results() {
       <FilterModal isOpen={isFilterOpen} onClose={onClose} />
     </main>
   );
+}
+
+//fetches initial recipe on load, to avoid the flicker caused by using useEffect as the alternative
+export async function getServerSideProps(context) {
+  const mealType = context.query.meal;
+  let meal;
+  if (mealType === "main dish") {
+    const response = await fetch(`http://localhost:3000/random-meal?meal=main`);
+    const data = await response.json();
+    meal = data.payload[0];
+  } else {
+    const response = await fetch(
+      `http://localhost:3000/random-meal?meal=${mealType}`
+    );
+    const data = await response.json();
+    meal = data.payload[0];
+  }
+  const mealObject = {
+    id: meal.id,
+    name: meal.name,
+    thumb: meal.image,
+    ingredients: meal.ingredients,
+    measures: meal.measures,
+    instructions: meal.instructions,
+  };
+  return { props: { initialMeal: mealObject } };
 }

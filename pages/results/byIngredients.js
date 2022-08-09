@@ -12,16 +12,16 @@ import {
 } from "@chakra-ui/icons";
 import BackButton from "../../components/BackButton";
 import FilterModal from "../../components/FilterModal";
-import LoadingScreen from "../../components/LoadingScreen";
 import MainButton from "../../components/MainButton";
 import RecipeView from "../../components/RecipeView";
+import NoResultsDisplay from "../../components/NoResultsDisplay";
 
-export default function Results() {
-  const [meal, setMeal] = useState();
+export default function Results({ meals }) {
+  const [count, setCount] = useState(0);
+  const [meal, setMeal] = useState(meals[0]);
   const [buttonText, setButtonText] = useState("View Recipe");
   const { isOpen: isFilterOpen, onOpen, onClose } = useDisclosure();
   const { isOpen: isCollapseOpen, onToggle } = useDisclosure();
-  const [count, setCount] = useState(0);
 
   function changeButtonText() {
     isCollapseOpen
@@ -29,51 +29,59 @@ export default function Results() {
       : setButtonText("Hide Recipe");
   }
 
-  const router = useRouter();
-
-  async function fetchMealByIngredients() {
-    const mealType = await router.query.meal;
-    const searchIngredients = await router.query.ingredients.toLowerCase();
-    if (mealType === "main dish") {
-      const response = await fetch(
-        `http://localhost:3000/ingredients-category?category=main&ingredients=${searchIngredients}`
-      );
-
-      // FUTURE URL `https://chews-database.herokuapp.com/
-
-      const data = await response.json();
-      console.log("Main data:", data);
-      console.log(data.payload[count]);
-      return data.payload[count];
-    }
-    const response = await fetch(
-      `http://localhost:3000/ingredients-category?category=${mealType}&ingredients=${searchIngredients}`
-    );
-
-    // FUTURE URL `https://chews-database.herokuapp.com/
-
-    const data = await response.json();
-    return data.payload[0][count];
+  function handleClick() {
+    setCount(count + 1);
   }
 
   useEffect(() => {
-    if (router.query.meal) {
-      const getMeal = async () => {
-        const fetchedMeal = await fetchMealByIngredients();
-        setMeal({
-          id: fetchedMeal.id,
-          name: fetchedMeal.name,
-          thumb: fetchedMeal.image,
-          ingredients: fetchedMeal.ingredients,
-          measures: fetchedMeal.measures,
-          instructions: fetchedMeal.instructions,
-        });
-      };
-      getMeal();
-    }
-  }, [router.query.meal, count]);
+    setMeal(meals[count]);
+  }, [count]);
 
-  if (!meal) return <LoadingScreen />;
+  // const router = useRouter();
+
+  // async function fetchMealByIngredients() {
+  //   const mealType = await router.query.meal;
+  //   const searchIngredients = await router.query.ingredients.toLowerCase();
+  //   if (mealType === "main dish") {
+  //     const response = await fetch(
+  //       `http://localhost:3000/ingredients-category?category=main&ingredients=${searchIngredients}`
+  //     );
+
+  //     // FUTURE URL `https://chews-database.herokuapp.com/
+
+  //     const data = await response.json();
+  //     console.log("Main data:", data);
+  //     console.log(data.payload[count]);
+  //     return data.payload[count];
+  //   }
+  //   const response = await fetch(
+  //     `http://localhost:3000/ingredients-category?category=${mealType}&ingredients=${searchIngredients}`
+  //   );
+
+  //   // FUTURE URL `https://chews-database.herokuapp.com/
+
+  //   const data = await response.json();
+  //   return data.payload[0][count];
+  // }
+  // useEffect(() => {
+  //   if (router.query.meal) {
+  //     const getMeal = async () => {
+  //       const fetchedMeal = await fetchMealByIngredients();
+  //       setMeal({
+  //         id: fetchedMeal.id,
+  //         name: fetchedMeal.name,
+  //         thumb: fetchedMeal.image,
+  //         ingredients: fetchedMeal.ingredients,
+  //         measures: fetchedMeal.measures,
+  //         instructions: fetchedMeal.instructions,
+  //       });
+  //     };
+  //     getMeal();
+  //   }
+  // }, [router.query.meal, count]);
+
+  // if (!meal) return <LoadingScreen />;
+  if (!meal) return <NoResultsDisplay />;
   return (
     <main className="flex flex-col min-h-[80vh] w-screen items-center justify-center space-y-2">
       <section className="absolute top-[12vh] left-[2vh]">
@@ -92,7 +100,7 @@ export default function Results() {
         </h1>
         <img
           className="w-[100%] max-h-[25vh] object-cover rounded"
-          src={meal.thumb}
+          src={meal.image}
           alt="recipe image"
         />
       </section>
@@ -131,9 +139,7 @@ export default function Results() {
         </h1>
         <section className="flex flex-row justify-between w-[100%] space-x-2">
           <MainButton
-            onClick={() => {
-              setCount(count + 1);
-            }}
+            onClick={handleClick}
             leftIcon={<RepeatIcon />}
             buttonText={
               <span className="font-permanent-marker text-center text-lg text-light-color font-normal">
@@ -166,4 +172,26 @@ export default function Results() {
       <FilterModal isOpen={isFilterOpen} onClose={onClose} />
     </main>
   );
+}
+
+//fetches initial recipe on load, to avoid the flicker caused by using useEffect as the alternative
+export async function getServerSideProps(context) {
+  const mealType = context.query.meal;
+  const searchIngredients = context.query.ingredients.toLowerCase();
+  let mealsArray;
+  if (mealType === "main dish") {
+    const response = await fetch(
+      `http://localhost:3000/ingredients-category?category=main&ingredients=${searchIngredients}`
+    );
+    const data = await response.json();
+    mealsArray = data.payload;
+  } else {
+    const response = await fetch(
+      `http://localhost:3000/ingredients-category?category=${mealType}&ingredients=${searchIngredients}`
+    );
+    const data = await response.json();
+    mealsArray = data.payload;
+  }
+  console.log(mealsArray);
+  return { props: { meals: mealsArray } };
 }

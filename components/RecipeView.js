@@ -15,8 +15,8 @@ export default function RecipeView({ ingredients, measures, instructions }) {
       <h2 className="text-primary-color font-permanent-marker text-2xl">
         How to make it:
       </h2>
-      {instructions.map((e) => {
-        return <p key={e}>{e}</p>;
+      {instructions.map((e, i) => {
+        return <p key={i}>{e}</p>;
       })}
     </main>
   );

@@ -20,6 +20,7 @@ import MainButton from "../components/MainButton";
 import BackButton from "../components/BackButton";
 import AlertModal from "../components/AlertModal";
 import FilterModal from "../components/FilterModal";
+import LoadingScreen from "../components/LoadingScreen";
 
 export default function SearchIngredients() {
   const router = useRouter();
@@ -57,6 +58,7 @@ export default function SearchIngredients() {
   const [inputText, setInputText] = useState("");
   const [currentIngredient, setCurrentIngredient] = useState("");
   const [tagsArray, setTagsArray] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   // fetchIngredients function fetches ingredients list from Edamam API based on user input - UPDATE TO THEMEALDB INGREDIENTS
   async function fetchIngredients(inputText) {
@@ -102,6 +104,7 @@ export default function SearchIngredients() {
     setTagsArray([...tagsArray.slice(0, index), ...tagsArray.slice(index + 1)]);
   }
 
+  if (isLoading) return <LoadingScreen />;
   return (
     <main className="h-[80vh] w-screen flex flex-col items-center justify-center space-y-6">
       <section className="absolute top-[12vh] left-[2vh]">
@@ -207,12 +210,15 @@ export default function SearchIngredients() {
           buttonWidth="100%"
           buttonSize="lg"
           onClick={() => {
-            tagsArray.length > 0
-              ? router.push({
-                  pathname: "/results/byIngredients",
-                  query: { meal: mealType, ingredients: tagsArray.join() },
-                })
-              : onOpenAlert4();
+            if (tagsArray.length > 0) {
+              router.push({
+                pathname: "/results/byIngredients",
+                query: { meal: mealType, ingredients: tagsArray.join() },
+              });
+              setIsLoading(true);
+            } else {
+              onOpenAlert4();
+            }
           }}
         />
         <MainButton
