@@ -17,8 +17,38 @@ import RecipeView from "../../components/RecipeView";
 import NoResultsDisplay from "../../components/NoResultsDisplay";
 
 //fetchRandomMeal fetches random meal from our backend server
-async function fetchRandomMeal(mealType) {
-  if (mealType === "main dish") {
+// If we want to fetch by CATEGORY and AREA, fetch request includes category and area
+// If we want to fetch by category only, fetch request should only include category
+// If we want to fetch by area only, fetch request should only include area
+//Else, fetch by meal only
+
+async function fetchRandomMeal(mealType, category, area) {
+  // console.log(category)
+  if (category == 'Pescatarian')
+  {category = 'Seafood'}
+  console.log(category)
+
+  if (category && area) {
+    const response = await fetch(`http://localhost:3000/area-category?category=${category}&area=${area}`);
+    const data = await response.json();
+    console.log("Meal:", data.payload[0]);
+    return data.payload[0];
+  }
+
+  if (category) {
+    const response = await fetch(`http://localhost:3000/area-category?category=${category}`);
+    const data = await response.json();
+    console.log("Meal:", data.payload[0]);
+    return data.payload[0];
+  }
+
+  if (area) {
+    const response = await fetch(`http://localhost:3000/area-category?area=${area}`);
+    const data = await response.json();
+    console.log("Meal:", data.payload[0]);
+    return data.payload[0];
+  } else {
+    if (mealType === "main dish") {
     const response = await fetch(`http://localhost:3000/random-meal?meal=main`);
 
     // FUTURE URL `https://chews-database.herokuapp.com/
@@ -36,6 +66,7 @@ async function fetchRandomMeal(mealType) {
   const data = await response.json();
   console.log("Meal", data.payload[0]);
   return data.payload[0];
+  }
 }
 
 export default function Results({ initialMeal }) {
@@ -54,7 +85,7 @@ export default function Results({ initialMeal }) {
   }
 
   async function getMeal() {
-    const fetchedMeal = await fetchRandomMeal(router.query.meal);
+    const fetchedMeal = await fetchRandomMeal(router.query.meal, router.query.category, router.query.area);
     setMeal({
       id: fetchedMeal.id,
       name: fetchedMeal.name,
@@ -168,7 +199,7 @@ export default function Results({ initialMeal }) {
 
 //getServerSideProps fetches initial recipe before load, avoiding the flicker update caused by useEffect as the alternative
 export async function getServerSideProps(context) {
-  const meal = await fetchRandomMeal(context.query.meal);
+  const meal = await fetchRandomMeal(context.query.meal, context.query.category, context.query.area);
   const mealObject = {
     id: meal.id,
     name: meal.name,
