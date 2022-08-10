@@ -67,23 +67,23 @@ export default function SearchSelect() {
   }
 
   return (
-    <main className="flex flex-col h-[80vh] justify-center items-center">
+    <main className="flex flex-col h-[80vh] w-screen justify-center items-center">
       <section className="absolute top-[12vh] left-[2vh]">
         <BackButton extraText={"to Meal Options"} buttonSize="sm" />
       </section>
       <VStack spacing={4} align="center" className="max-w-lg">
-        <h1 className="font-nunito font-bold text-2xl text-center">
+        <h2 className="font-nunito font-bold text-xl text-center">
           Ok, you want{" "}
           {selectedMeal.charAt(0).toUpperCase() + selectedMeal.slice(1)} ideas!
-        </h1>
+        </h2>
         <Divider width={"80vw"} className="max-w-md" />
-        <h1 className="font-nunito font-bold text-2xl text-center">
+        <h2 className="font-nunito font-bold text-xl text-center">
           Now,{" "}
-          <span className="font-permanent-marker text-center text-2xl text-primary-color font-normal">
+          <span className="font-permanent-marker text-center text-xl text-primary-color font-normal">
             Chews{" "}
           </span>
           a search option:
-        </h1>
+        </h2>
         <MainButton
           buttonText={
             <span className="font-permanent-marker text-center text-xl text-light-color font-normal">
@@ -94,7 +94,7 @@ export default function SearchSelect() {
           rightIcon="for Me"
           buttonSize="lg"
           colorMode="dark"
-          buttonWidth="80%"
+          buttonWidth="100%"
           onClick={() => {
             const mealObject = getFilters();
             {
@@ -116,7 +116,7 @@ export default function SearchSelect() {
           buttonText="by Ingredient"
           buttonSize="lg"
           colorMode="dark"
-          buttonWidth="80%"
+          buttonWidth="100%"
           onClick={() => {
             router.push({
               pathname: "/search-ingredients",
@@ -126,7 +126,7 @@ export default function SearchSelect() {
         />
         <MainButton
           leftIcon={<EditIcon />}
-          buttonText="Edit Search Filters"
+          buttonText="Add Search Filters"
           buttonSize="sm"
           colorMode="light"
           buttonWidth="100%"

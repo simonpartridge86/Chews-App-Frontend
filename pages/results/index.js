@@ -3,19 +3,13 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useDisclosure, Divider, Collapse } from "@chakra-ui/react";
-import { StarIcon, ViewIcon, RepeatIcon, ArrowUpIcon } from "@chakra-ui/icons";
+import { StarIcon, ViewIcon, RepeatIcon, ViewOffIcon } from "@chakra-ui/icons";
 import BackButton from "../../components/BackButton";
 import FilterModal from "../../components/FilterModal";
 import MainButton from "../../components/MainButton";
 import RecipeView from "../../components/RecipeView";
 import NoResultsDisplay from "../../components/NoResultsDisplay";
 import FavouritesButton from "../../components/FavouritesButton";
-
-//fetchRandomMeal fetches random meal from our backend server
-// If we want to fetch by CATEGORY and AREA, fetch request includes category and area
-// If we want to fetch by category only, fetch request should only include category
-// If we want to fetch by area only, fetch request should only include area
-//Else, fetch by meal only
 
 async function fetchRandomMeal(mealType, category, area) {
   // console.log(category)
@@ -76,6 +70,7 @@ export default function Results({ initialMeal }) {
   // Various hooks to manage changes on page
   const [meal, setMeal] = useState(initialMeal);
   const [buttonText, setButtonText] = useState("View Recipe");
+  const [buttonIcon, setButtonIcon] = useState(<ViewIcon />);
   const { isOpen: isFilterOpen, onOpen, onClose } = useDisclosure();
   const { isOpen: isCollapseOpen, onToggle } = useDisclosure();
   const [isFavourite, setIsFavourite] = useState(false);
@@ -102,9 +97,13 @@ export default function Results({ initialMeal }) {
 
   //changeButtonText changes the text on the "View Recipe" button based on whether full recipe is open or closed
   function changeButtonText() {
-    isCollapseOpen
-      ? setButtonText("View Recipe")
-      : setButtonText("Hide Recipe");
+    if (isCollapseOpen) {
+      setButtonText("View Recipe");
+      setButtonIcon(<ViewIcon />);
+    } else {
+      setButtonText("Hide Recipe");
+      setButtonIcon(<ViewOffIcon />);
+    }
   }
 
   async function getMeal() {
@@ -159,7 +158,7 @@ export default function Results({ initialMeal }) {
       <section className="absolute top-[12vh] left-[2vh]">
         <BackButton extraText={"to Search"} buttonSize="sm" />
       </section>
-      <section className="flex flex-col w-[80vw] items-center justify-end space-y-2 max-w-lg">
+      <section className="flex flex-col w-[80vw] h-[50vh] items-center justify-end space-y-2 max-w-lg">
         <h2 className="font-nunito font-bold text-xl text-dark-color text-center">
           You should{" "}
           <span className="font-permanent-marker text-center text-xl text-primary-color font-normal">
@@ -178,8 +177,8 @@ export default function Results({ initialMeal }) {
         <section className="flex flex-row justify-between w-[80vw] space-x-2 max-w-lg">
           <MainButton
             buttonText={buttonText}
-            leftIcon={<ViewIcon />}
-            buttonSize="md"
+            leftIcon={buttonIcon}
+            buttonSize="lg"
             colorMode="dark"
             buttonWidth="80%"
             onClick={() => {
@@ -189,7 +188,7 @@ export default function Results({ initialMeal }) {
           />
           <FavouritesButton
             buttonText={<StarIcon />}
-            buttonSize="md"
+            buttonSize="lg"
             buttonWidth="20%"
             isDisabled={false}
             isFavourite={isFavourite}
@@ -224,7 +223,7 @@ export default function Results({ initialMeal }) {
       </section>
       <section className="flex flex-col w-[80vw] items-center justify-end space-y-2 max-w-lg">
         <Divider />
-        <h2 className="font-nunito font-bold text-center text-xl text-dark-color">
+        <h2 className="font-nunito font-bold text-center text-lg text-dark-color">
           Prefer something else?
         </h2>
         <MainButton

@@ -1,8 +1,8 @@
 // Results page - displays random recipe from local data
 
-import React, { useEffect, useState } from "react";
+import React, { cloneElement, useEffect, useState } from "react";
 import { useDisclosure, Divider, Collapse } from "@chakra-ui/react";
-import { StarIcon, ViewIcon, RepeatIcon } from "@chakra-ui/icons";
+import { StarIcon, ViewIcon, RepeatIcon, ViewOffIcon } from "@chakra-ui/icons";
 import BackButton from "../../components/BackButton";
 import FilterModal from "../../components/FilterModal";
 import MainButton from "../../components/MainButton";
@@ -10,20 +10,26 @@ import RecipeView from "../../components/RecipeView";
 import NoResultsDisplay from "../../components/NoResultsDisplay";
 import FavouritesButton from "../../components/FavouritesButton";
 
-export default function Results({ meals }) {
+export default function Results({ meals, noMeal }) {
   // various hooks to handle changes on page
   const [count, setCount] = useState(0);
   const [meal, setMeal] = useState(meals[0]);
   const [buttonText, setButtonText] = useState("View Recipe");
+  const [buttonIcon, setButtonIcon] = useState(<ViewIcon />);
   const [isFavourite, setIsFavourite] = useState(false);
+  const [isNoMeal, setIsNoMeal] = useState(noMeal);
   const { isOpen: isFilterOpen, onOpen, onClose } = useDisclosure();
   const { isOpen: isCollapseOpen, onToggle } = useDisclosure();
 
   //changeButtonText changes the text on the "View Recipe" button based on whether full recipe is open or closed
   function changeButtonText() {
-    isCollapseOpen
-      ? setButtonText("View Recipe")
-      : setButtonText("Hide Recipe");
+    if (isCollapseOpen) {
+      setButtonText("View Recipe");
+      setButtonIcon(<ViewIcon />);
+    } else {
+      setButtonText("Hide Recipe");
+      setButtonIcon(<ViewOffIcon />);
+    }
   }
 
   //handleClick function is handed to "Chews Again" button
@@ -62,7 +68,14 @@ export default function Results({ meals }) {
   }
 
   useEffect(() => {
-    setMeal(meals[count]);
+    console.log(meals[count]);
+    if (meals[count] === undefined) {
+      setIsNoMeal(true);
+      setMeal([]);
+    } else {
+      setMeal(meals[count]);
+      setIsNoMeal(false);
+    }
   }, [count]);
 
   useEffect(() => {
@@ -84,13 +97,14 @@ export default function Results({ meals }) {
     }
   }
 
-  if (!meal) return <NoResultsDisplay hasHistory={true} setCount={setCount} />; //returns error page if no more results found
+  if (isNoMeal === true)
+    return <NoResultsDisplay hasHistory={true} setCount={setCount} />; //returns error page if no more results found
   return (
     <main className="flex flex-col min-h-[80vh] w-screen items-center justify-center space-y-5 pb-[2vh] pt-[5vh]">
       <section className="absolute top-[12vh] left-[2vh]">
         <BackButton extraText={"to Search"} buttonSize="sm" />
       </section>
-      <section className="flex flex-col w-[80vw] items-center justify-end space-y-2 max-w-lg">
+      <section className="flex flex-col w-[80vw] items-center justify-end space-y-2 max-w-sm">
         <h2 className="font-nunito font-bold text-xl text-dark-color text-center">
           You should{" "}
           <span className="font-permanent-marker text-center text-xl text-primary-color font-normal">
@@ -109,8 +123,8 @@ export default function Results({ meals }) {
         <section className="flex flex-row justify-between w-[80vw] space-x-2 max-w-lg">
           <MainButton
             buttonText={buttonText}
-            leftIcon={<ViewIcon />}
-            buttonSize="md"
+            leftIcon={buttonIcon}
+            buttonSize="lg"
             colorMode="dark"
             buttonWidth="80%"
             onClick={() => {
@@ -120,7 +134,7 @@ export default function Results({ meals }) {
           />
           <FavouritesButton
             buttonText={<StarIcon />}
-            buttonSize="md"
+            buttonSize="lg"
             buttonWidth="20%"
             isDisabled={false}
             isFavourite={isFavourite}
@@ -155,7 +169,7 @@ export default function Results({ meals }) {
       </section>
       <section className="flex flex-col w-[80vw] items-center justify-end space-y-2 max-w-lg">
         <Divider />
-        <h2 className="font-nunito font-bold text-center text-xl text-dark-color">
+        <h2 className="font-nunito font-bold text-center text-lg text-dark-color">
           Prefer something else?
         </h2>
         <MainButton
@@ -203,6 +217,9 @@ export async function getServerSideProps(context) {
     const data = await response.json();
     mealsArray = data.payload;
   }
-  console.log(mealsArray);
-  return { props: { meals: mealsArray } };
+  if (mealsArray === []) {
+    return { props: { meals: mealsArray, noMeal: true } };
+  } else {
+    return { props: { meals: mealsArray, noMeal: false } };
+  }
 }
