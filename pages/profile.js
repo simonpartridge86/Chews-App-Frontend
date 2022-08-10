@@ -1,10 +1,13 @@
 // Profile page - displays profile details when logged in
 
 import React from "react";
+import { useRouter } from "next/router";
+import MainButton from "../components/MainButton";
 import { useUser } from "@auth0/nextjs-auth0";
 import { Grid, GridItem } from "@chakra-ui/react";
 
 export default function Profile() {
+  const router = useRouter();
   const { user, error, isLoading } = useUser();
 
   if (isLoading) return <div>Loading...</div>;
@@ -21,7 +24,7 @@ export default function Profile() {
         </section>
         <section className="flex flex-col items-center space-y-4 w-screen">
           <h2 className="font-nunito font-bold text-2xl w-[80vw] text-center">
-            View Favourites:
+            Your Favourites
           </h2>
           <Grid templateColumns="repeat(3, 1fr)" gap={6}>
             <img
@@ -40,6 +43,20 @@ export default function Profile() {
               alt="dish1 pic"
             />
           </Grid>
+        </section>
+
+        <section className="w-[75vw] max-w-lg">
+          <MainButton
+            buttonText="View Favourites"
+            buttonSize="md"
+            colorMode="dark"
+            buttonWidth="100%"
+            onClick={() => {
+              router.push({
+                pathname: "/favourites",
+              });
+            }}
+          />
         </section>
       </main>
     )

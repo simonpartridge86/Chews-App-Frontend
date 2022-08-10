@@ -46,11 +46,13 @@ export default function NavBar() {
       <Flex display={["none", "none", "flex", "flex"]}>
         <section className="flex flex-row justify-between items-center h-[10vh] w-screen">
           <section className="flex w-[10vh] justify-center items-center">
-            <img
-              className="w-[6vh] h-[6vh]"
-              src={"/profileIcon.png"}
-              alt="placeholder profile pic"
-            />
+            <a href="/profile">
+              <img
+                className="w-[6vh] h-[6vh]"
+                src={"/profileIcon.png"}
+                alt="placeholder profile pic"
+              />
+            </a>
           </section>
           <section className="flex w-[30vh] justify-center items-center">
             <h1
