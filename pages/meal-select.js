@@ -1,18 +1,23 @@
-import MainButton from "../components/MainButton";
-import { VStack } from "@chakra-ui/react";
-import { useRouter } from "next/router";
+// Meal-Select page - allows user to select meal option (Breakfast, Main or Dessert)
 
 import React from "react";
+import { useRouter } from "next/router";
+import { VStack } from "@chakra-ui/react";
+import MainButton from "../components/MainButton";
+import BackButton from "../components/BackButton";
 
 export default function MealSelect() {
   const router = useRouter();
 
   return (
     <main className="flex flex-col h-[80vh] justify-center items-center">
+      <section className="absolute top-[12vh] left-[2vh]">
+        <BackButton extraText={"to Home"} buttonSize="sm" />
+      </section>
       <VStack spacing={4} align="center">
         <h1 className="font-nunito font-bold text-2xl">
           First,{" "}
-          <span className="font-permanent-marker text-center text-2xl">
+          <span className="font-permanent-marker text-center text-2xl text-primary-color font-normal">
             Chews{" "}
           </span>
           a meal type:

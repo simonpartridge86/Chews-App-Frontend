@@ -1,80 +1,136 @@
-import React from "react";
-import { useRouter } from "next/router";
-import MainButton from "../../components/MainButton";
-import { StarIcon } from "@chakra-ui/icons";
-import { Divider } from "@chakra-ui/react";
+// Results page - displays random recipe from local data
 
-const mockRecipe = {
-  name: "Creamy Steak Alfredo",
-  imgSrc:
-    "https://images.unsplash.com/photo-1551183053-bf91a1d81141?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1232&q=80",
-};
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useDisclosure, Divider } from "@chakra-ui/react";
+import {
+  StarIcon,
+  ViewIcon,
+  RepeatIcon,
+  UpDownIcon,
+  EditIcon,
+} from "@chakra-ui/icons";
+import BackButton from "../../components/BackButton";
+import FilterModal from "../../components/FilterModal";
+import LoadingScreen from "../../components/LoadingScreen";
+import MainButton from "../../components/MainButton";
+import meals from "../../libs/recipeData.js";
 
 export default function Results() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [meal, setMeal] = useState({});
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [index, setIndex] = useState(Math.floor(Math.random() * 10));
+
   const router = useRouter();
-  const meal = router.query.meal;
-  const ingredients = router.query.ingredients;
-  console.log(ingredients);
+  const mealType = router.query.meal;
+  // add the following to get ingredients from router object: "const ingredients = router.query.ingredients;"
+
+  //useEffect removes loading screen after set time (remove setTimeout if actual loading times are long) and sets meal to random meal from libs
+  useEffect(() => {
+    setTimeout(() => setIsLoading(true), 500);
+    setMeal({
+      name: meals[index].strMeal,
+      thumb: meals[index].strMealThumb,
+      ingredient1: meals[index].strIngredient1,
+      ingredient2: meals[index].strIngredient2,
+      ingredient3: meals[index].strIngredient3,
+      instructions: meals[index].strInstructions,
+    });
+  }, []);
+
   return (
-    <main className="flex flex-col h-[80vh] w-screen items-center justify-center space-y-2">
-      <section className="flex flex-col w-[80vw] items-center justify-end space-y-2 max-w-lg">
-        <h1 className="font-nunito font-bold text-2xl text-dark-color text-center">
-          Ok, we think you should{" "}
-          <span className="font-permanent-marker text-center text-2xl text-dark-color font-bold">
-            Chews{" "}
-          </span>
-          this recipe:
-        </h1>
-        <Divider />
-        <h1 className="font-permanent-marker text-center text-2xl text-primary-color">
-          {mockRecipe.name}
-        </h1>
-        <img
-          className="w-[100%] object-cover rounded"
-          src={mockRecipe.imgSrc}
-          alt="recipe image"
-        />
-      </section>
-      <section className="flex flex-row justify-between w-[80vw] space-x-2 max-w-lg">
-        <MainButton
-          buttonText="View Recipe"
-          buttonSize="md"
-          colorMode="dark"
-          buttonWidth="70%"
-        />
-        <MainButton
-          buttonText={<StarIcon />}
-          buttonSize="md"
-          colorMode="dark"
-          buttonWidth="30%"
-        />
-      </section>
-      <section className="flex flex-col w-[80vw] items-center justify-end space-y-2 max-w-lg">
-        <Divider />
-        <h1 className="font-nunito font-bold text-center text-2xl text-dark-color">
-          Prefer something else?
-        </h1>
-        <section className="flex flex-row justify-between w-[100%] space-x-2">
-          <MainButton
-            buttonText="Chews Again"
-            buttonSize="md"
-            colorMode="dark"
-            buttonWidth="50%"
-          />
-          <MainButton
-            buttonText="See All"
-            buttonSize="md"
-            colorMode="dark"
-            buttonWidth="50%"
-          />
-        </section>
-        {/* <MainButton
-        buttonText="Add Search Filters"
-        buttonSize="xs"
-        colorMode="light"
-        buttonWidth="100%"
-      /> */}
-      </section>
-    </main>
+    <>
+      {!isLoading ? (
+        <LoadingScreen />
+      ) : (
+        <main className="flex flex-col h-[80vh] w-screen items-center justify-center space-y-2">
+          <section className="absolute top-[12vh] left-[2vh]">
+            <BackButton extraText={"to Search"} buttonSize="sm" />
+          </section>
+          <section className="flex flex-col w-[80vw] items-center justify-end space-y-2 max-w-lg">
+            <h1 className="font-nunito font-bold text-2xl text-dark-color text-center">
+              You should{" "}
+              <span className="font-permanent-marker text-center text-2xl text-primary-color font-normal">
+                Chews{" "}
+              </span>
+              this:
+            </h1>
+            <h1 className="font-permanent-marker text-center text-2xl text-primary-color">
+              {meal.name}
+            </h1>
+            <img
+              className="w-[100%] max-h-[25vh] object-cover rounded"
+              src={meal.thumb}
+              alt="recipe image"
+            />
+          </section>
+          <section className="flex flex-row justify-between w-[80vw] space-x-2 max-w-lg">
+            <MainButton
+              buttonText="View Recipe"
+              leftIcon={<ViewIcon />}
+              buttonSize="md"
+              colorMode="dark"
+              buttonWidth="80%"
+              onClick={() => {
+                router.push({
+                  pathname: "/recipes",
+                  query: { meal: mealType, mealIndex: index },
+                });
+              }}
+            />
+            <MainButton
+              buttonText={<StarIcon />}
+              buttonSize="md"
+              colorMode="dark"
+              buttonWidth="20%"
+              isDisabled={true}
+            />
+          </section>
+          <section className="flex flex-col w-[80vw] items-center justify-end space-y-2 max-w-lg">
+            <Divider />
+            <h1 className="font-nunito font-bold text-center text-2xl text-dark-color">
+              Prefer something else?
+            </h1>
+            <section className="flex flex-row justify-between w-[100%] space-x-2">
+              <MainButton
+                onClick={() => {
+                  window.location.reload(false);
+                }}
+                leftIcon={<RepeatIcon />}
+                buttonText={
+                  <span className="font-permanent-marker text-center text-lg text-light-color font-normal">
+                    Chews
+                  </span>
+                }
+                rightIcon="again"
+                buttonSize="md"
+                colorMode="dark"
+                buttonWidth="50%"
+              />
+              <MainButton
+                leftIcon={<UpDownIcon />}
+                buttonText="See All"
+                buttonSize="md"
+                colorMode="dark"
+                buttonWidth="50%"
+                isDisabled={true}
+              />
+            </section>
+            <MainButton
+              leftIcon={<EditIcon />}
+              buttonText="Edit Search Filters"
+              buttonSize="sm"
+              colorMode="light"
+              buttonWidth="100%"
+              onClick={() => {
+                onOpen();
+              }}
+            />
+          </section>
+          <FilterModal isOpen={isOpen} onClose={onClose} />
+        </main>
+      )}{" "}
+    </>
   );
 }

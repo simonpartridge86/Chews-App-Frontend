@@ -1,46 +1,60 @@
-import Head from "next/head";
-import Image from "next/image";
-import Hamburger from "../components/Hamburger/HamburgerButton";
-import styles from "../styles/Home.module.css";
-import ChewsLogo from "../components/chews-logo";
-import MainButton from "../components/MainButton";
+// Root directory - displays Login options to user
 
-import Navbar from "../components/navbar";
-import Footer from "../components/footer";
 import { useRouter } from "next/router";
+import { Button } from "@chakra-ui/react";
+import ChewsLogo from "../components/ChewsLogo";
 
-export default function Home() {
+export default function LogIn() {
   const router = useRouter();
 
-
-
   return (
-    <main className="flex flex-col justify-evenly h-[80vh] w-screen items-center">
+    <main className="flex flex-col justify-evenly h-screen w-screen items-center bg-primary-color">
       <section className="flex flex-col items-center space-y-4 w-screen">
-        <ChewsLogo theme={"brand.primary"} size={"4xl"} />
-        <h2 className="text-primary-color font-bold font-nunito">
-          We Choose...You Chew!
+        <ChewsLogo theme={"brand.light"} size={"4xl"} />
+        <h2 className="text-light-color text-xl font-bold italic font-nunito">
+          We Choose... You Chew!
         </h2>
       </section>
       <section className="flex flex-col items-center space-y-4 w-screen max-w-lg">
-        <MainButton
-          isDisabled={true}
-          buttonWidth="75%"
-          buttonSize="lg"
-          buttonText="Log In / Sign Up"
-          colorMode="dark"
-        />
-        <MainButton
-          buttonWidth="75%"
-          buttonSize="lg"
-          buttonText="Continue As Guest"
-          colorMode="light"
+        <Button
+          bg="brand.light"
+          size="lg"
+          rounded="md"
+          width="75%"
+          fontFamily="brand.main"
+          fontWeight="600"
+          fontSize="lg"
+          color="brand.primary"
+          _active={{
+            bg: "brand.primary",
+            color: "brand.light",
+          }}
+          _hover={{ transform: "translateY(-1px)" }}
+        >
+          Log In / Sign Up
+        </Button>
+        <Button
+          bg="brand.primary"
+          size="lg"
+          rounded="md"
+          width="75%"
+          fontFamily="brand.main"
+          fontWeight="600"
+          fontSize="lg"
+          color="brand.light"
+          _hover={{ transform: "translateY(-1px)", boxShadow: "lg" }}
+          _active={{
+            bg: "brand.light",
+            color: "brand.primary",
+          }}
           onClick={() => {
             router.push({
-              pathname: "/meal-select",
+              pathname: "/home",
             });
           }}
-        />
+        >
+          Continue as Guest
+        </Button>
       </section>
     </main>
   );
