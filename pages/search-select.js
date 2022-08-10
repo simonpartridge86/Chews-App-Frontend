@@ -1,12 +1,15 @@
 // Search-select page - allows user to choose between viewing random recipe or searching by ingredients
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
-import { Divider, VStack } from "@chakra-ui/react";
+import { Divider, VStack, useDisclosure } from "@chakra-ui/react";
 import MainButton from "../components/MainButton";
 import BackButton from "../components/BackButton";
+import { EditIcon } from "@chakra-ui/icons";
+import FilterModal from "../components/FilterModal";
 
 export default function SearchSelect() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
 
   // Below adds fallback to "Main dish" in case user navigates to this page directly, rather than from meal-select page
@@ -15,6 +18,52 @@ export default function SearchSelect() {
     selectedMeal = router.query.meal;
   } else {
     selectedMeal = "main dish";
+  }
+  var categories, cuisines;
+  function getFilters() {
+    const storedcategoryFilters = JSON.parse(localStorage.getItem("category"));
+    let isCategoryArray = [];
+    for (const element of storedcategoryFilters) {
+      if (element.isChecked === true) {
+        isCategoryArray.push(Object.values(element)[0]);
+      }
+    }
+    categories = isCategoryArray.join();
+    const storedcuisineFilters = JSON.parse(localStorage.getItem("cuisine"));
+    let isCuisineArray = [];
+    for (const element of storedcuisineFilters) {
+      if (element.isChecked === true) {
+        isCuisineArray.push(Object.values(element)[0]);
+      }
+    }
+    cuisines = isCuisineArray.join();
+
+    return createQueryObject(categories, cuisines);
+  }
+
+  function createQueryObject(categories, cuisines) {
+    if (categories && cuisines) {
+      return {
+        meal: selectedMeal,
+        category: categories,
+        area: cuisines,
+      };
+    }
+    if (categories) {
+      return {
+        meal: selectedMeal,
+        category: categories,
+      };
+    }
+    if (cuisines) {
+      return {
+        meal: selectedMeal,
+        area: cuisines,
+      };
+    }
+    return {
+      meal: selectedMeal,
+    };
   }
 
   return (
@@ -47,10 +96,13 @@ export default function SearchSelect() {
           colorMode="dark"
           buttonWidth="80%"
           onClick={() => {
-            router.push({
-              pathname: "/results",
-              query: { meal: selectedMeal },
-            });
+            const mealObject = getFilters();
+            {
+              router.push({
+                pathname: "/results",
+                query: mealObject,
+              });
+            }
           }}
         >
           Hello {<span>World</span>}
@@ -66,13 +118,25 @@ export default function SearchSelect() {
           colorMode="dark"
           buttonWidth="80%"
           onClick={() => {
-            router.push({
-              pathname: "/search-ingredients",
-              query: { meal: selectedMeal },
-            });
+            const mealObject = getFilters();
+            {
+              router.push({
+                pathname: "/results",
+                query: mealObject,
+              });
+            }
           }}
         />
+        <MainButton
+          leftIcon={<EditIcon />}
+          buttonText="Edit Search Filters"
+          buttonSize="sm"
+          colorMode="light"
+          buttonWidth="100%"
+          onClick={onOpen}
+        />
       </VStack>
+      <FilterModal isOpen={isOpen} onClose={onClose} />
     </main>
   );
 }

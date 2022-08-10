@@ -1,12 +1,8 @@
 //FILTERS - default false settings used for FilterModal component
 
-export const dietArray = [
+export const categoryArray = [
   {
-    filter: "Vegan",
-    isChecked: false,
-  },
-  {
-    filter: "Gluten-free",
+    filter: "Pescatarian",
     isChecked: false,
   },
   {
@@ -14,7 +10,7 @@ export const dietArray = [
     isChecked: false,
   },
   {
-    filter: "Dairy-free",
+    filter: "Vegan",
     isChecked: false,
   },
 ];
@@ -50,6 +46,50 @@ export const cuisineArray = [
   },
   {
     filter: "Mexican",
+    isChecked: false,
+  },
+  {
+    filter: "Thai",
+    isChecked: false,
+  },
+  {
+    filter: "American",
+    isChecked: false,
+  },
+  {
+    filter: "British",
+    isChecked: false,
+  },
+  {
+    filter: "Chinese",
+    isChecked: false,
+  },
+  {
+    filter: "French",
+    isChecked: false,
+  },
+  {
+    filter: "Greek",
+    isChecked: false,
+  },
+  {
+    filter: "Indian",
+    isChecked: false,
+  },
+  {
+    filter: "Italian",
+    isChecked: false,
+  },
+  {
+    filter: "Japanese",
+    isChecked: false,
+  },
+  {
+    filter: "Mexican",
+    isChecked: false,
+  },
+  {
+    filter: "Spanish",
     isChecked: false,
   },
   {

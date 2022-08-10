@@ -27,19 +27,21 @@ import {
   Switch,
   Divider,
 } from "@chakra-ui/react";
-import { dietArray, cuisineArray } from "../libs/filters.js";
+import { categoryArray, cuisineArray } from "../libs/filters.js";
 
 export default function FilterModal({ isOpen, onClose }) {
-  const [dietFilters, setDietFilters] = useState([]); // used to store selected diet filters
+  const [categoryFilters, setcategoryFilters] = useState([]); // used to store selected category filters
   const [cuisineFilters, setCuisineFilters] = useState([]); // used to store selected cuisine filters
 
-  // useEffect sets the diet and cuisine filters, either as the default "all false" settings from libs, or from localstorage if they exist
+  // useEffect sets the category and cuisine filters, either as the default "all false" settings from libs, or from localstorage if they exist
   useEffect(() => {
-    if (localStorage.getItem("diet") === null) {
-      setDietFilters([...dietArray]);
+    if (localStorage.getItem("category") === null) {
+      setcategoryFilters([...categoryArray]);
     } else {
-      const storedDietFilters = JSON.parse(localStorage.getItem("diet"));
-      setDietFilters([...storedDietFilters]);
+      const storedcategoryFilters = JSON.parse(
+        localStorage.getItem("category")
+      );
+      setcategoryFilters([...storedcategoryFilters]);
     }
 
     if (localStorage.getItem("cuisine") === null) {
@@ -50,15 +52,15 @@ export default function FilterModal({ isOpen, onClose }) {
     }
   }, []);
 
-  // onChangeDiet and onChangeCuisine functions update the respective filter array states based on changes to switches in the filter modal
-  function onChangeDiet(e, arr, item) {
+  // onChangecategory and onChangeCuisine functions update the respective filter array states based on changes to switches in the filter modal
+  function onChangecategory(e, arr, item) {
     const index = arr.findIndex((object) => {
       return object.filter === item;
     });
     const newArray = [...arr];
     newArray[index].isChecked = e.target.checked;
-    setDietFilters(newArray);
-    console.log(dietFilters);
+    setcategoryFilters(newArray);
+    console.log(categoryFilters);
   }
 
   function onChangeCuisine(e, arr, item) {
@@ -104,11 +106,11 @@ export default function FilterModal({ isOpen, onClose }) {
               textColor={"brand.primary"}
               textAlign={"left"}
             >
-              Dietary Preferences:
+              Category Preferences:
             </Text>
             <Divider />
             <section className="w-[100%] flex flex-col mt-[1vh]">
-              {dietFilters.map((object) => {
+              {categoryFilters.map((object) => {
                 return (
                   <div
                     className="flex flex-row items-center justify-between"
@@ -122,10 +124,10 @@ export default function FilterModal({ isOpen, onClose }) {
                       colorScheme="red"
                       id={object.filter}
                       onChange={(e) => {
-                        onChangeDiet(e, dietFilters, object.filter);
+                        onChangecategory(e, categoryFilters, object.filter);
                         localStorage.setItem(
-                          "diet",
-                          JSON.stringify(dietFilters)
+                          "category",
+                          JSON.stringify(categoryFilters)
                         );
                       }}
                       defaultChecked={object.isChecked}
