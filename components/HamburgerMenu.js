@@ -4,7 +4,7 @@ import { useState } from "react";
 import NextLink from "next/link";
 import { IconButton, Button, Flex } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import { useUser } from '@auth0/nextjs-auth0';
+import { useUser } from "@auth0/nextjs-auth0";
 
 export default function HamburgerMenu() {
   const { user, error, isLoading } = useUser();
@@ -69,7 +69,31 @@ export default function HamburgerMenu() {
               a Meal
             </Button>
           </NextLink>
-          
+
+          {user && (
+            <NextLink
+              href="/api/auth/logout"
+              passHref
+              className="h-[10vh] align-middle"
+            >
+              <Button
+                as="a"
+                variant="ghost"
+                aria-label="Home"
+                my={5}
+                size="lg"
+                fontFamily={"brand.main"}
+                fontSize="xl"
+                _hover={{
+                  boxShadow: "md",
+                  textColor: "brand.light",
+                  bgColor: "brand.primary",
+                }}
+              >
+                Logout
+              </Button>
+            </NextLink>
+          )}
         </Flex>
 
         {/* Hamburger menu view on small screens */}
@@ -163,9 +187,9 @@ export default function HamburgerMenu() {
               a Meal
             </Button>
           </NextLink>
-          { user && 
-            <NextLink href='/api/auth/logout' passHref>
-                 <Button
+          {user && (
+            <NextLink href="/api/auth/logout" passHref>
+              <Button
                 bg="brand.light"
                 size="xs"
                 rounded="md"
@@ -178,12 +202,12 @@ export default function HamburgerMenu() {
                   bg: "brand.primary",
                   color: "brand.light",
                 }}
-                _hover={{ transform: "translateY(-1px)" }}       
-                >
-              LOGOUT
+                _hover={{ transform: "translateY(-1px)" }}
+              >
+                LOGOUT
               </Button>
             </NextLink>
-            }
+          )}
           <section className="flex h-[20vh] items-center">
             <IconButton
               bgColor="brand.primary"
