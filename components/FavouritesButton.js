@@ -9,6 +9,7 @@ PLAN:
 // FAVOURITESBUTTON COMPONENT - used for adding recipe to favourites on various pages
 
 import { Button } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 
 /*
 Prop Notes:
@@ -27,70 +28,97 @@ export default function FavouritesButton({
   isDisabled,
   leftIcon,
   rightIcon,
-  currentMeal,
-  goldStar,
-  setIsButtonGold,
-  isButtonGold,
+  isFavourite,
+  onClick,
 }) {
-  function handleClick(mealObj) {
-    if (!isButtonGold) {
-      if (localStorage.getItem("favourites") === null) {
-        localStorage.setItem("favourites", JSON.stringify([mealObj]));
-      } else {
-        const storedFavourites = JSON.parse(localStorage.getItem("favourites"));
-        if (storedFavourites.filter((e) => e.id === mealObj.id).length === 0) {
-          const newStoredFavourites = [...storedFavourites, mealObj];
-          localStorage.setItem(
-            "favourites",
-            JSON.stringify(newStoredFavourites)
-          );
-        }
-      }
-    }
-    if (isButtonGold) {
-      const storedFavourites = JSON.parse(localStorage.getItem("favourites"));
-      const index = storedFavourites
-        .map((object) => object.id)
-        .indexOf(currentMeal.id);
-      const newStoredFavourites = [
-        ...storedFavourites.slice(0, index),
-        ...storedFavourites.slice(index + 1),
-      ];
-      localStorage.setItem("favourites", JSON.stringify(newStoredFavourites));
-    }
-    setIsButtonGold(!isButtonGold);
+  const toast = useToast();
+  let buttonTextColor;
+  let toastObject;
+  if (isFavourite === true) {
+    buttonTextColor = "brand.primary";
+    toastObject = {
+      position: "bottom",
+      title: "Removed from Favourites",
+      status: "error",
+      duration: 2000,
+      isClosable: true,
+    };
+  }
+  if (isFavourite === false) {
+    buttonTextColor = "brand.light";
+    toastObject = {
+      position: "bottom",
+      title: "Added to Favourites",
+      status: "success",
+      duration: 2000,
+      isClosable: true,
+    };
   }
 
-  let buttonTextColor = "brand.light";
-  if (goldStar) {
-    buttonTextColor = "yellow.300";
+  if (isFavourite === true) {
+    return (
+      <Button
+        leftIcon={leftIcon}
+        rightIcon={rightIcon}
+        disabled={isDisabled}
+        onClick={() => {
+          onClick();
+          toast(toastObject);
+        }}
+        size={buttonSize}
+        fontWeight={"600"}
+        fontSize={buttonSize}
+        fontFamily={"brand.main"}
+        rounded={"md"}
+        width={buttonWidth}
+        _hover={{
+          transform: "translateY(-1px)",
+          boxShadow: "md",
+        }}
+        bg={"brand.light"}
+        color={"brand.primary"}
+        borderColor={"brand.primary"}
+        borderWidth={"2px"}
+        _active={{
+          bg: "brand.primary",
+          color: "brand.light",
+        }}
+      >
+        {buttonText}
+      </Button>
+    );
   }
 
-  return (
-    <Button
-      leftIcon={leftIcon}
-      rightIcon={rightIcon}
-      disabled={isDisabled}
-      onClick={() => handleClick(currentMeal)}
-      size={buttonSize}
-      fontWeight={"600"}
-      fontSize={buttonSize}
-      fontFamily={"brand.main"}
-      rounded={"md"}
-      width={buttonWidth}
-      _hover={{
-        transform: "translateY(-1px)",
-        boxShadow: "md",
-      }}
-      bg={"brand.primary"}
-      color={buttonTextColor}
-      _active={{
-        bg: "brand.light",
-        color: "brand.primary",
-        borderColor: "brand.primary",
-      }}
-    >
-      {buttonText}
-    </Button>
-  );
+  if (isFavourite === false) {
+    return (
+      <Button
+        leftIcon={leftIcon}
+        rightIcon={rightIcon}
+        disabled={isDisabled}
+        onClick={() => {
+          onClick();
+          toast(toastObject);
+        }}
+        size={buttonSize}
+        fontWeight={"600"}
+        fontSize={buttonSize}
+        fontFamily={"brand.main"}
+        rounded={"md"}
+        width={buttonWidth}
+        _hover={{
+          transform: "translateY(-1px)",
+          boxShadow: "md",
+        }}
+        bg={"brand.primary"}
+        color={buttonTextColor}
+        _active={{
+          bg: "brand.light",
+          color: "brand.primary",
+          borderColor: "brand.primary",
+        }}
+      >
+        {buttonText}
+      </Button>
+    );
+  }
 }

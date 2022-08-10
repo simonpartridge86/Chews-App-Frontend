@@ -1,9 +1,8 @@
 // Results page - displays random recipe from local data
 
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 import { useDisclosure, Divider, Collapse } from "@chakra-ui/react";
-import { StarIcon, ViewIcon, RepeatIcon, ArrowUpIcon } from "@chakra-ui/icons";
+import { StarIcon, ViewIcon, RepeatIcon } from "@chakra-ui/icons";
 import BackButton from "../../components/BackButton";
 import FilterModal from "../../components/FilterModal";
 import MainButton from "../../components/MainButton";
@@ -11,94 +10,14 @@ import RecipeView from "../../components/RecipeView";
 import NoResultsDisplay from "../../components/NoResultsDisplay";
 import FavouritesButton from "../../components/FavouritesButton";
 
-//fetchRandomMeal fetches random meal from our backend server
-// If we want to fetch by CATEGORY and AREA, fetch request includes category and area
-// If we want to fetch by category only, fetch request should only include category
-// If we want to fetch by area only, fetch request should only include area
-//Else, fetch by meal only
-
-async function fetchRandomMeal(mealType, category, area) {
-  // console.log(category)
-  if (category == "Pescatarian") {
-    category = "Seafood";
-  }
-
-  if (category && area) {
-    const response = await fetch(
-      `http://localhost:3000/area-category?category=${category}&area=${area}`
-    );
-    const data = await response.json();
-    console.log("Meal:", data.payload[0]);
-    return data.payload[0];
-  }
-
-  if (category) {
-    const response = await fetch(
-      `http://localhost:3000/area-category?category=${category}`
-    );
-    const data = await response.json();
-    console.log("Meal:", data.payload[0]);
-    return data.payload[0];
-  }
-
-  if (area) {
-    const response = await fetch(
-      `http://localhost:3000/area-category?area=${area}`
-    );
-    const data = await response.json();
-    console.log("Meal:", data.payload[0]);
-    return data.payload[0];
-  } else {
-    if (mealType === "main dish") {
-      const response = await fetch(
-        `http://localhost:3000/random-meal?meal=main`
-      );
-
-      // FUTURE URL `https://chews-database.herokuapp.com/
-
-      const data = await response.json();
-      console.log("Meal:", data.payload[0]);
-      return data.payload[0];
-    }
-    const response = await fetch(
-      `http://localhost:3000/random-meal?meal=${mealType}`
-    );
-
-    // FUTURE URL `https://chews-database.herokuapp.com/
-
-    const data = await response.json();
-    console.log("Meal", data.payload[0]);
-    return data.payload[0];
-  }
-}
-
-export default function Results({ initialMeal }) {
-  // Various hooks to manage changes on page
-  const [meal, setMeal] = useState(initialMeal);
+export default function Results({ meals }) {
+  // various hooks to handle changes on page
+  const [count, setCount] = useState(0);
+  const [meal, setMeal] = useState(meals[0]);
   const [buttonText, setButtonText] = useState("View Recipe");
+  const [isFavourite, setIsFavourite] = useState(false);
   const { isOpen: isFilterOpen, onOpen, onClose } = useDisclosure();
   const { isOpen: isCollapseOpen, onToggle } = useDisclosure();
-  const [isFavourite, setIsFavourite] = useState(false);
-  const router = useRouter();
-
-  function checkFavourites() {
-    if (!localStorage.getItem("favourites")) {
-      setIsFavourite(false);
-    } else {
-      const storedFavourites = JSON.parse(localStorage.getItem("favourites"));
-      if (storedFavourites.filter((e) => e.id === meal.id).length > 0) {
-        console.log("found item:");
-        setIsFavourite(true);
-      } else {
-        setIsFavourite(false);
-      }
-    }
-  }
-
-  useEffect(() => {
-    console.log("useEffect runs", isFavourite);
-    checkFavourites();
-  }, [meal]);
 
   //changeButtonText changes the text on the "View Recipe" button based on whether full recipe is open or closed
   function changeButtonText() {
@@ -107,20 +26,9 @@ export default function Results({ initialMeal }) {
       : setButtonText("Hide Recipe");
   }
 
-  async function getMeal() {
-    const fetchedMeal = await fetchRandomMeal(
-      router.query.meal,
-      router.query.category,
-      router.query.area
-    );
-    setMeal({
-      id: fetchedMeal.id,
-      name: fetchedMeal.name,
-      thumb: fetchedMeal.image,
-      ingredients: fetchedMeal.ingredients,
-      measures: fetchedMeal.measures,
-      instructions: fetchedMeal.instructions,
-    });
+  //handleClick function is handed to "Chews Again" button
+  function handleClick() {
+    setCount(count + 1);
   }
 
   function handleFavouritesClick() {
@@ -153,7 +61,30 @@ export default function Results({ initialMeal }) {
     }
   }
 
-  if (!meal) return <NoResultsDisplay />; //returns error page if no more results found
+  useEffect(() => {
+    setMeal(meals[count]);
+  }, [count]);
+
+  useEffect(() => {
+    console.log("useEffect runs", isFavourite);
+    checkFavourites();
+  }, [meal]);
+
+  function checkFavourites() {
+    if (!localStorage.getItem("favourites")) {
+      setIsFavourite(false);
+    } else {
+      const storedFavourites = JSON.parse(localStorage.getItem("favourites"));
+      if (storedFavourites.filter((e) => e.id === meal.id).length > 0) {
+        console.log("found item:");
+        setIsFavourite(true);
+      } else {
+        setIsFavourite(false);
+      }
+    }
+  }
+
+  if (!meal) return <NoResultsDisplay hasHistory={true} setCount={setCount} />; //returns error page if no more results found
   return (
     <main className="flex flex-col min-h-[80vh] w-screen items-center justify-center space-y-5 pb-[2vh] pt-[5vh]">
       <section className="absolute top-[12vh] left-[2vh]">
@@ -172,7 +103,7 @@ export default function Results({ initialMeal }) {
         </h1>
         <img
           className="w-[100%] max-h-[25vh] object-cover rounded"
-          src={meal.thumb}
+          src={meal.image}
           alt="recipe image"
         />
         <section className="flex flex-row justify-between w-[80vw] space-x-2 max-w-lg">
@@ -232,9 +163,9 @@ export default function Results({ initialMeal }) {
             if (isCollapseOpen) {
               onToggle();
               changeButtonText();
-              getMeal();
+              handleClick();
             } else {
-              getMeal();
+              handleClick();
             }
           }}
           leftIcon={<RepeatIcon />}
@@ -254,20 +185,24 @@ export default function Results({ initialMeal }) {
   );
 }
 
-//getServerSideProps fetches initial recipe before load, avoiding the flicker update caused by useEffect as the alternative
+//getServerSideProps runs initial fetch request for recipe before page load, this avoids the flicker update caused by useEffect as the alternative
 export async function getServerSideProps(context) {
-  const meal = await fetchRandomMeal(
-    context.query.meal,
-    context.query.category,
-    context.query.area
-  );
-  const mealObject = {
-    id: meal.id,
-    name: meal.name,
-    thumb: meal.image,
-    ingredients: meal.ingredients,
-    measures: meal.measures,
-    instructions: meal.instructions,
-  };
-  return { props: { initialMeal: mealObject } };
+  const mealType = context.query.meal;
+  const searchIngredients = context.query.ingredients.toLowerCase();
+  let mealsArray;
+  if (mealType === "main dish") {
+    const response = await fetch(
+      `http://localhost:3000/ingredients-category?category=main&ingredients=${searchIngredients}`
+    );
+    const data = await response.json();
+    mealsArray = data.payload;
+  } else {
+    const response = await fetch(
+      `http://localhost:3000/ingredients-category?category=${mealType}&ingredients=${searchIngredients}`
+    );
+    const data = await response.json();
+    mealsArray = data.payload;
+  }
+  console.log(mealsArray);
+  return { props: { meals: mealsArray } };
 }

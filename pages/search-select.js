@@ -118,13 +118,10 @@ export default function SearchSelect() {
           colorMode="dark"
           buttonWidth="80%"
           onClick={() => {
-            const mealObject = getFilters();
-            {
-              router.push({
-                pathname: "/results",
-                query: mealObject,
-              });
-            }
+            router.push({
+              pathname: "/search-ingredients",
+              query: { meal: selectedMeal },
+            });
           }}
         />
         <MainButton

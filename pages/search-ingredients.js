@@ -220,7 +220,7 @@ export default function SearchIngredients() {
           onClick={() => {
             if (tagsArray.length > 0) {
               router.push({
-                pathname: "/results/byIngredients",
+                pathname: "/results/by-ingredients",
                 query: { meal: mealType, ingredients: tagsArray.join() },
               });
               setIsLoading(true);
