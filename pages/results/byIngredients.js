@@ -1,7 +1,6 @@
 // Results page - displays random recipe from local data
 
-import React, { useState } from "react";
-import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 import { useDisclosure, Divider, Collapse } from "@chakra-ui/react";
 import {
   StarIcon,
@@ -16,13 +15,13 @@ import MainButton from "../../components/MainButton";
 import RecipeView from "../../components/RecipeView";
 import NoResultsDisplay from "../../components/NoResultsDisplay";
 
-export default function Results({ initialMeal }) {
-  // Various hooks to manage changes on page
-  const [meal, setMeal] = useState(initialMeal);
+export default function Results({ meals }) {
+  // various hooks to handle changes on page
+  const [count, setCount] = useState(0);
+  const [meal, setMeal] = useState(meals[0]);
   const [buttonText, setButtonText] = useState("View Recipe");
   const { isOpen: isFilterOpen, onOpen, onClose } = useDisclosure();
   const { isOpen: isCollapseOpen, onToggle } = useDisclosure();
-  const router = useRouter();
 
   //changeButtonText changes the text on the "View Recipe" button based on whether full recipe is open or closed
   function changeButtonText() {
@@ -31,44 +30,16 @@ export default function Results({ initialMeal }) {
       : setButtonText("Hide Recipe");
   }
 
-  //fetchRandomMeal fetches random meal from our backend server
-  async function fetchRandomMeal() {
-    const mealType = router.query.meal;
-    if (mealType === "main dish") {
-      const response = await fetch(
-        `http://localhost:3000/random-meal?meal=main`
-      );
-
-      // FUTURE URL `https://chews-database.herokuapp.com/
-
-      const data = await response.json();
-      console.log("Meal:", data.payload[0]);
-      return data.payload[0];
-    }
-    const response = await fetch(
-      `http://localhost:3000/random-meal?meal=${mealType}`
-    );
-
-    // FUTURE URL `https://chews-database.herokuapp.com/
-
-    const data = await response.json();
-    console.log("Meal", data.payload[0]);
-    return data.payload[0];
+  //handleClick function is handed to "Chews Again" button
+  function handleClick() {
+    setCount(count + 1);
   }
 
-  async function getMeal() {
-    const fetchedMeal = await fetchRandomMeal();
-    setMeal({
-      id: fetchedMeal.id,
-      name: fetchedMeal.name,
-      thumb: fetchedMeal.image,
-      ingredients: fetchedMeal.ingredients,
-      measures: fetchedMeal.measures,
-      instructions: fetchedMeal.instructions,
-    });
-  }
+  useEffect(() => {
+    setMeal(meals[count]);
+  }, [count]);
 
-  if (!meal) return <NoResultsDisplay />; //returns error page if no more results found
+  if (!meal) return <NoResultsDisplay hasHistory={true} setCount={setCount} />; //returns error page if no more results found
   return (
     <main className="flex flex-col min-h-[80vh] w-screen items-center justify-center space-y-2">
       <section className="absolute top-[12vh] left-[2vh]">
@@ -87,7 +58,7 @@ export default function Results({ initialMeal }) {
         </h1>
         <img
           className="w-[100%] max-h-[25vh] object-cover rounded"
-          src={meal.thumb}
+          src={meal.image}
           alt="recipe image"
         />
       </section>
@@ -126,9 +97,7 @@ export default function Results({ initialMeal }) {
         </h1>
         <section className="flex flex-row justify-between w-[100%] space-x-2">
           <MainButton
-            onClick={() => {
-              getMeal();
-            }}
+            onClick={handleClick}
             leftIcon={<RepeatIcon />}
             buttonText={
               <span className="font-permanent-marker text-center text-lg text-light-color font-normal">
@@ -163,28 +132,24 @@ export default function Results({ initialMeal }) {
   );
 }
 
-//getServerSideProps fetches initial recipe before load, avoiding the flicker update caused by useEffect as the alternative
+//getServerSideProps runs initial fetch request for recipe before page load, this avoids the flicker update caused by useEffect as the alternative
 export async function getServerSideProps(context) {
   const mealType = context.query.meal;
-  let meal;
+  const searchIngredients = context.query.ingredients.toLowerCase();
+  let mealsArray;
   if (mealType === "main dish") {
-    const response = await fetch(`http://localhost:3000/random-meal?meal=main`);
-    const data = await response.json();
-    meal = data.payload[0];
-  } else {
     const response = await fetch(
-      `http://localhost:3000/random-meal?meal=${mealType}`
+      `http://localhost:3000/ingredients-category?category=main&ingredients=${searchIngredients}`
     );
     const data = await response.json();
-    meal = data.payload[0];
+    mealsArray = data.payload;
+  } else {
+    const response = await fetch(
+      `http://localhost:3000/ingredients-category?category=${mealType}&ingredients=${searchIngredients}`
+    );
+    const data = await response.json();
+    mealsArray = data.payload;
   }
-  const mealObject = {
-    id: meal.id,
-    name: meal.name,
-    thumb: meal.image,
-    ingredients: meal.ingredients,
-    measures: meal.measures,
-    instructions: meal.instructions,
-  };
-  return { props: { initialMeal: mealObject } };
+  console.log(mealsArray);
+  return { props: { meals: mealsArray } };
 }

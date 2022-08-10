@@ -8,6 +8,7 @@ import MainButton from "../components/MainButton";
 import BackButton from "../components/BackButton";
 import LoadingScreen from "../components/LoadingScreen";
 import meals from "../libs/recipeData.js";
+import RecipeView from "../components/RecipeView";
 
 function Recipes() {
   const router = useRouter();
@@ -18,17 +19,17 @@ function Recipes() {
   const [index, setIndex] = useState(newIndex);
   const [meal, setMeal] = useState({});
 
-  useEffect(() => {
-    setTimeout(() => setLoading(true), 500);
-    setMeal({
-      name: meals[index].strMeal,
-      thumb: meals[index].strMealThumb,
-      ingredient1: meals[index].strIngredient1,
-      ingredient2: meals[index].strIngredient2,
-      ingredient3: meals[index].strIngredient3,
-      instructions: meals[index].strInstructions,
-    });
-  }, []);
+  // useEffect(() => {
+  //   // setTimeout(() => setLoading(true), 500);
+  //   // setMeal({
+  //   //   name: meals[index].strMeal,
+  //   //   thumb: meals[index].strMealThumb,
+  //   //   ingredient1: meals[index].strIngredient1,
+  //   //   ingredient2: meals[index].strIngredient2,
+  //   //   ingredient3: meals[index].strIngredient3,
+  //   //   instructions: meals[index].strInstructions,
+  //   // });
+  // }, []);
 
   return (
     <>
@@ -60,19 +61,12 @@ function Recipes() {
               isDisabled={true}
             />
           </section>
+          <RecipeView
+            ingredients={meal.ingredients}
+            measures={meal.measures}
+            instructions={meal.instructions}
+          />
           <section className="flex flex-col w-[80vw] items-center space-y-2 my-[2vh] max-w-lg">
-            <h2 className="text-primary-color font-permanent-marker text-2xl text-center">
-              Things you need:
-            </h2>
-            <UnorderedList className="w-[90%] font-bold text-dark-color font-nunito">
-              <ListItem>{meal.ingredient1}</ListItem>
-              <ListItem>{meal.ingredient2}</ListItem>
-              <ListItem>{meal.ingredient3}</ListItem>
-            </UnorderedList>
-            <h2 className="text-primary-color font-permanent-marker text-2xl">
-              How to make it:
-            </h2>
-            <p className="text-dark-color font-nunito">{meal.instructions}</p>{" "}
             <MainButton
               onClick={() => {
                 window.scrollTo({
