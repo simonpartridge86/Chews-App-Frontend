@@ -1,7 +1,6 @@
 // Results page - displays random recipe from local data
 
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import { useDisclosure, Divider, Collapse } from "@chakra-ui/react";
 import {
   StarIcon,
@@ -17,18 +16,21 @@ import RecipeView from "../../components/RecipeView";
 import NoResultsDisplay from "../../components/NoResultsDisplay";
 
 export default function Results({ meals }) {
+  // various hooks to handle changes on page
   const [count, setCount] = useState(0);
   const [meal, setMeal] = useState(meals[0]);
   const [buttonText, setButtonText] = useState("View Recipe");
   const { isOpen: isFilterOpen, onOpen, onClose } = useDisclosure();
   const { isOpen: isCollapseOpen, onToggle } = useDisclosure();
 
+  //changeButtonText changes the text on the "View Recipe" button based on whether full recipe is open or closed
   function changeButtonText() {
     isCollapseOpen
       ? setButtonText("View Recipe")
       : setButtonText("Hide Recipe");
   }
 
+  //handleClick function is handed to "Chews Again" button
   function handleClick() {
     setCount(count + 1);
   }
@@ -37,51 +39,7 @@ export default function Results({ meals }) {
     setMeal(meals[count]);
   }, [count]);
 
-  // const router = useRouter();
-
-  // async function fetchMealByIngredients() {
-  //   const mealType = await router.query.meal;
-  //   const searchIngredients = await router.query.ingredients.toLowerCase();
-  //   if (mealType === "main dish") {
-  //     const response = await fetch(
-  //       `http://localhost:3000/ingredients-category?category=main&ingredients=${searchIngredients}`
-  //     );
-
-  //     // FUTURE URL `https://chews-database.herokuapp.com/
-
-  //     const data = await response.json();
-  //     console.log("Main data:", data);
-  //     console.log(data.payload[count]);
-  //     return data.payload[count];
-  //   }
-  //   const response = await fetch(
-  //     `http://localhost:3000/ingredients-category?category=${mealType}&ingredients=${searchIngredients}`
-  //   );
-
-  //   // FUTURE URL `https://chews-database.herokuapp.com/
-
-  //   const data = await response.json();
-  //   return data.payload[0][count];
-  // }
-  // useEffect(() => {
-  //   if (router.query.meal) {
-  //     const getMeal = async () => {
-  //       const fetchedMeal = await fetchMealByIngredients();
-  //       setMeal({
-  //         id: fetchedMeal.id,
-  //         name: fetchedMeal.name,
-  //         thumb: fetchedMeal.image,
-  //         ingredients: fetchedMeal.ingredients,
-  //         measures: fetchedMeal.measures,
-  //         instructions: fetchedMeal.instructions,
-  //       });
-  //     };
-  //     getMeal();
-  //   }
-  // }, [router.query.meal, count]);
-
-  // if (!meal) return <LoadingScreen />;
-  if (!meal) return <NoResultsDisplay hasHistory={true} setCount={setCount} />;
+  if (!meal) return <NoResultsDisplay hasHistory={true} setCount={setCount} />; //returns error page if no more results found
   return (
     <main className="flex flex-col min-h-[80vh] w-screen items-center justify-center space-y-2">
       <section className="absolute top-[12vh] left-[2vh]">
@@ -174,7 +132,7 @@ export default function Results({ meals }) {
   );
 }
 
-//fetches initial recipe on load, to avoid the flicker caused by using useEffect as the alternative
+//getServerSideProps runs initial fetch request for recipe before page load, this avoids the flicker update caused by useEffect as the alternative
 export async function getServerSideProps(context) {
   const mealType = context.query.meal;
   const searchIngredients = context.query.ingredients.toLowerCase();

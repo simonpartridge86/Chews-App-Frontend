@@ -26,7 +26,7 @@ export default function SearchIngredients() {
   const router = useRouter();
   const mealType = router.query.meal;
 
-  // useDisclosure hooks for alert and filter modals
+  // Chakra useDisclosure hooks for alert and filter modals
   const {
     isOpen: isOpenAlert1,
     onOpen: onOpenAlert1,
@@ -53,22 +53,20 @@ export default function SearchIngredients() {
     onClose: onCloseFilter,
   } = useDisclosure();
 
-  // Various useState hooks to store user inputs and selected ingredients
+  // Various useState hooks to store user inputs and selected ingredients, among others
   const [ingredientOptions, setIngredientOptions] = useState([]);
   const [inputText, setInputText] = useState("");
   const [currentIngredient, setCurrentIngredient] = useState("");
   const [tagsArray, setTagsArray] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  // fetchIngredients function fetches ingredients list from Edamam API based on user input - UPDATE TO THEMEALDB INGREDIENTS
+  // fetchIngredients function fetches ingredients list from our database (originally from TheMealDB API) based on user input
   async function fetchIngredients(inputText) {
     console.log(inputText);
-    // Change the url to FUTURE URL when backend is ready
     const response = await fetch(
       `http://localhost:3000/ingredients-list/${inputText}`
     );
 
-    // OLD URL `https://api.edamam.com/auto-complete?app_id=5cca2bea&app_key=%2061c41e444a3a1fa44fc42fcbe169faad&q=${inputText}`
     // FUTURE URL `https://chews-database.herokuapp.com/ingredients-list/${inputText}`
 
     const data = await response.json();
@@ -105,6 +103,7 @@ export default function SearchIngredients() {
     setTagsArray([...tagsArray.slice(0, index), ...tagsArray.slice(index + 1)]);
   }
 
+  // useEffect function runs the ingredients fetch to ensure up-to-date rendering
   useEffect(() => {
     if (inputText && /^[a-zA-Z]/.test(inputText)) {
       const getIngredients = async () => {
@@ -115,7 +114,7 @@ export default function SearchIngredients() {
     }
   }, [inputText]);
 
-  if (isLoading) return <LoadingScreen />;
+  if (isLoading) return <LoadingScreen />; // makes LoadingScreen component show while the next Results page is loading
   return (
     <main className="h-[80vh] w-screen flex flex-col items-center justify-center space-y-6">
       <section className="absolute top-[12vh] left-[2vh]">

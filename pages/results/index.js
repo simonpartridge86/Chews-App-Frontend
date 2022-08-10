@@ -12,25 +12,26 @@ import {
 } from "@chakra-ui/icons";
 import BackButton from "../../components/BackButton";
 import FilterModal from "../../components/FilterModal";
-import LoadingScreen from "../../components/LoadingScreen";
 import MainButton from "../../components/MainButton";
 import RecipeView from "../../components/RecipeView";
 import NoResultsDisplay from "../../components/NoResultsDisplay";
 
 export default function Results({ initialMeal }) {
+  // Various hooks to manage changes on page
   const [meal, setMeal] = useState(initialMeal);
   const [buttonText, setButtonText] = useState("View Recipe");
   const { isOpen: isFilterOpen, onOpen, onClose } = useDisclosure();
   const { isOpen: isCollapseOpen, onToggle } = useDisclosure();
+  const router = useRouter();
 
+  //changeButtonText changes the text on the "View Recipe" button based on whether full recipe is open or closed
   function changeButtonText() {
     isCollapseOpen
       ? setButtonText("View Recipe")
       : setButtonText("Hide Recipe");
   }
 
-  const router = useRouter();
-
+  //fetchRandomMeal fetches random meal from our backend server
   async function fetchRandomMeal() {
     const mealType = router.query.meal;
     if (mealType === "main dish") {
@@ -67,16 +68,7 @@ export default function Results({ initialMeal }) {
     });
   }
 
-  // useLayoutEffect(() => {
-  //   if (!router.isReady) {
-  //     return;
-  //   }
-  //   getMeal();
-  // }, [router.isReady]);
-
-  // if (!meal) return <LoadingScreen />;
-
-  if (!meal) return <NoResultsDisplay />;
+  if (!meal) return <NoResultsDisplay />; //returns error page if no more results found
   return (
     <main className="flex flex-col min-h-[80vh] w-screen items-center justify-center space-y-2">
       <section className="absolute top-[12vh] left-[2vh]">
@@ -171,7 +163,7 @@ export default function Results({ initialMeal }) {
   );
 }
 
-//fetches initial recipe on load, to avoid the flicker caused by using useEffect as the alternative
+//getServerSideProps fetches initial recipe before load, avoiding the flicker update caused by useEffect as the alternative
 export async function getServerSideProps(context) {
   const mealType = context.query.meal;
   let meal;
