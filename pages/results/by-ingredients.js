@@ -18,7 +18,6 @@ export default function Results({ meals, noMeal }) {
   const [buttonIcon, setButtonIcon] = useState(<ViewIcon />);
   const [isFavourite, setIsFavourite] = useState(false);
   const [isNoMeal, setIsNoMeal] = useState(noMeal);
-  const { isOpen: isFilterOpen, onOpen, onClose } = useDisclosure();
   const { isOpen: isCollapseOpen, onToggle } = useDisclosure();
 
   //changeButtonText changes the text on the "View Recipe" button based on whether full recipe is open or closed
@@ -69,9 +68,9 @@ export default function Results({ meals, noMeal }) {
 
   useEffect(() => {
     console.log(meals[count]);
-    if (meals[count] === undefined) {
+    if (Object.keys(meals[count]).length === 0) {
       setIsNoMeal(true);
-      setMeal([]);
+      setMeal({});
     } else {
       setMeal(meals[count]);
       setIsNoMeal(false);
@@ -195,7 +194,6 @@ export default function Results({ meals, noMeal }) {
           buttonWidth="80%"
         />
       </section>
-      <FilterModal isOpen={isFilterOpen} onClose={onClose} />
     </main>
   );
 }
@@ -218,8 +216,8 @@ export async function getServerSideProps(context) {
     const data = await response.json();
     mealsArray = data.payload;
   }
-  if (mealsArray === []) {
-    return { props: { meals: mealsArray, noMeal: true } };
+  if (mealsArray.length === 0) {
+    return { props: { meals: [{}], noMeal: true } };
   } else {
     return { props: { meals: mealsArray, noMeal: false } };
   }

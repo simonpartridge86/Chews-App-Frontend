@@ -23,7 +23,11 @@ async function fetchRandomMeal(mealType, category, area) {
     );
     const data = await response.json();
     console.log("Meal:", data.payload[0]);
-    return data.payload[0];
+    if (data.payload.length === 0) {
+      return null;
+    } else {
+      return data.payload[0];
+    }
   }
 
   if (category) {
@@ -32,7 +36,11 @@ async function fetchRandomMeal(mealType, category, area) {
     );
     const data = await response.json();
     console.log("Meal:", data.payload[0]);
-    return data.payload[0];
+    if (data.payload.length === 0) {
+      return null;
+    } else {
+      return data.payload[0];
+    }
   }
 
   if (area) {
@@ -41,7 +49,11 @@ async function fetchRandomMeal(mealType, category, area) {
     );
     const data = await response.json();
     console.log("Meal:", data.payload[0]);
-    return data.payload[0];
+    if (data.payload.length === 0) {
+      return null;
+    } else {
+      return data.payload[0];
+    }
   } else {
     if (mealType === "main dish") {
       const response = await fetch(
@@ -52,7 +64,11 @@ async function fetchRandomMeal(mealType, category, area) {
 
       const data = await response.json();
       console.log("Meal:", data.payload[0]);
-      return data.payload[0];
+      if (data.payload.length === 0) {
+        return null;
+      } else {
+        return data.payload[0];
+      }
     }
     const response = await fetch(
       `http://localhost:3000/random-meal?meal=${mealType}`
@@ -62,7 +78,11 @@ async function fetchRandomMeal(mealType, category, area) {
 
     const data = await response.json();
     console.log("Meal", data.payload[0]);
-    return data.payload[0];
+    if (data.payload.length === 0) {
+      return null;
+    } else {
+      return data.payload[0];
+    }
   }
 }
 
@@ -274,6 +294,6 @@ export async function getServerSideProps(context) {
     };
     return { props: { initialMeal: mealObject, noMeal: false } };
   } else {
-    return { props: { initialMeal: null, noMeal: true } };
+    return { props: { initialMeal: {}, noMeal: true } };
   }
 }

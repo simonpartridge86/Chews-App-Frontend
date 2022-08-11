@@ -114,7 +114,7 @@ export default function SearchIngredients() {
       <section className="absolute top-[12vh] left-[2vh]">
         <BackButton extraText={"to Search Options"} buttonSize="sm" />
       </section>
-      <VStack width="80%" className="max-w-lg">
+      <VStack width="80vw" className="max-w-md">
         <h1 className="font-nunito font-bold text-2xl text-center">
           Time to{" "}
           <span className="font-permanent-marker text-center text-2xl text-primary-color font-normal">
@@ -196,7 +196,7 @@ export default function SearchIngredients() {
         />
       </VStack>
       <Divider width="80%" className="max-w-lg" />
-      <VStack width="80%" className="max-w-lg">
+      <VStack width="80%" className="max-w-md">
         <h2 className="font-nunito font-bold text-2xl text-center">
           Added your ingredients?
         </h2>
