@@ -85,6 +85,7 @@ export default function RecipeCard({ meal }) {
               onClick={() => {
                 router.push({
                   pathname: "/recipes",
+                  query: { mealId: meal.id },
                 });
               }}
             />

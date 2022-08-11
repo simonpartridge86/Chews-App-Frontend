@@ -116,7 +116,7 @@ export default function Results({ initialMeal, noMeal }) {
     setMeal({
       id: fetchedMeal.id,
       name: fetchedMeal.name,
-      thumb: fetchedMeal.image,
+      image: fetchedMeal.image,
       ingredients: fetchedMeal.ingredients,
       measures: fetchedMeal.measures,
       instructions: fetchedMeal.instructions,
@@ -174,7 +174,7 @@ export default function Results({ initialMeal, noMeal }) {
         </h1>
         <img
           className="w-[100%] max-h-[25vh] object-cover rounded"
-          src={meal.thumb}
+          src={meal.image}
           alt="recipe image"
         />
         <section className="flex flex-row justify-between w-[80vw] space-x-2 max-w-lg">
@@ -267,7 +267,7 @@ export async function getServerSideProps(context) {
     const mealObject = {
       id: meal.id,
       name: meal.name,
-      thumb: meal.image,
+      image: meal.image,
       ingredients: meal.ingredients,
       measures: meal.measures,
       instructions: meal.instructions,
