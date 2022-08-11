@@ -6,16 +6,19 @@ import ChewsLogo from "../components/ChewsLogo";
 import MainButton from "../components/MainButton";
 import BackButton from "../components/BackButton";
 import { Button } from "@chakra-ui/react";
+import { useUser } from "@auth0/nextjs-auth0";
 
 export default function Home() {
   const router = useRouter();
+  const { user, error, isLoading } = useUser();
 
   return (
     <main className="flex flex-col h-[80vh] justify-center items-center space-y-14">
-      <section className="absolute top-[12vh] left-[2vh]">
-        <BackButton extraText={"to Login"} buttonSize="sm" />
-      </section>
-      
+      {!user && (
+        <section className="absolute top-[12vh] left-[2vh]">
+          <BackButton extraText={"to Login"} buttonSize="sm" />
+        </section>
+      )}
       <section className="flex flex-col items-center space-y-4 w-screen">
         <h1 className="font-nunito font-bold text-2xl">Welcome to</h1>
         <ChewsLogo theme={"brand.primary"} size={"4xl"} />

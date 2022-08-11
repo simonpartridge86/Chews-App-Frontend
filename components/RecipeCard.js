@@ -19,25 +19,21 @@ export default function RecipeCard() {
 
   //useEffect is necessary for random num generation in nextjs
   useEffect(() => {
-    setRandomDescription(Math.floor(Math.random() * 3));
-    setIndex(Math.floor(Math.random() * 10));
+    setIndex(Math.floor(Math.random() * 3));
   }, []);
 
-  const mealName = meals[index].strMeal;
-  const mealThumb = meals[index].strMealThumb;
-  const ingredient1 = meals[index].strIngredient1;
-  const ingredient2 = meals[index].strIngredient2;
+  const mealName = meals[index].name;
+  const mealThumb = meals[index].image;
+  const ingredient1 = meals[index].ingredients[0];
+  const ingredient2 = meals[index].ingredients[1];
   const descriptionArray = [
     `Whet your appetite with our tasty ${mealName} meal. Made with ${ingredient1.toLowerCase()} and ${ingredient2.toLowerCase()}.`,
     `Feast your eyes on our our tasty ${
-      meals[index].strMeal
+      meals[index].name
     } dish. We've chosen special ingredients, like: ${ingredient1.toLowerCase()} and ${ingredient2.toLowerCase()}, to make this a truly special meal.`,
     `Bored? Lonely? Neither? Try this ${mealName} dish. Made with special care and love by carefully sellecting the freshest ${ingredient1.toLowerCase()} and ${ingredient2.toLowerCase()}.`,
   ];
   const description = descriptionArray[randomDescription];
-
-  console.log(meals);
-  console.log(meals[index].strMeal);
 
   return (
     <Center py={6} padding={2}>
