@@ -14,18 +14,25 @@ Things to do:
 import { Flex } from "@chakra-ui/react";
 import HamburgerMenu from "./HamburgerMenu";
 import { Divider } from "@chakra-ui/react";
+import { useUser } from "@auth0/nextjs-auth0";
 
 export default function NavBar() {
+  const { user, error, isLoading } = useUser();
+
   return (
     <nav className="fixed w-screen bg-light-color z-10">
       <Flex display={["flex", "flex", "none", "none"]}>
         <section className="flex flex-row justify-between items-center h-[10vh] w-screen">
-          <section className="flex w-[10vh] justify-center items-center">
-            <img
-              className="w-[6vh] h-[6vh]"
-              src={"/profileIcon.png"}
-              alt="placeholder profile pic"
-            />
+          <section className="flex w-[10vw] h-[10vh] justify-center items-center">
+            {user && (
+              <a href="/profile">
+                <img
+                  className="w-[6vh] h-[6vh]"
+                  src={user.picture}
+                  alt="placeholder profile pic"
+                />
+              </a>
+            )}
           </section>
           <section className="flex w-[30vh] justify-center items-center">
             <h1
@@ -46,11 +53,15 @@ export default function NavBar() {
       <Flex display={["none", "none", "flex", "flex"]}>
         <section className="flex flex-row justify-between items-center h-[10vh] w-screen">
           <section className="flex w-[10vh] justify-center items-center">
-            <img
-              className="w-[6vh] h-[6vh]"
-              src={"/profileIcon.png"}
-              alt="placeholder profile pic"
-            />
+            {user && (
+              <a href="/profile">
+                <img
+                  className="w-[6vh] h-[6vh]"
+                  src={user.picture}
+                  alt="placeholder profile pic"
+                />
+              </a>
+            )}
           </section>
           <section className="flex w-[30vh] justify-center items-center">
             <h1
