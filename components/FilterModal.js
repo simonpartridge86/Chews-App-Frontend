@@ -106,7 +106,7 @@ export default function FilterModal({ isOpen, onClose }) {
               textColor={"brand.primary"}
               textAlign={"left"}
             >
-              Category Preferences:
+              Dietary Preferences:
             </Text>
             <Divider />
             <section className="w-[100%] flex flex-col mt-[1vh]">
