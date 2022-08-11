@@ -35,7 +35,7 @@ export default function FavouritesButton({
   let buttonTextColor;
   let toastObject;
   if (isFavourite === true) {
-    buttonTextColor = "brand.primary";
+    buttonTextColor = "brand.light";
     toastObject = {
       position: "bottom",
       fontFamily: "brand.main",
@@ -46,7 +46,7 @@ export default function FavouritesButton({
     };
   }
   if (isFavourite === false) {
-    buttonTextColor = "brand.light";
+    buttonTextColor = "brand.primary";
     toastObject = {
       fontFamily: "brand.main",
       position: "bottom",
@@ -57,7 +57,7 @@ export default function FavouritesButton({
     };
   }
 
-  if (isFavourite === true) {
+  if (isFavourite === false) {
     return (
       <Button
         leftIcon={leftIcon}
@@ -91,7 +91,7 @@ export default function FavouritesButton({
     );
   }
 
-  if (isFavourite === false) {
+  if (isFavourite === true) {
     return (
       <Button
         leftIcon={leftIcon}

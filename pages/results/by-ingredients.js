@@ -105,7 +105,7 @@ export default function Results({ meals, noMeal }) {
       <section className="absolute top-[12vh] left-[2vh]">
         <BackButton extraText={"to Search"} buttonSize="sm" />
       </section>
-      <section className="flex flex-col w-[80vw] items-center justify-end space-y-2 max-w-sm">
+      <section className="flex flex-col w-[80vw] h-[50vh] items-center justify-end space-y-2 max-w-lg">
         <h2 className="font-nunito font-bold text-xl text-dark-color text-center">
           You should{" "}
           <span className="font-permanent-marker text-center text-xl text-primary-color font-normal">

@@ -1,4 +1,4 @@
-// Search-Ingredients page - allows user to add ingredients and additional filters to their search
+// Search-Ingredients page - allows user to add ingredients to their search
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
@@ -19,14 +19,13 @@ import { Search2Icon, AddIcon, EditIcon } from "@chakra-ui/icons";
 import MainButton from "../components/MainButton";
 import BackButton from "../components/BackButton";
 import AlertModal from "../components/AlertModal";
-import FilterModal from "../components/FilterModal";
 import LoadingScreen from "../components/LoadingScreen";
 
 export default function SearchIngredients() {
   const router = useRouter();
   const mealType = router.query.meal;
 
-  // Chakra useDisclosure hooks for alert and filter modals
+  // Chakra useDisclosure hooks for alert modals
   const {
     isOpen: isOpenAlert1,
     onOpen: onOpenAlert1,
@@ -46,11 +45,6 @@ export default function SearchIngredients() {
     isOpen: isOpenAlert4,
     onOpen: onOpenAlert4,
     onClose: onCloseAlert4,
-  } = useDisclosure();
-  const {
-    isOpen: isOpenFilter,
-    onOpen: onOpenFilter,
-    onClose: onCloseFilter,
   } = useDisclosure();
 
   // Various useState hooks to store user inputs and selected ingredients, among others
@@ -229,16 +223,6 @@ export default function SearchIngredients() {
             }
           }}
         />
-        <MainButton
-          leftIcon={<EditIcon />}
-          buttonText="Edit Search Filters"
-          buttonSize="sm"
-          colorMode="light"
-          buttonWidth="100%"
-          onClick={() => {
-            onOpenFilter();
-          }}
-        />
       </VStack>
       <AlertModal
         isOpen={isOpenAlert1}
@@ -264,7 +248,6 @@ export default function SearchIngredients() {
         headerText="Wait!"
         bodyText="Please add some ingredients first!"
       />
-      <FilterModal isOpen={isOpenFilter} onClose={onCloseFilter} />
     </main>
   );
 }
