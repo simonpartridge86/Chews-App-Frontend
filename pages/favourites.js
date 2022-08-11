@@ -1,5 +1,6 @@
 // Favourites page - displays list of favourites page
 
+import { Divider } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import RecipeCard from "../components/RecipeCard";
 
@@ -32,6 +33,7 @@ export default function Favourites() {
     return (
       <main className="flex flex-col h-[80vh] justify-center items-center overflow-y-scroll">
         <h1 className="font-nunito font-bold text-2xl">Your Favourites</h1>
+        <Divider />
         {mealArray.map(function (meal) {
           return <RecipeCard key={meal.id} meal={meal} />;
         })}
