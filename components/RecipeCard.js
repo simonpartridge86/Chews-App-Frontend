@@ -1,6 +1,5 @@
 // RECIPECARD COMPONENT - used to display recipes in a list format
 
-import { useEffect, useState } from "react";
 import {
   Center,
   Flex,
@@ -11,29 +10,22 @@ import {
 } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 import MainButton from "./MainButton";
-import meals from "../libs/recipeData.js";
+import { useRouter } from "next/router";
 
-export default function RecipeCard() {
-  const [index, setIndex] = useState(0);
-  const [randomDescription, setRandomDescription] = useState(0);
-
-  //useEffect is necessary for random num generation in nextjs
-  useEffect(() => {
-    setIndex(Math.floor(Math.random() * 3));
-  }, []);
-
-  const mealName = meals[index].name;
-  const mealThumb = meals[index].image;
-  const ingredient1 = meals[index].ingredients[0];
-  const ingredient2 = meals[index].ingredients[1];
-  const descriptionArray = [
-    `Whet your appetite with our tasty ${mealName} meal. Made with ${ingredient1.toLowerCase()} and ${ingredient2.toLowerCase()}.`,
-    `Feast your eyes on our our tasty ${
-      meals[index].name
-    } dish. We've chosen special ingredients, like: ${ingredient1.toLowerCase()} and ${ingredient2.toLowerCase()}, to make this a truly special meal.`,
-    `Bored? Lonely? Neither? Try this ${mealName} dish. Made with special care and love by carefully sellecting the freshest ${ingredient1.toLowerCase()} and ${ingredient2.toLowerCase()}.`,
-  ];
-  const description = descriptionArray[randomDescription];
+export default function RecipeCard({ meal }) {
+  const router = useRouter();
+  // const mealName = meals[index].name;
+  // const mealThumb = meals[index].image;
+  // const ingredient1 = meals[index].ingredients[0];
+  // const ingredient2 = meals[index].ingredients[1];
+  // const descriptionArray = [
+  //   `Whet your appetite with our tasty ${mealName} meal. Made with ${ingredient1.toLowerCase()} and ${ingredient2.toLowerCase()}.`,
+  //   `Feast your eyes on our our tasty ${
+  //     meals[index].name
+  //   } dish. We've chosen special ingredients, like: ${ingredient1.toLowerCase()} and ${ingredient2.toLowerCase()}, to make this a truly special meal.`,
+  //   `Bored? Lonely? Neither? Try this ${mealName} dish. Made with special care and love by carefully sellecting the freshest ${ingredient1.toLowerCase()} and ${ingredient2.toLowerCase()}.`,
+  // ];
+  // const description = descriptionArray[randomDescription];
 
   return (
     <Center py={6} padding={2}>
@@ -55,7 +47,7 @@ export default function RecipeCard() {
           pl={1}
           pt={0}
         >
-          <Image objectFit="cover" src={mealThumb} />
+          <Image objectFit="cover" src={meal.image} />
         </Flex>
         <Stack
           flex={1}
@@ -67,13 +59,9 @@ export default function RecipeCard() {
           fontSize={"10px"}
         >
           <Heading fontSize={"12px"} fontFamily={"body"}>
-            {mealName}
+            {meal.name}
           </Heading>
-          <p id="chakra-text" color={useColorModeValue("gray.700", "gray.400")}>
-            {description.length > 125
-              ? `${description.substring(0, 125)}...`
-              : description}
-          </p>
+
           <Stack
             mt={"2rem"}
             direction={"row"}
@@ -94,6 +82,11 @@ export default function RecipeCard() {
               buttonSize="xs"
               buttonText="View Recipe"
               colorMode="dark"
+              onClick={() => {
+                router.push({
+                  pathname: "/recipes",
+                });
+              }}
             />
           </Stack>
         </Stack>
