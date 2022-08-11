@@ -25,7 +25,7 @@ export default function Home() {
         </span>
         " your next meal for you!
       </h2>
-      <section className="w-[75vw] max-w-lg">
+      <section className="w-[75vw] max-w-md">
         <MainButton
           buttonText="Get Started"
           buttonSize="lg"

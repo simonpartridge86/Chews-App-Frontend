@@ -1,6 +1,6 @@
 // Results page - displays random recipe from local data
 
-import React, { cloneElement, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDisclosure, Divider, Collapse } from "@chakra-ui/react";
 import { StarIcon, ViewIcon, RepeatIcon, ViewOffIcon } from "@chakra-ui/icons";
 import BackButton from "../../components/BackButton";
@@ -97,8 +97,9 @@ export default function Results({ meals, noMeal }) {
     }
   }
 
-  if (isNoMeal === true)
-    return <NoResultsDisplay hasHistory={true} setCount={setCount} />; //returns error page if no more results found
+  if (isNoMeal === true) {
+    return <NoResultsDisplay hasHistory={true} setCount={setCount} />;
+  } //returns error page if no more results found
   return (
     <main className="flex flex-col min-h-[80vh] w-screen items-center justify-center space-y-5 pb-[2vh] pt-[5vh]">
       <section className="absolute top-[12vh] left-[2vh]">

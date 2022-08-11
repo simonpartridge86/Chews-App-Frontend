@@ -66,7 +66,7 @@ async function fetchRandomMeal(mealType, category, area) {
   }
 }
 
-export default function Results({ initialMeal }) {
+export default function Results({ initialMeal, noMeal }) {
   // Various hooks to manage changes on page
   const [meal, setMeal] = useState(initialMeal);
   const [buttonText, setButtonText] = useState("View Recipe");
@@ -74,6 +74,7 @@ export default function Results({ initialMeal }) {
   const { isOpen: isFilterOpen, onOpen, onClose } = useDisclosure();
   const { isOpen: isCollapseOpen, onToggle } = useDisclosure();
   const [isFavourite, setIsFavourite] = useState(false);
+  const [isNoMeal, setIsNoMeal] = useState(noMeal);
   const router = useRouter();
 
   function checkFavourites() {
@@ -152,7 +153,9 @@ export default function Results({ initialMeal }) {
     }
   }
 
-  if (!meal) return <NoResultsDisplay />; //returns error page if no more results found
+  if (isNoMeal === true) {
+    return <NoResultsDisplay hasHistory={false} />;
+  } //returns error page if no more results found
   return (
     <main className="flex flex-col min-h-[80vh] w-screen items-center justify-center space-y-5 pb-[2vh] pt-[5vh]">
       <section className="absolute top-[12vh] left-[2vh]">
@@ -260,13 +263,17 @@ export async function getServerSideProps(context) {
     context.query.category,
     context.query.area
   );
-  const mealObject = {
-    id: meal.id,
-    name: meal.name,
-    thumb: meal.image,
-    ingredients: meal.ingredients,
-    measures: meal.measures,
-    instructions: meal.instructions,
-  };
-  return { props: { initialMeal: mealObject } };
+  if (meal) {
+    const mealObject = {
+      id: meal.id,
+      name: meal.name,
+      thumb: meal.image,
+      ingredients: meal.ingredients,
+      measures: meal.measures,
+      instructions: meal.instructions,
+    };
+    return { props: { initialMeal: mealObject, noMeal: false } };
+  } else {
+    return { props: { initialMeal: null, noMeal: true } };
+  }
 }
