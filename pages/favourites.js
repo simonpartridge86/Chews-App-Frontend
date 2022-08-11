@@ -30,11 +30,12 @@ export default function Favourites() {
   }
   if (favouritesExist === true) {
     return (
-      <div className="h-screen">
+      <main className="flex flex-col h-[80vh] justify-center items-center overflow-y-scroll">
+        <h1 className="font-nunito font-bold text-2xl">Your Favourites</h1>
         {mealArray.map(function (meal) {
           return <RecipeCard key={meal.id} meal={meal} />;
         })}
-      </div>
+      </main>
     );
   }
 }
