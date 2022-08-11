@@ -94,6 +94,30 @@ export default function HamburgerMenu() {
               </Button>
             </NextLink>
           )}
+          {!user && (
+            <NextLink
+              href="/api/auth/login"
+              passHref
+              className="h-[10vh] align-middle"
+            >
+              <Button
+                as="a"
+                variant="ghost"
+                aria-label="Home"
+                my={5}
+                size="lg"
+                fontFamily={"brand.main"}
+                fontSize="xl"
+                _hover={{
+                  boxShadow: "md",
+                  textColor: "brand.light",
+                  bgColor: "brand.primary",
+                }}
+              >
+                Log In
+              </Button>
+            </NextLink>
+          )}
         </Flex>
 
         {/* Hamburger menu view on small screens */}
@@ -190,21 +214,46 @@ export default function HamburgerMenu() {
           {user && (
             <NextLink href="/api/auth/logout" passHref>
               <Button
-                bg="brand.light"
-                size="xs"
-                rounded="md"
-                width="75%"
-                fontFamily="brand.main"
-                fontWeight="600"
-                fontSize="lg"
-                color="brand.primary"
-                _active={{
-                  bg: "brand.primary",
-                  color: "brand.light",
+                onClick={() => {
+                  setDisplay("none");
+                  setIsBurgerOpen(false);
                 }}
-                _hover={{ transform: "translateY(-1px)" }}
+                as="a"
+                variant="ghost"
+                aria-label="Home"
+                w="100%"
+                h="10vh"
+                fontFamily={"brand.main"}
+                fontSize="xl"
+                _hover={{
+                  fontSize: "3xl",
+                  boxShadow: "md",
+                }}
               >
-                LOGOUT
+                Logout
+              </Button>
+            </NextLink>
+          )}
+          {!user && (
+            <NextLink href="/api/auth/login" passHref>
+              <Button
+                onClick={() => {
+                  setDisplay("none");
+                  setIsBurgerOpen(false);
+                }}
+                as="a"
+                variant="ghost"
+                aria-label="Home"
+                w="100%"
+                h="10vh"
+                fontFamily={"brand.main"}
+                fontSize="xl"
+                _hover={{
+                  fontSize: "3xl",
+                  boxShadow: "md",
+                }}
+              >
+                Log In
               </Button>
             </NextLink>
           )}
