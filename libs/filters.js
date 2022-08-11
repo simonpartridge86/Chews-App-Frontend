@@ -17,42 +17,6 @@ export const categoryArray = [
 
 export const cuisineArray = [
   {
-    filter: "Italian",
-    isChecked: false,
-  },
-  {
-    filter: "Chinese",
-    isChecked: false,
-  },
-  {
-    filter: "Indian",
-    isChecked: false,
-  },
-  {
-    filter: "British",
-    isChecked: false,
-  },
-  {
-    filter: "American",
-    isChecked: false,
-  },
-  {
-    filter: "Moroccan",
-    isChecked: false,
-  },
-  {
-    filter: "Spanish",
-    isChecked: false,
-  },
-  {
-    filter: "Mexican",
-    isChecked: false,
-  },
-  {
-    filter: "Thai",
-    isChecked: false,
-  },
-  {
     filter: "American",
     isChecked: false,
   },
