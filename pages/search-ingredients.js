@@ -58,10 +58,8 @@ export default function SearchIngredients() {
   async function fetchIngredients(inputText) {
     console.log(inputText);
     const response = await fetch(
-      `http://localhost:3000/ingredients-list/${inputText}`
+      `https://chews-backend.herokuapp.com/ingredients-list/${inputText}`
     );
-
-    // FUTURE URL `https://chews-database.herokuapp.com/ingredients-list/${inputText}`
 
     const data = await response.json();
     return data.payload;

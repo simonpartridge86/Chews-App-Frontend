@@ -205,13 +205,13 @@ export async function getServerSideProps(context) {
   let mealsArray;
   if (mealType === "main dish") {
     const response = await fetch(
-      `http://localhost:3000/ingredients-category?category=main&ingredients=${searchIngredients}`
+      `https://chews-backend.herokuapp.com/ingredients-category?category=main&ingredients=${searchIngredients}`
     );
     const data = await response.json();
     mealsArray = data.payload;
   } else {
     const response = await fetch(
-      `http://localhost:3000/ingredients-category?category=${mealType}&ingredients=${searchIngredients}`
+      `https://chews-backend.herokuapp.com/ingredients-category?category=${mealType}&ingredients=${searchIngredients}`
     );
     const data = await response.json();
     mealsArray = data.payload;
