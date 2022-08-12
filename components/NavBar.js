@@ -30,7 +30,7 @@ export default function NavBar() {
             {user && (
               <a href="/profile">
                 <img
-                  className="rounded-[50%]"
+                  className="rounded-[50%] w-[7vw] h-[7vh]"
                   src={user.picture}
                   alt={user.name}
                 />
@@ -59,7 +59,7 @@ export default function NavBar() {
             {user && (
               <a href="/profile">
                 <img
-                  className="rounded-[50%]"
+                  className="rounded-[50%] w-[7vw] h-[7vh]"
                   src={user.picture}
                   alt={user.name}
                 />
