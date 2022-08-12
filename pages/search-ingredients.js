@@ -21,6 +21,8 @@ import BackButton from "../components/BackButton";
 import AlertModal from "../components/AlertModal";
 import LoadingScreen from "../components/LoadingScreen";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 export default function SearchIngredients() {
   const router = useRouter();
   const mealType = router.query.meal;
@@ -57,9 +59,7 @@ export default function SearchIngredients() {
   // fetchIngredients function fetches ingredients list from our database (originally from TheMealDB API) based on user input
   async function fetchIngredients(inputText) {
     console.log(inputText);
-    const response = await fetch(
-      `http://localhost:3000/ingredients-list/${inputText}`
-    );
+    const response = await fetch(`${API_URL}ingredients-list/${inputText}`);
 
     // FUTURE URL `https://chews-database.herokuapp.com/ingredients-list/${inputText}`
 
