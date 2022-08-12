@@ -71,14 +71,14 @@ export default function HamburgerMenu() {
 
           {user && (
             <NextLink
-              href="/Favourites"
+              href="/favourites"
               passHref
               className="h-[10vh] align-middle"
             >
               <Button
                 as="a"
                 variant="ghost"
-                aria-label="Favourites"
+                aria-label="favourites"
                 my={5}
                 size="lg"
                 fontFamily={"brand.main"}
@@ -244,7 +244,7 @@ export default function HamburgerMenu() {
                 }}
                 as="a"
                 variant="ghost"
-                aria-label="Favourites"
+                aria-label="favourites"
                 w="100%"
                 h="10vh"
                 fontFamily={"brand.main"}

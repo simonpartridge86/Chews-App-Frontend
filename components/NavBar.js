@@ -18,7 +18,6 @@ import { useUser } from "@auth0/nextjs-auth0";
 import { useRouter } from "next/router";
 import { Image } from "@chakra-ui/react";
 
-
 export default function NavBar() {
   const { user, error, isLoading } = useUser();
   const router = useRouter();
@@ -30,9 +29,8 @@ export default function NavBar() {
           <section className="flex w-[7vw] h-[7vh] justify-center items-center">
             {user && (
               <a href="/profile">
-                <Image
-                  // boxSize="60px"
-                  borderRadius="full"
+                <img
+                  className="rounded-[50%]"
                   src={user.picture}
                   alt={user.name}
                 />
@@ -60,9 +58,8 @@ export default function NavBar() {
           <section className="flex w-[7vw] h-[7vh] justify-center items-center">
             {user && (
               <a href="/profile">
-                <Image
-                  // boxSize="60px"
-                  borderRadius="full"
+                <img
+                  className="rounded-[50%]"
                   src={user.picture}
                   alt={user.name}
                 />
