@@ -37,7 +37,7 @@ export default function FavouritesButton({
   if (isFavourite === true) {
     buttonTextColor = "brand.light";
     toastObject = {
-      position: "bottom",
+      position: "top",
       fontFamily: "brand.main",
       title: "Removed from Favourites",
       status: "error",
@@ -49,7 +49,7 @@ export default function FavouritesButton({
     buttonTextColor = "brand.primary";
     toastObject = {
       fontFamily: "brand.main",
-      position: "bottom",
+      position: "top",
       title: "Added to Favourites",
       status: "success",
       duration: 2000,
