@@ -1,15 +1,17 @@
 // Search-select page - allows user to choose between viewing random recipe or searching by ingredients
 
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { Divider, VStack, useDisclosure } from "@chakra-ui/react";
 import MainButton from "../components/MainButton";
 import BackButton from "../components/BackButton";
 import { EditIcon } from "@chakra-ui/icons";
 import FilterModal from "../components/FilterModal";
+import LoadingScreen from "../components/LoadingScreen";
 
 export default function SearchSelect() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   // Below adds fallback to "Main dish" in case user navigates to this page directly, rather than from meal-select page
@@ -21,24 +23,29 @@ export default function SearchSelect() {
   }
   var categories, cuisines;
   function getFilters() {
-    const storedcategoryFilters = JSON.parse(localStorage.getItem("category"));
-    let isCategoryArray = [];
-    for (const element of storedcategoryFilters) {
-      if (element.isChecked === true) {
-        isCategoryArray.push(Object.values(element)[0]);
+    if (localStorage.getItem("category")) {
+      const storedcategoryFilters = JSON.parse(
+        localStorage.getItem("category")
+      );
+      let isCategoryArray = [];
+      for (const element of storedcategoryFilters) {
+        if (element.isChecked === true) {
+          isCategoryArray.push(Object.values(element)[0]);
+        }
       }
-    }
-    categories = isCategoryArray.join();
-    const storedcuisineFilters = JSON.parse(localStorage.getItem("cuisine"));
-    let isCuisineArray = [];
-    for (const element of storedcuisineFilters) {
-      if (element.isChecked === true) {
-        isCuisineArray.push(Object.values(element)[0]);
+      categories = isCategoryArray.join();
+      const storedcuisineFilters = JSON.parse(localStorage.getItem("cuisine"));
+      let isCuisineArray = [];
+      for (const element of storedcuisineFilters) {
+        if (element.isChecked === true) {
+          isCuisineArray.push(Object.values(element)[0]);
+        }
       }
-    }
-    cuisines = isCuisineArray.join();
+      cuisines = isCuisineArray.join();
 
-    return createQueryObject(categories, cuisines);
+      return createQueryObject(categories, cuisines);
+    }
+    return createQueryObject();
   }
 
   function createQueryObject(categories, cuisines) {
@@ -65,6 +72,8 @@ export default function SearchSelect() {
       meal: selectedMeal,
     };
   }
+
+  if (isLoading) return <LoadingScreen />; // makes LoadingScreen component show while the next Results page is loading
 
   return (
     <main className="flex flex-col h-[80vh] w-screen justify-center items-center">
@@ -103,6 +112,7 @@ export default function SearchSelect() {
                 query: mealObject,
               });
             }
+            setIsLoading(true);
           }}
         >
           Hello {<span>World</span>}

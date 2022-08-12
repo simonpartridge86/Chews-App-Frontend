@@ -15,10 +15,13 @@ import { Flex } from "@chakra-ui/react";
 import HamburgerMenu from "./HamburgerMenu";
 import { Divider } from "@chakra-ui/react";
 import { useUser } from "@auth0/nextjs-auth0";
+import { useRouter } from "next/router";
 import { Image } from "@chakra-ui/react";
+
 
 export default function NavBar() {
   const { user, error, isLoading } = useUser();
+  const router = useRouter();
 
   return (
     <nav className="fixed w-screen bg-light-color z-10">
@@ -70,6 +73,9 @@ export default function NavBar() {
             <h1
               className="text-center font-permanent-marker text-center
           text-primary-color font-normal text-primary-color text-5xl"
+              onClick={() => {
+                router.push("/home");
+              }}
             >
               Chews
             </h1>

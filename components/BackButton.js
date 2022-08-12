@@ -21,9 +21,9 @@ import { useRouter } from "next/router";
 export default function BackButton({ buttonWidth, buttonSize, extraText }) {
   const router = useRouter();
   let buttonText = "Back";
-  if (extraText) {
-    buttonText = `Back ${extraText}`;
-  }
+  // if (extraText) {
+  //   buttonText = `Back ${extraText}`;
+  // }
   return (
     <Button
       onClick={() => {
