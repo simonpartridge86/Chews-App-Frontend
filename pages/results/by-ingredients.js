@@ -10,8 +10,6 @@ import RecipeView from "../../components/RecipeView";
 import NoResultsDisplay from "../../components/NoResultsDisplay";
 import FavouritesButton from "../../components/FavouritesButton";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
 export default function Results({ meals, noMeal }) {
   // various hooks to handle changes on page
   const [count, setCount] = useState(0);
@@ -207,13 +205,13 @@ export async function getServerSideProps(context) {
   let mealsArray;
   if (mealType === "main dish") {
     const response = await fetch(
-      `${API_URL}ingredients-category?category=main&ingredients=${searchIngredients}`
+      `https://chews-backend.herokuapp.com/ingredients-category?category=main&ingredients=${searchIngredients}`
     );
     const data = await response.json();
     mealsArray = data.payload;
   } else {
     const response = await fetch(
-      `${API_URL}ingredients-category?category=${mealType}&ingredients=${searchIngredients}`
+      `https://chews-backend.herokuapp.com/ingredients-category?category=${mealType}&ingredients=${searchIngredients}`
     );
     const data = await response.json();
     mealsArray = data.payload;

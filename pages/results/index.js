@@ -11,8 +11,6 @@ import RecipeView from "../../components/RecipeView";
 import NoResultsDisplay from "../../components/NoResultsDisplay";
 import FavouritesButton from "../../components/FavouritesButton";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
 async function fetchRandomMeal(mealType, category, area) {
   if (category == "Pescatarian") {
     category = "Seafood";
@@ -20,7 +18,7 @@ async function fetchRandomMeal(mealType, category, area) {
 
   if (category && area) {
     const response = await fetch(
-      `${API_URL}area-category?category=${category}&area=${area}`
+      `https://chews-backend.herokuapp.com/area-category?category=${category}&area=${area}`
     );
     const data = await response.json();
     console.log("Meal:", data.payload[0]);
@@ -33,7 +31,7 @@ async function fetchRandomMeal(mealType, category, area) {
 
   if (category) {
     const response = await fetch(
-      `${API_URL}area-category?category=${category}`
+      `https://chews-backend.herokuapp.com/area-category?category=${category}`
     );
     const data = await response.json();
     console.log("Meal:", data.payload[0]);
@@ -45,7 +43,9 @@ async function fetchRandomMeal(mealType, category, area) {
   }
 
   if (area) {
-    const response = await fetch(`${API_URL}area-category?area=${area}`);
+    const response = await fetch(
+      `https://chews-backend.herokuapp.com/area-category?area=${area}`
+    );
     const data = await response.json();
     console.log("Meal:", data.payload[0]);
     if (data.payload.length === 0) {
@@ -55,7 +55,9 @@ async function fetchRandomMeal(mealType, category, area) {
     }
   } else {
     if (mealType === "main dish") {
-      const response = await fetch(`${API_URL}random-meal?meal=main`);
+      const response = await fetch(
+        `https://chews-backend.herokuapp.com/random-meal?meal=main`
+      );
 
       const data = await response.json();
       console.log("Meal:", data.payload[0]);
@@ -65,7 +67,9 @@ async function fetchRandomMeal(mealType, category, area) {
         return data.payload[0];
       }
     }
-    const response = await fetch(`${API_URL}random-meal?meal=${mealType}`);
+    const response = await fetch(
+      `https://chews-backend.herokuapp.com/random-meal?meal=${mealType}`
+    );
 
     const data = await response.json();
     console.log("Meal", data.payload[0]);
