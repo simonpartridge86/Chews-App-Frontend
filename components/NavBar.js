@@ -26,11 +26,11 @@ export default function NavBar() {
     <nav className="fixed w-screen bg-light-color z-10">
       <Flex display={["flex", "flex", "none", "none"]}>
         <section className="flex flex-row justify-between items-center h-[10vh] w-screen">
-          <section className="flex w-[7vw] h-[7vh] justify-center items-center">
+          <section className="flex w-[7vh] h-[7vh] justify-center items-center">
             {user && (
               <a href="/profile">
                 <img
-                  className="rounded-[50%] w-[7vw] h-[7vh]"
+                  className="rounded-full w-[7vh] h-[7vh]"
                   src={user.picture}
                   alt={user.name}
                 />
@@ -55,11 +55,11 @@ export default function NavBar() {
       </Flex>
       <Flex display={["none", "none", "flex", "flex"]}>
         <section className="flex flex-row justify-between items-center h-[10vh] w-screen">
-          <section className="flex w-[7vw] h-[7vh] justify-center items-center">
+          <section className="flex w-[7vh] h-[7vh] justify-center items-center">
             {user && (
               <a href="/profile">
                 <img
-                  className="rounded-[50%] w-[7vw] h-[7vh]"
+                  className="rounded-[50%] w-[7vh] h-[7vh]"
                   src={user.picture}
                   alt={user.name}
                 />
