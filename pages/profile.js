@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import MainButton from "../components/MainButton";
 import { useUser } from "@auth0/nextjs-auth0";
 import { Grid, GridItem } from "@chakra-ui/react";
+import { Image } from "@chakra-ui/react";
 
 export default function Profile() {
   const router = useRouter();
@@ -17,8 +18,8 @@ export default function Profile() {
     user && (
       <main className="flex flex-col h-[80vh] justify-center items-center space-y-14">
         <section className="flex flex-col items-center space-y-4 w-screen">
-          <img src={user.picture} alt={user.name} />
-          <h2 className="font-nunito font-bold text-2xl w-[80vw] text-center">
+          <Image borderRadius="full" src={user.picture} alt={user.name} />
+          <h2 className=" font-nunito font-bold text-2xl w-[80vw] text-center">
             Hey, {user.name}
           </h2>
         </section>
@@ -45,10 +46,10 @@ export default function Profile() {
           </Grid>
         </section>
 
-        <section className="w-[75vw] max-w-lg">
+        <section className="w-[75vw] max-w-sm">
           <MainButton
             buttonText="View Favourites"
-            buttonSize="md"
+            buttonSize="lg"
             colorMode="dark"
             buttonWidth="100%"
             onClick={() => {

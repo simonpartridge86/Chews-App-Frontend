@@ -46,7 +46,6 @@ export default function HamburgerMenu() {
               Home
             </Button>
           </NextLink>
-
           <NextLink href="/meal-select" passHref>
             <Button
               as="a"
@@ -69,6 +68,31 @@ export default function HamburgerMenu() {
               a Meal
             </Button>
           </NextLink>
+
+          {user && (
+            <NextLink
+              href="/Favourites"
+              passHref
+              className="h-[10vh] align-middle"
+            >
+              <Button
+                as="a"
+                variant="ghost"
+                aria-label="Favourites"
+                my={5}
+                size="lg"
+                fontFamily={"brand.main"}
+                fontSize="xl"
+                _hover={{
+                  boxShadow: "md",
+                  textColor: "brand.light",
+                  bgColor: "brand.primary",
+                }}
+              >
+                Favourites
+              </Button>
+            </NextLink>
+          )}
 
           {user && (
             <NextLink
@@ -211,6 +235,29 @@ export default function HamburgerMenu() {
               a Meal
             </Button>
           </NextLink>
+          {user && (
+            <NextLink href="/favourites" passHref>
+              <Button
+                onClick={() => {
+                  setDisplay("none");
+                  setIsBurgerOpen(false);
+                }}
+                as="a"
+                variant="ghost"
+                aria-label="Favourites"
+                w="100%"
+                h="10vh"
+                fontFamily={"brand.main"}
+                fontSize="xl"
+                _hover={{
+                  fontSize: "3xl",
+                  boxShadow: "md",
+                }}
+              >
+                Favourites
+              </Button>
+            </NextLink>
+          )}
           {user && (
             <NextLink href="/api/auth/logout" passHref>
               <Button

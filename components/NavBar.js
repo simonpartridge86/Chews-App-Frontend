@@ -16,6 +16,8 @@ import HamburgerMenu from "./HamburgerMenu";
 import { Divider } from "@chakra-ui/react";
 import { useUser } from "@auth0/nextjs-auth0";
 import { useRouter } from "next/router";
+import { Image } from "@chakra-ui/react";
+
 
 export default function NavBar() {
   const { user, error, isLoading } = useUser();
@@ -25,13 +27,14 @@ export default function NavBar() {
     <nav className="fixed w-screen bg-light-color z-10">
       <Flex display={["flex", "flex", "none", "none"]}>
         <section className="flex flex-row justify-between items-center h-[10vh] w-screen">
-          <section className="flex w-[10vw] h-[10vh] justify-center items-center">
+          <section className="flex w-[7vw] h-[7vh] justify-center items-center">
             {user && (
               <a href="/profile">
-                <img
-                  className="w-[6vh] h-[6vh]"
+                <Image
+                  // boxSize="60px"
+                  borderRadius="full"
                   src={user.picture}
-                  alt="placeholder profile pic"
+                  alt={user.name}
                 />
               </a>
             )}
@@ -54,13 +57,14 @@ export default function NavBar() {
       </Flex>
       <Flex display={["none", "none", "flex", "flex"]}>
         <section className="flex flex-row justify-between items-center h-[10vh] w-screen">
-          <section className="flex w-[10vh] justify-center items-center">
+          <section className="flex w-[7vw] h-[7vh] justify-center items-center">
             {user && (
               <a href="/profile">
-                <img
-                  className="w-[6vh] h-[6vh]"
+                <Image
+                  // boxSize="60px"
+                  borderRadius="full"
                   src={user.picture}
-                  alt="placeholder profile pic"
+                  alt={user.name}
                 />
               </a>
             )}
