@@ -12,13 +12,9 @@ import NoResultsDisplay from "../../components/NoResultsDisplay";
 import FavouritesButton from "../../components/FavouritesButton";
 
 async function fetchRandomMeal(mealType, category, area) {
-  if (category == "Pescatarian") {
-    category = "Seafood";
-  }
-
   if (category && area) {
     const response = await fetch(
-      `https://chews-backend.herokuapp.com/area-category?category=${category}&area=${area}`
+      `http://localhost:3000/area-category?category=${category}&area=${area}`
     );
     const data = await response.json();
     console.log("Meal:", data.payload[0]);
@@ -31,7 +27,7 @@ async function fetchRandomMeal(mealType, category, area) {
 
   if (category) {
     const response = await fetch(
-      `https://chews-backend.herokuapp.com/area-category?category=${category}`
+      `http://localhost:3000/area-category?category=${category}`
     );
     const data = await response.json();
     console.log("Meal:", data.payload[0]);
@@ -44,7 +40,7 @@ async function fetchRandomMeal(mealType, category, area) {
 
   if (area) {
     const response = await fetch(
-      `https://chews-backend.herokuapp.com/area-category?area=${area}`
+      `http://localhost:3000/area-category?area=${area}`
     );
     const data = await response.json();
     console.log("Meal:", data.payload[0]);
@@ -56,7 +52,7 @@ async function fetchRandomMeal(mealType, category, area) {
   } else {
     if (mealType === "main dish") {
       const response = await fetch(
-        `https://chews-backend.herokuapp.com/random-meal?meal=main`
+        `http://localhost:3000/random-meal?meal=main`
       );
 
       const data = await response.json();
@@ -68,7 +64,7 @@ async function fetchRandomMeal(mealType, category, area) {
       }
     }
     const response = await fetch(
-      `https://chews-backend.herokuapp.com/random-meal?meal=${mealType}`
+      `http://localhost:3000/random-meal?meal=${mealType}`
     );
 
     const data = await response.json();

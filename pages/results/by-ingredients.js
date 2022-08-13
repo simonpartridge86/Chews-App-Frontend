@@ -4,21 +4,37 @@ import React, { useEffect, useState } from "react";
 import { useDisclosure, Divider, Collapse } from "@chakra-ui/react";
 import { StarIcon, ViewIcon, RepeatIcon, ViewOffIcon } from "@chakra-ui/icons";
 import BackButton from "../../components/BackButton";
-import FilterModal from "../../components/FilterModal";
 import MainButton from "../../components/MainButton";
 import RecipeView from "../../components/RecipeView";
 import NoResultsDisplay from "../../components/NoResultsDisplay";
 import FavouritesButton from "../../components/FavouritesButton";
+import { useRouter } from "next/router";
 
-export default function Results({ meals, noMeal }) {
+async function fetchMealByIngredients(meal, ingredients) {
+  if (meal === "main dish") {
+    const response = await fetch(
+      `http://localhost:3000/ingredients-category?category=main&ingredients=${ingredients}`
+    );
+    const data = await response.json();
+    return data.payload[0];
+  } else {
+    const response = await fetch(
+      `http://localhost:3000/ingredients-category?category=${meal}&ingredients=${ingredients}`
+    );
+    const data = await response.json();
+    return data.payload[0];
+  }
+}
+
+export default function Results({ initialMeal, noMeal }) {
   // various hooks to handle changes on page
-  const [count, setCount] = useState(0);
-  const [meal, setMeal] = useState(meals[0]);
+  const [meal, setMeal] = useState(initialMeal);
   const [buttonText, setButtonText] = useState("View Recipe");
   const [buttonIcon, setButtonIcon] = useState(<ViewIcon />);
   const [isFavourite, setIsFavourite] = useState(false);
   const [isNoMeal, setIsNoMeal] = useState(noMeal);
   const { isOpen: isCollapseOpen, onToggle } = useDisclosure();
+  const router = useRouter();
 
   //changeButtonText changes the text on the "View Recipe" button based on whether full recipe is open or closed
   function changeButtonText() {
@@ -29,11 +45,6 @@ export default function Results({ meals, noMeal }) {
       setButtonText("Hide Recipe");
       setButtonIcon(<ViewOffIcon />);
     }
-  }
-
-  //handleClick function is handed to "Chews Again" button
-  function handleClick() {
-    setCount(count + 1);
   }
 
   function handleFavouritesClick() {
@@ -66,16 +77,16 @@ export default function Results({ meals, noMeal }) {
     }
   }
 
-  useEffect(() => {
-    console.log(meals[count]);
-    if (Object.keys(meals[count]).length === 0) {
-      setIsNoMeal(true);
-      setMeal({});
-    } else {
-      setMeal(meals[count]);
-      setIsNoMeal(false);
-    }
-  }, [count]);
+  // useEffect(() => {
+  //   console.log(meals[count]);
+  //   if (Object.keys(meals[count]).length === 0) {
+  //     setIsNoMeal(true);
+  //     setMeal({});
+  //   } else {
+  //     setMeal(meals[count]);
+  //     setIsNoMeal(false);
+  //   }
+  // }, [count]);
 
   useEffect(() => {
     console.log("useEffect runs", isFavourite);
@@ -96,8 +107,27 @@ export default function Results({ meals, noMeal }) {
     }
   }
 
+  async function getMeal() {
+    const fetchedMeal = await fetchMealByIngredients(
+      router.query.meal,
+      router.query.ingredients.toLowerCase()
+    );
+    if (!fetchedMeal) {
+      setIsNoMeal(true);
+    } else {
+      setMeal({
+        id: fetchedMeal.id,
+        name: fetchedMeal.name,
+        image: fetchedMeal.image,
+        ingredients: fetchedMeal.ingredients,
+        measures: fetchedMeal.measures,
+        instructions: fetchedMeal.instructions,
+      });
+    }
+  }
+
   if (isNoMeal === true) {
-    return <NoResultsDisplay hasHistory={true} setCount={setCount} />;
+    return <NoResultsDisplay />;
   } //returns error page if no more results found
   return (
     <main className="flex flex-col min-h-[80vh] w-screen items-center justify-center space-y-5 pb-[2vh] pt-[5vh]">
@@ -177,9 +207,9 @@ export default function Results({ meals, noMeal }) {
             if (isCollapseOpen) {
               onToggle();
               changeButtonText();
-              handleClick();
+              getMeal();
             } else {
-              handleClick();
+              getMeal();
             }
           }}
           leftIcon={<RepeatIcon />}
@@ -202,23 +232,10 @@ export default function Results({ meals, noMeal }) {
 export async function getServerSideProps(context) {
   const mealType = context.query.meal;
   const searchIngredients = context.query.ingredients.toLowerCase();
-  let mealsArray;
-  if (mealType === "main dish") {
-    const response = await fetch(
-      `https://chews-backend.herokuapp.com/ingredients-category?category=main&ingredients=${searchIngredients}`
-    );
-    const data = await response.json();
-    mealsArray = data.payload;
+  const meal = await fetchMealByIngredients(mealType, searchIngredients);
+  if (!meal) {
+    return { props: { initialMeal: {}, noMeal: true } };
   } else {
-    const response = await fetch(
-      `https://chews-backend.herokuapp.com/ingredients-category?category=${mealType}&ingredients=${searchIngredients}`
-    );
-    const data = await response.json();
-    mealsArray = data.payload;
-  }
-  if (mealsArray.length === 0) {
-    return { props: { meals: [{}], noMeal: true } };
-  } else {
-    return { props: { meals: mealsArray, noMeal: false } };
+    return { props: { initialMeal: meal, noMeal: false } };
   }
 }
