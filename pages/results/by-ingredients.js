@@ -1,16 +1,16 @@
 // Results page - displays random recipe from local data
 
 import React, { useEffect, useState } from "react";
+import Head from "next/head";
 import { useDisclosure, Divider, Collapse } from "@chakra-ui/react";
 import { StarIcon, ViewIcon, RepeatIcon, ViewOffIcon } from "@chakra-ui/icons";
 import BackButton from "../../components/BackButton";
-import FilterModal from "../../components/FilterModal";
 import MainButton from "../../components/MainButton";
 import RecipeView from "../../components/RecipeView";
 import NoResultsDisplay from "../../components/NoResultsDisplay";
 import FavouritesButton from "../../components/FavouritesButton";
 
-export default function Results({ meals, noMeal }) {
+export default function Results({ meals, noMeal, docTitle }) {
   // various hooks to handle changes on page
   const [count, setCount] = useState(0);
   const [meal, setMeal] = useState(meals[0]);
@@ -100,9 +100,19 @@ export default function Results({ meals, noMeal }) {
     return <NoResultsDisplay hasHistory={true} setCount={setCount} />;
   } //returns error page if no more results found
   return (
-    <main className="flex flex-col min-h-[80vh] w-screen items-center justify-center space-y-5 pb-[2vh] pt-[5vh]">
+    <main
+      aria-label={docTitle}
+      className="flex flex-col min-h-[80vh] w-screen items-center justify-center space-y-5 pb-[2vh] pt-[5vh]"
+    >
+      <Head>
+        <title>{docTitle}</title>
+      </Head>
       <section className="absolute top-[12vh] left-[2vh]">
-        <BackButton extraText={"to Search"} buttonSize="sm" />
+        <BackButton
+          extraText={"to Search"}
+          buttonSize="sm"
+          ariaLabel="back button"
+        />
       </section>
       <section className="flex flex-col w-[80vw] h-[50vh] items-center justify-end space-y-2 max-w-lg">
         <h2 className="font-nunito font-bold text-xl text-dark-color text-center">
@@ -118,12 +128,13 @@ export default function Results({ meals, noMeal }) {
         <img
           className="w-[100%] max-h-[25vh] object-cover rounded"
           src={meal.image}
-          alt="recipe image"
+          alt={meal.name}
         />
         <section className="flex flex-row justify-between w-[80vw] space-x-2 max-w-lg">
           <MainButton
             buttonText={buttonText}
             leftIcon={buttonIcon}
+            ariaLabel="view or hide recipe"
             buttonSize="lg"
             colorMode="dark"
             buttonWidth="80%"
@@ -134,6 +145,7 @@ export default function Results({ meals, noMeal }) {
           />
           <FavouritesButton
             buttonText={<StarIcon />}
+            ariaLabel="add or remove from favourites"
             buttonSize="lg"
             buttonWidth="20%"
             isDisabled={false}
@@ -163,6 +175,7 @@ export default function Results({ meals, noMeal }) {
               buttonSize="sm"
               buttonText={"Return to Top"}
               colorMode="light"
+              ariaLabel="return to top"
             />
           </section>
         </Collapse>
@@ -173,6 +186,7 @@ export default function Results({ meals, noMeal }) {
           Prefer something else?
         </h2>
         <MainButton
+          ariaLabel="choose again"
           onClick={() => {
             if (isCollapseOpen) {
               onToggle();
@@ -217,8 +231,14 @@ export async function getServerSideProps(context) {
     mealsArray = data.payload;
   }
   if (mealsArray.length === 0) {
-    return { props: { meals: [{}], noMeal: true } };
+    return { props: { meals: [{}], noMeal: true, docTitle: "No Results" } };
   } else {
-    return { props: { meals: mealsArray, noMeal: false } };
+    return {
+      props: {
+        meals: mealsArray,
+        noMeal: false,
+        docTitle: `Results for ${mealType} with ${searchIngredients}`,
+      },
+    };
   }
 }

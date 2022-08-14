@@ -1,6 +1,7 @@
 // Profile page - displays profile details when logged in
 
 import React from "react";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import MainButton from "../components/MainButton";
 import { useUser } from "@auth0/nextjs-auth0";
@@ -17,6 +18,9 @@ export default function Profile() {
   return (
     user && (
       <main className="flex flex-col h-[80vh] justify-center items-center space-y-14">
+        <Head>
+          <title>Profile page</title>
+        </Head>
         <section className="flex flex-col items-center space-y-4 w-screen">
           <Image borderRadius="full" src={user.picture} alt={user.name} />
           <h2 className=" font-nunito font-bold text-2xl w-[80vw] text-center">
@@ -62,7 +66,4 @@ export default function Profile() {
       </main>
     )
   );
-}
-{
-  /* <p>{user.email}</p>; */
 }
