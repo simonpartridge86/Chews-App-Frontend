@@ -8,7 +8,10 @@ export default function Custom404() {
   const router = useRouter();
 
   return (
-    <main className="flex flex-col justify-center items-center w-screen h-[80vh]">
+    <main
+      aria-label="Page not found"
+      className="flex flex-col justify-center items-center w-screen h-[80vh]"
+    >
       <VStack spacing={5} align="center" className="max-w-lg">
         <h1 className="font-nunito font-bold text-2xl text-dark-color text-center">
           404 - Page Not Found

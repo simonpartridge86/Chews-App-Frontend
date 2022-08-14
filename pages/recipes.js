@@ -42,7 +42,10 @@ function Recipes() {
   }
   if (favouritesExist === true) {
     return (
-      <main className="flex flex-col justify-around items-center w-screen">
+      <main
+        aria-label="Search results"
+        className="flex flex-col justify-around items-center w-screen"
+      >
         <section className="absolute top-[12vh] left-[2vh]">
           <BackButton extraText={"to Favourites"} buttonSize="sm" />
         </section>

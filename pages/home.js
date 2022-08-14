@@ -11,7 +11,10 @@ export default function Home() {
   const { user, error, isLoading } = useUser();
 
   return (
-    <main className="flex flex-col h-[80vh] justify-center items-center space-y-14">
+    <main
+      aria-label="Home page"
+      className="flex flex-col h-[80vh] justify-center items-center space-y-14"
+    >
       <section className="flex flex-col items-center space-y-4 w-screen">
         <h1 className="font-nunito font-bold text-2xl">Welcome to</h1>
         <ChewsLogo theme={"brand.primary"} size={"4xl"} />

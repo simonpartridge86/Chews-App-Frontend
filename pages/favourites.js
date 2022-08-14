@@ -32,7 +32,10 @@ export default function Favourites() {
 
   if (!user) {
     return (
-      <main className="flex flex-col h-[80vh] w-screen justify-center items-center">
+      <main
+        aria-label="Your favourite dishes"
+        className="flex flex-col h-[80vh] w-screen justify-center items-center"
+      >
         <section className="text-center w-[80vw] space-y-4">
           <h1 className="font-permanent-marker text-primary-color text-2xl w-[80vw]">
             Login to View Favourites

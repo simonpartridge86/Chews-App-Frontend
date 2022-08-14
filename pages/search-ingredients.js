@@ -108,7 +108,10 @@ export default function SearchIngredients() {
 
   if (isLoading) return <LoadingScreen />; // makes LoadingScreen component show while the next Results page is loading
   return (
-    <main className="h-[80vh] w-screen flex flex-col items-center justify-center space-y-6">
+    <main
+      aria-label="Ingredients search"
+      className="h-[80vh] w-screen flex flex-col items-center justify-center space-y-6"
+    >
       <section className="absolute top-[12vh] left-[2vh]">
         <BackButton extraText={"to Search Options"} buttonSize="sm" />
       </section>

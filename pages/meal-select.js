@@ -10,7 +10,10 @@ export default function MealSelect() {
   const router = useRouter();
 
   return (
-    <main className="flex flex-col h-[80vh] justify-center items-center">
+    <main
+      aria-label="Select your meals"
+      className="flex flex-col h-[80vh] justify-center items-center"
+    >
       <section className="absolute top-[12vh] left-[2vh]">
         <BackButton extraText={"to Home"} buttonSize="sm" />
       </section>

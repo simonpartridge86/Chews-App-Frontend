@@ -16,7 +16,10 @@ export default function Profile() {
 
   return (
     user && (
-      <main className="flex flex-col h-[80vh] justify-center items-center space-y-14">
+      <main
+        aria-label="Your profile page"
+        className="flex flex-col h-[80vh] justify-center items-center space-y-14"
+      >
         <section className="flex flex-col items-center space-y-4 w-screen">
           <Image borderRadius="full" src={user.picture} alt={user.name} />
           <h2 className=" font-nunito font-bold text-2xl w-[80vw] text-center">

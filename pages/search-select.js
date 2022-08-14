@@ -76,7 +76,10 @@ export default function SearchSelect() {
   if (isLoading) return <LoadingScreen />; // makes LoadingScreen component show while the next Results page is loading
 
   return (
-    <main className="flex flex-col h-[80vh] w-screen justify-center items-center">
+    <main
+      aria-label="Choose your search"
+      className="flex flex-col h-[80vh] w-screen justify-center items-center"
+    >
       <section className="absolute top-[12vh] left-[2vh]">
         <BackButton extraText={"to Meal Options"} buttonSize="sm" />
       </section>
