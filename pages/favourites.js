@@ -37,10 +37,14 @@ export default function Favourites() {
         className="flex flex-col h-[80vh] w-screen justify-center items-center"
       >
         <section className="text-center w-[80vw] space-y-4">
-          <h1 className="font-permanent-marker text-primary-color text-2xl w-[80vw]">
+          <h1
+            ariaLabel="Login to View Favourites "
+            className="font-permanent-marker text-primary-color text-2xl w-[80vw]"
+          >
             Login to View Favourites
           </h1>
           <MainButton
+            ariaLabel="Login"
             borderWidthRecipe={"0px"}
             buttonWidth="75%"
             buttonSize="md"
@@ -58,12 +62,16 @@ export default function Favourites() {
   }
   if (favouritesExist === false) {
     return (
-      <main className="flex flex-col h-[80vh] w-screen justify-center items-center">
+      <main
+        ariaLabel="No favourites in your list"
+        className="flex flex-col h-[80vh] w-screen justify-center items-center"
+      >
         <section className="text-center w-[80vw] space-y-4">
           <h1 className="font-permanent-marker text-primary-color text-2xl w-[80vw]">
             No Favourites Added
           </h1>
           <MainButton
+            ariaLabel="Return to Home"
             borderWidthRecipe={"0px"}
             buttonWidth="75%"
             buttonSize="md"
@@ -81,7 +89,13 @@ export default function Favourites() {
   }
   if (favouritesExist === true) {
     return (
-      <main className="flex flex-col min-h-[80vh] justify-start items-center space-y-[2vh] pb-[2vh] pt-[2vh]">
+      <main
+        ariaLabel="Your favourites list"
+        className="flex flex-col min-h-[80vh] justify-start items-center space-y-[2vh] pb-[2vh] pt-[2vh]"
+      >
+        <Head>
+          <title>Favourite page</title>
+        </Head>
         <section className="text-center">
           <h1 className="font-permanent-marker text-primary-color font-bold text-2xl">
             Your Favourites

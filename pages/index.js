@@ -15,6 +15,9 @@ export default function LogIn() {
       aria-label="Login page"
       className="flex flex-col justify-evenly h-screen w-screen items-center bg-primary-color"
     >
+      <Head>
+        <title>Chews your meal</title>
+      </Head>
       <section className="flex flex-col items-center space-y-4 w-screen">
         <ChewsLogo theme={"brand.light"} size={"4xl"} />
         <h2 className="text-light-color text-xl font-bold italic font-nunito">
