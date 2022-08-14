@@ -5,6 +5,7 @@ import { Button } from "@chakra-ui/react";
 import ChewsLogo from "../components/ChewsLogo";
 import Link from "next/link";
 import { useUser } from "@auth0/nextjs-auth0";
+import Head from "next/head";
 
 export default function LogIn() {
   const { user, error, isLoading } = useUser();

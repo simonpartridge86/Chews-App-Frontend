@@ -3,6 +3,7 @@
 import { useRouter } from "next/router";
 import { VStack } from "@chakra-ui/react";
 import MainButton from "../components/MainButton";
+import Head from "next/head";
 
 export default function Custom404() {
   const router = useRouter();

@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import ChewsLogo from "../components/ChewsLogo";
 import MainButton from "../components/MainButton";
 import { useUser } from "@auth0/nextjs-auth0";
+import Head from "next/head";
 
 export default function Home() {
   const router = useRouter();
