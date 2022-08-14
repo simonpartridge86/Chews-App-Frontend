@@ -11,7 +11,7 @@ export default function MealSelect() {
   const router = useRouter();
 
   return (
-    <main className="flex flex-col h-[80vh] justify-center items-center">
+    <main className="flex flex-col h-[80vh] justify-center items-center" aria-label="Select your meals">
       <Head>
         <title>Choose meal type</title>
       </Head>

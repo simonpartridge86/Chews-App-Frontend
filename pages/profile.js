@@ -17,7 +17,7 @@ export default function Profile() {
 
   return (
     user && (
-      <main className="flex flex-col h-[80vh] justify-center items-center space-y-14">
+      <main className="flex flex-col h-[80vh] justify-center items-center space-y-14" aria-label="Your profile page">
         <Head>
           <title>Profile page</title>
         </Head>

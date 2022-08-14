@@ -43,7 +43,7 @@ function Recipes() {
   }
   if (favouritesExist === true) {
     return (
-      <main className="flex flex-col justify-around items-center w-screen">
+      <main className="flex flex-col justify-around items-center w-screen" aria-label="Search results">
         <Head>
           <title>{`Recipe: ${meal.name}`}</title>
         </Head>

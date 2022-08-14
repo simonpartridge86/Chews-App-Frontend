@@ -109,7 +109,7 @@ export default function SearchIngredients() {
 
   if (isLoading) return <LoadingScreen />; // makes LoadingScreen component show while the next Results page is loading
   return (
-    <main className="h-[80vh] w-screen flex flex-col items-center justify-center space-y-6">
+    <main className="h-[80vh] w-screen flex flex-col items-center justify-center space-y-6" aria-label="Ingredients search">
       <Head>
         <title>Choose ingredients</title>
       </Head>

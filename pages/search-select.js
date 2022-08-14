@@ -77,7 +77,7 @@ export default function SearchSelect() {
   if (isLoading) return <LoadingScreen />; // makes LoadingScreen component show while the next Results page is loading
 
   return (
-    <main className="flex flex-col h-[80vh] w-screen justify-center items-center">
+    <main className="flex flex-col h-[80vh] w-screen justify-center items-center" aria-label="Choose your search">
       <Head>
         <title>Choose search option</title>
       </Head>
