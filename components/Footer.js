@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer className="flex flex-col justify-evenly items-center bg-dark-color text-light-color h-[10vh] font-nunito">
       <p className="text-light-color text-md font-nunito">
-        Served up by The Baristacrats
+        Served up by <a href="/about">The Baristacrats</a>
       </p>
       <p className="text-light-color text-md font-nunito">
         Powered by{" "}

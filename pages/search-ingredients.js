@@ -1,6 +1,6 @@
-// Search-Ingredients page - allows user to add ingredients and additional filters to their search
+// Search-Ingredients page - allows user to add ingredients to their search
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import {
   Divider,
@@ -19,13 +19,13 @@ import { Search2Icon, AddIcon, EditIcon } from "@chakra-ui/icons";
 import MainButton from "../components/MainButton";
 import BackButton from "../components/BackButton";
 import AlertModal from "../components/AlertModal";
-import FilterModal from "../components/FilterModal";
+import LoadingScreen from "../components/LoadingScreen";
 
 export default function SearchIngredients() {
   const router = useRouter();
   const mealType = router.query.meal;
 
-  // useDisclosure hooks for alert and filter modals
+  // Chakra useDisclosure hooks for alert modals
   const {
     isOpen: isOpenAlert1,
     onOpen: onOpenAlert1,
@@ -46,26 +46,23 @@ export default function SearchIngredients() {
     onOpen: onOpenAlert4,
     onClose: onCloseAlert4,
   } = useDisclosure();
-  const {
-    isOpen: isOpenFilter,
-    onOpen: onOpenFilter,
-    onClose: onCloseFilter,
-  } = useDisclosure();
 
-  // Various useState hooks to store user inputs and selected ingredients
+  // Various useState hooks to store user inputs and selected ingredients, among others
   const [ingredientOptions, setIngredientOptions] = useState([]);
   const [inputText, setInputText] = useState("");
   const [currentIngredient, setCurrentIngredient] = useState("");
   const [tagsArray, setTagsArray] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // fetchIngredients function fetches ingredients list from Edamam API based on user input - UPDATE TO THEMEALDB INGREDIENTS
+  // fetchIngredients function fetches ingredients list from our database (originally from TheMealDB API) based on user input
   async function fetchIngredients(inputText) {
+    console.log(inputText);
     const response = await fetch(
-      `https://api.edamam.com/auto-complete?app_id=5cca2bea&app_key=%2061c41e444a3a1fa44fc42fcbe169faad&q=${inputText}`
+      `https://chews-backend.herokuapp.com/ingredients-list/${inputText}`
     );
+
     const data = await response.json();
-    const newData = [...data.slice(0, 5)];
-    setIngredientOptions(newData);
+    return data.payload;
   }
 
   // addTag function validates user input before adding new tag to ingredients list, and resets input on text input and dropdown menu
@@ -98,12 +95,24 @@ export default function SearchIngredients() {
     setTagsArray([...tagsArray.slice(0, index), ...tagsArray.slice(index + 1)]);
   }
 
+  // useEffect function runs the ingredients fetch to ensure up-to-date rendering
+  useEffect(() => {
+    if (inputText && /^[a-zA-Z]/.test(inputText)) {
+      const getIngredients = async () => {
+        const searchIngredient = await fetchIngredients(inputText);
+        setIngredientOptions(searchIngredient);
+      };
+      getIngredients();
+    }
+  }, [inputText]);
+
+  if (isLoading) return <LoadingScreen />; // makes LoadingScreen component show while the next Results page is loading
   return (
     <main className="h-[80vh] w-screen flex flex-col items-center justify-center space-y-6">
       <section className="absolute top-[12vh] left-[2vh]">
         <BackButton extraText={"to Search Options"} buttonSize="sm" />
       </section>
-      <VStack width="80%" className="max-w-lg">
+      <VStack width="80vw" className="max-w-md">
         <h1 className="font-nunito font-bold text-2xl text-center">
           Time to{" "}
           <span className="font-permanent-marker text-center text-2xl text-primary-color font-normal">
@@ -120,9 +129,8 @@ export default function SearchIngredients() {
             type="text"
             placeholder="Type ingredients here"
             fontFamily={"brand.main"}
-            onChange={(e) => {
+            onChange={async (e) => {
               setInputText(e.target.value);
-              fetchIngredients(inputText);
             }}
             value={inputText}
           />
@@ -186,7 +194,7 @@ export default function SearchIngredients() {
         />
       </VStack>
       <Divider width="80%" className="max-w-lg" />
-      <VStack width="80%" className="max-w-lg">
+      <VStack width="80%" className="max-w-md">
         <h2 className="font-nunito font-bold text-2xl text-center">
           Added your ingredients?
         </h2>
@@ -202,22 +210,15 @@ export default function SearchIngredients() {
           buttonWidth="100%"
           buttonSize="lg"
           onClick={() => {
-            tagsArray.length > 0
-              ? router.push({
-                  pathname: "/results",
-                  query: { meal: mealType, ingredients: { ...tagsArray } },
-                })
-              : onOpenAlert4();
-          }}
-        />
-        <MainButton
-          leftIcon={<EditIcon />}
-          buttonText="Edit Search Filters"
-          buttonSize="sm"
-          colorMode="light"
-          buttonWidth="100%"
-          onClick={() => {
-            onOpenFilter();
+            if (tagsArray.length > 0) {
+              router.push({
+                pathname: "/results/by-ingredients",
+                query: { meal: mealType, ingredients: tagsArray.join() },
+              });
+              setIsLoading(true);
+            } else {
+              onOpenAlert4();
+            }
           }}
         />
       </VStack>
@@ -245,7 +246,6 @@ export default function SearchIngredients() {
         headerText="Wait!"
         bodyText="Please add some ingredients first!"
       />
-      <FilterModal isOpen={isOpenFilter} onClose={onCloseFilter} />
     </main>
   );
 }

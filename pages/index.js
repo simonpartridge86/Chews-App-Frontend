@@ -3,8 +3,11 @@
 import { useRouter } from "next/router";
 import { Button } from "@chakra-ui/react";
 import ChewsLogo from "../components/ChewsLogo";
+import Link from "next/link";
+import { useUser } from "@auth0/nextjs-auth0";
 
 export default function LogIn() {
+  const { user, error, isLoading } = useUser();
   const router = useRouter();
 
   return (
@@ -30,11 +33,18 @@ export default function LogIn() {
             color: "brand.light",
           }}
           _hover={{ transform: "translateY(-1px)" }}
+          onClick={() => {
+            router.push({
+              pathname: "/api/auth/login",
+            });
+          }}
         >
           Log In / Sign Up
         </Button>
         <Button
           bg="brand.primary"
+          borderWidth={"2px"}
+          borderColor={"brand.light"}
           size="lg"
           rounded="md"
           width="75%"
