@@ -27,7 +27,7 @@ async function fetchMealByIngredients(meal, ingredients) {
   }
 }
 
-export default function Results({ meals, noMeal, docTitle }) {
+export default function Results({ initialMeal, noMeal, docTitle }) {
   // various hooks to handle changes on page
   const [meal, setMeal] = useState(initialMeal);
   const [buttonText, setButtonText] = useState("View Recipe");
