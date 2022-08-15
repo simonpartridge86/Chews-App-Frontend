@@ -22,6 +22,7 @@ export default function MainButton({
   isDisabled,
   leftIcon,
   rightIcon,
+  ariaLabel,
 }) {
   if (!borderWidthRecipe) {
     borderWidthRecipe = "2px";
@@ -29,6 +30,7 @@ export default function MainButton({
   if (colorMode === "light") {
     return (
       <Button
+        aria-label={ariaLabel}
         leftIcon={leftIcon}
         rightIcon={rightIcon}
         disabled={isDisabled}
@@ -58,6 +60,7 @@ export default function MainButton({
   } else if (colorMode === "dark") {
     return (
       <Button
+        aria-label={ariaLabel}
         leftIcon={leftIcon}
         rightIcon={rightIcon}
         disabled={isDisabled}

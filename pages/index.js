@@ -5,13 +5,20 @@ import { Button } from "@chakra-ui/react";
 import ChewsLogo from "../components/ChewsLogo";
 import Link from "next/link";
 import { useUser } from "@auth0/nextjs-auth0";
+import Head from "next/head";
 
 export default function LogIn() {
   const { user, error, isLoading } = useUser();
   const router = useRouter();
 
   return (
-    <main className="flex flex-col justify-evenly h-screen w-screen items-center bg-primary-color">
+    <main
+      aria-label="Login page"
+      className="flex flex-col justify-evenly h-screen w-screen items-center bg-primary-color"
+    >
+      <Head>
+        <title>Chews your meal</title>
+      </Head>
       <section className="flex flex-col items-center space-y-4 w-screen">
         <ChewsLogo theme={"brand.light"} size={"4xl"} />
         <h2 className="text-light-color text-xl font-bold italic font-nunito">

@@ -6,6 +6,7 @@ import RecipeCard from "../components/RecipeCard";
 import { useUser } from "@auth0/nextjs-auth0";
 import MainButton from "../components/MainButton";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 export default function Favourites() {
   const router = useRouter();
@@ -30,37 +31,18 @@ export default function Favourites() {
     setMealArray(storedFavourites);
   }, []);
 
-  if (!user) {
+  if (user && favouritesExist === false) {
     return (
-      <main className="flex flex-col h-[80vh] w-screen justify-center items-center">
-        <section className="text-center w-[80vw] space-y-4">
-          <h1 className="font-permanent-marker text-primary-color text-2xl w-[80vw]">
-            Login to View Favourites
-          </h1>
-          <MainButton
-            borderWidthRecipe={"0px"}
-            buttonWidth="75%"
-            buttonSize="md"
-            buttonText="Login / Signup"
-            colorMode="dark"
-            onClick={() => {
-              router.push({
-                pathname: "/api/auth/login",
-              });
-            }}
-          />
-        </section>
-      </main>
-    );
-  }
-  if (favouritesExist === false) {
-    return (
-      <main className="flex flex-col h-[80vh] w-screen justify-center items-center">
+      <main
+        ariaLabel="No favourites in your list"
+        className="flex flex-col h-[80vh] w-screen justify-center items-center"
+      >
         <section className="text-center w-[80vw] space-y-4">
           <h1 className="font-permanent-marker text-primary-color text-2xl w-[80vw]">
             No Favourites Added
           </h1>
           <MainButton
+            ariaLabel="Return to Home"
             borderWidthRecipe={"0px"}
             buttonWidth="75%"
             buttonSize="md"
@@ -76,9 +58,15 @@ export default function Favourites() {
       </main>
     );
   }
-  if (favouritesExist === true) {
+  if (user && favouritesExist === true) {
     return (
-      <main className="flex flex-col min-h-[80vh] justify-start items-center space-y-[2vh] pb-[2vh] pt-[2vh]">
+      <main
+        ariaLabel="Your favourites list"
+        className="flex flex-col min-h-[80vh] justify-start items-center space-y-[2vh] pb-[2vh] pt-[2vh]"
+      >
+        <Head>
+          <title>Favourite page</title>
+        </Head>
         <section className="text-center">
           <h1 className="font-permanent-marker text-primary-color font-bold text-2xl">
             Your Favourites
@@ -89,6 +77,39 @@ export default function Favourites() {
             return <RecipeCard key={meal.id} meal={meal} />;
           })}
         </SimpleGrid>
+      </main>
+    );
+  }
+  if (!user) {
+    return (
+      <main
+        aria-label="Your favourite dishes"
+        className="flex flex-col h-[80vh] w-screen justify-center items-center"
+      >
+        <Head>
+          <title>Favorites page</title>
+        </Head>
+        <section className="text-center w-[80vw] space-y-4">
+          <h1
+            ariaLabel="Login to View Favourites "
+            className="font-permanent-marker text-primary-color text-2xl w-[80vw]"
+          >
+            Login to View Favourites
+          </h1>
+          <MainButton
+            ariaLabel="Login"
+            borderWidthRecipe={"0px"}
+            buttonWidth="75%"
+            buttonSize="md"
+            buttonText="Login / Signup"
+            colorMode="dark"
+            onClick={() => {
+              router.push({
+                pathname: "/api/auth/login",
+              });
+            }}
+          />
+        </section>
       </main>
     );
   }
