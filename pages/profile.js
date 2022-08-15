@@ -7,17 +7,21 @@ import MainButton from "../components/MainButton";
 import { useUser } from "@auth0/nextjs-auth0";
 import { Grid, GridItem } from "@chakra-ui/react";
 import { Image } from "@chakra-ui/react";
+import LoadingScreen from "../components/LoadingScreen";
 
 export default function Profile() {
   const router = useRouter();
   const { user, error, isLoading } = useUser();
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <LoadingScreen />;
   if (error) return <div>{error.message}</div>;
 
   return (
     user && (
-      <main className="flex flex-col h-[80vh] justify-center items-center space-y-14" aria-label="Your profile page">
+      <main
+        className="flex flex-col h-[80vh] justify-center items-center space-y-14"
+        aria-label="Your profile page"
+      >
         <Head>
           <title>Profile page</title>
         </Head>
