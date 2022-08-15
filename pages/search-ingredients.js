@@ -151,6 +151,7 @@ export default function SearchIngredients() {
           Select from list:
         </label>
         <Select
+          size="lg"
           ariaLabel="choose from list"
           placeholder="Chews from list"
           name="ingredients"

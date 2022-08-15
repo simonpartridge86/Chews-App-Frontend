@@ -7,6 +7,7 @@ import { useUser } from "@auth0/nextjs-auth0";
 import MainButton from "../components/MainButton";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import LoadingScreen from "../components/LoadingScreen";
 
 export default function Favourites() {
   const router = useRouter();
@@ -30,6 +31,8 @@ export default function Favourites() {
     const storedFavourites = getFavourites();
     setMealArray(storedFavourites);
   }, []);
+
+  if (isLoading) return <LoadingScreen />;
 
   if (user && favouritesExist === false) {
     return (
