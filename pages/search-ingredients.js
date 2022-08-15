@@ -59,7 +59,7 @@ export default function SearchIngredients() {
   async function fetchIngredients(inputText) {
     console.log(inputText);
     const response = await fetch(
-      `http://localhost:3000/ingredients-list/${inputText}`
+      `https://chews-backend.herokuapp.com/ingredients-list/${inputText}`
     );
 
     const data = await response.json();
@@ -109,7 +109,10 @@ export default function SearchIngredients() {
 
   if (isLoading) return <LoadingScreen />; // makes LoadingScreen component show while the next Results page is loading
   return (
-    <main className="h-[80vh] w-screen flex flex-col items-center justify-center space-y-6" aria-label="Ingredients search">
+    <main
+      className="h-[80vh] w-screen flex flex-col items-center justify-center space-y-6"
+      aria-label="Ingredients search"
+    >
       <Head>
         <title>Choose ingredients</title>
       </Head>

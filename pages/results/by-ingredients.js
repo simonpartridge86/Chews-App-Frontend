@@ -14,13 +14,13 @@ import { useRouter } from "next/router";
 async function fetchMealByIngredients(meal, ingredients) {
   if (meal === "main dish") {
     const response = await fetch(
-      `http://localhost:3000/ingredients-category?category=main&ingredients=${ingredients}`
+      `https://chews-backend.herokuapp.com/ingredients-category?category=main&ingredients=${ingredients}`
     );
     const data = await response.json();
     return data.payload[0];
   } else {
     const response = await fetch(
-      `http://localhost:3000/ingredients-category?category=${meal}&ingredients=${ingredients}`
+      `https://chews-backend.herokuapp.com/ingredients-category?category=${meal}&ingredients=${ingredients}`
     );
     const data = await response.json();
     return data.payload[0];
