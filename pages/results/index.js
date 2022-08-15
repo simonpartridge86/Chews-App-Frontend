@@ -5,12 +5,14 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useDisclosure, Divider, Collapse } from "@chakra-ui/react";
 import { StarIcon, ViewIcon, RepeatIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { useUser } from "@auth0/nextjs-auth0";
 import BackButton from "../../components/BackButton";
 import FilterModal from "../../components/FilterModal";
 import MainButton from "../../components/MainButton";
 import RecipeView from "../../components/RecipeView";
 import NoResultsDisplay from "../../components/NoResultsDisplay";
 import FavouritesButton from "../../components/FavouritesButton";
+import NoFavouritesButton from "../../components/NoFavouritesButton";
 
 async function fetchRandomMeal(mealType, category, area) {
   if (category && area) {
@@ -80,6 +82,7 @@ async function fetchRandomMeal(mealType, category, area) {
 
 export default function Results({ initialMeal, noMeal, docTitle }) {
   // Various hooks to manage changes on page
+  const { user, error, isLoading } = useUser();
   const [meal, setMeal] = useState(initialMeal);
   const [buttonText, setButtonText] = useState("View Recipe");
   const [buttonIcon, setButtonIcon] = useState(<ViewIcon />);
@@ -212,17 +215,26 @@ export default function Results({ initialMeal, noMeal, docTitle }) {
               changeButtonText();
             }}
           />
-          <FavouritesButton
-            ariaLabel="add or remove from favourites"
-            buttonText={<StarIcon />}
-            buttonSize="lg"
-            buttonWidth="20%"
-            isDisabled={false}
-            isFavourite={isFavourite}
-            onClick={() => {
-              handleFavouritesClick();
-            }}
-          />
+          {user && (
+            <FavouritesButton
+              ariaLabel="add or remove from favourites"
+              buttonText={<StarIcon />}
+              buttonSize="lg"
+              buttonWidth="20%"
+              isDisabled={false}
+              isFavourite={isFavourite}
+              onClick={() => {
+                handleFavouritesClick();
+              }}
+            />
+          )}
+          {!user && (
+            <NoFavouritesButton
+              ariaLabel="add or remove from favourites"
+              buttonSize="lg"
+              buttonWidth="20%"
+            />
+          )}
         </section>
       </section>
 

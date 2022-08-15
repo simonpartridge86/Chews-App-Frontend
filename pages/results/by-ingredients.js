@@ -10,6 +10,8 @@ import RecipeView from "../../components/RecipeView";
 import NoResultsDisplay from "../../components/NoResultsDisplay";
 import FavouritesButton from "../../components/FavouritesButton";
 import { useRouter } from "next/router";
+import NoFavouritesButton from "../../components/NoFavouritesButton";
+import { useUser } from "@auth0/nextjs-auth0";
 
 async function fetchMealByIngredients(meal, ingredients) {
   if (meal === "main dish") {
@@ -29,6 +31,7 @@ async function fetchMealByIngredients(meal, ingredients) {
 
 export default function Results({ initialMeal, noMeal, docTitle }) {
   // various hooks to handle changes on page
+  const { user, error, isLoading } = useUser();
   const [meal, setMeal] = useState(initialMeal);
   const [buttonText, setButtonText] = useState("View Recipe");
   const [buttonIcon, setButtonIcon] = useState(<ViewIcon />);
@@ -174,17 +177,26 @@ export default function Results({ initialMeal, noMeal, docTitle }) {
               changeButtonText();
             }}
           />
-          <FavouritesButton
-            buttonText={<StarIcon />}
-            ariaLabel="add or remove from favourites"
-            buttonSize="lg"
-            buttonWidth="20%"
-            isDisabled={false}
-            isFavourite={isFavourite}
-            onClick={() => {
-              handleFavouritesClick();
-            }}
-          />
+          {user && (
+            <FavouritesButton
+              buttonText={<StarIcon />}
+              ariaLabel="add or remove from favourites"
+              buttonSize="lg"
+              buttonWidth="20%"
+              isDisabled={false}
+              isFavourite={isFavourite}
+              onClick={() => {
+                handleFavouritesClick();
+              }}
+            />
+          )}
+          {!user && (
+            <NoFavouritesButton
+              ariaLabel="add or remove from favourites"
+              buttonSize="lg"
+              buttonWidth="20%"
+            />
+          )}
         </section>
       </section>
 
