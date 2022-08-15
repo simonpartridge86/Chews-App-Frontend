@@ -1,6 +1,7 @@
 // Results page - displays random recipe from local data
 
 import React, { useState, useEffect } from "react";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useDisclosure, Divider, Collapse } from "@chakra-ui/react";
 import { StarIcon, ViewIcon, RepeatIcon, ViewOffIcon } from "@chakra-ui/icons";
@@ -81,7 +82,7 @@ async function fetchRandomMeal(mealType, category, area) {
   }
 }
 
-export default function Results({ initialMeal, noMeal }) {
+export default function Results({ initialMeal, noMeal, docTitle }) {
   // Various hooks to manage changes on page
   const [meal, setMeal] = useState(initialMeal);
   const [buttonText, setButtonText] = useState("View Recipe");
@@ -172,9 +173,19 @@ export default function Results({ initialMeal, noMeal }) {
     return <NoResultsDisplay hasHistory={false} />;
   } //returns error page if no more results found
   return (
-    <main className="flex flex-col min-h-[80vh] w-screen items-center justify-center space-y-5 pb-[2vh] pt-[5vh]">
+    <main
+      aria-label={docTitle}
+      className="flex flex-col min-h-[80vh] w-screen items-center justify-center space-y-5 pb-[2vh] pt-[5vh]"
+    >
+      <Head>
+        <title>{docTitle}</title>
+      </Head>
       <section className="absolute top-[12vh] left-[2vh]">
-        <BackButton extraText={"to Search"} buttonSize="sm" />
+        <BackButton
+          extraText={"to Search"}
+          buttonSize="sm"
+          ariaLabel="back button"
+        />
       </section>
       <section className="flex flex-col w-[80vw] h-[50vh] items-center justify-end space-y-2 max-w-lg">
         <h2 className="font-nunito font-bold text-xl text-dark-color text-center">
@@ -190,10 +201,11 @@ export default function Results({ initialMeal, noMeal }) {
         <img
           className="w-[100%] max-h-[25vh] object-cover rounded"
           src={meal.image}
-          alt="recipe image"
+          alt={meal.name}
         />
         <section className="flex flex-row justify-between w-[80vw] space-x-2 max-w-lg">
           <MainButton
+            ariaLabel="view or hide recipe"
             buttonText={buttonText}
             leftIcon={buttonIcon}
             buttonSize="lg"
@@ -205,6 +217,7 @@ export default function Results({ initialMeal, noMeal }) {
             }}
           />
           <FavouritesButton
+            ariaLabel="add or remove from favourites"
             buttonText={<StarIcon />}
             buttonSize="lg"
             buttonWidth="20%"
@@ -226,6 +239,7 @@ export default function Results({ initialMeal, noMeal }) {
           />
           <section className="flex flex-col w-[80vw] items-center space-y-2 max-w-lg">
             <MainButton
+              ariaLabel="return to top"
               onClick={() => {
                 window.scrollTo({
                   top: 0,
@@ -245,6 +259,7 @@ export default function Results({ initialMeal, noMeal }) {
           Prefer something else?
         </h2>
         <MainButton
+          ariaLabel="choose again"
           onClick={() => {
             if (isCollapseOpen) {
               onToggle();
@@ -287,8 +302,14 @@ export async function getServerSideProps(context) {
       measures: meal.measures,
       instructions: meal.instructions,
     };
-    return { props: { initialMeal: mealObject, noMeal: false } };
+    return {
+      props: {
+        initialMeal: mealObject,
+        noMeal: false,
+        docTitle: `Results for ${context.query.meal} (${context.query.category},${context.query.area})`,
+      },
+    };
   } else {
-    return { props: { initialMeal: {}, noMeal: true } };
+    return { props: { initialMeal: {}, noMeal: true, docTitle: "No Results" } };
   }
 }

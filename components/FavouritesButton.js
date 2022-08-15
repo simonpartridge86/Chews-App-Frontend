@@ -30,6 +30,7 @@ export default function FavouritesButton({
   rightIcon,
   isFavourite,
   onClick,
+  ariaLabel,
 }) {
   const toast = useToast();
   let buttonTextColor;
@@ -60,6 +61,7 @@ export default function FavouritesButton({
   if (isFavourite === false) {
     return (
       <Button
+        aria-label={ariaLabel}
         leftIcon={leftIcon}
         rightIcon={rightIcon}
         disabled={isDisabled}
@@ -94,6 +96,7 @@ export default function FavouritesButton({
   if (isFavourite === true) {
     return (
       <Button
+        aria-label={ariaLabel}
         leftIcon={leftIcon}
         rightIcon={rightIcon}
         disabled={isDisabled}
