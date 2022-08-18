@@ -37,7 +37,7 @@ export default function RecipeCard({ meal }) {
         <p className="font-nunito text-xs font-semibold text-middle truncate max-w-[180px]">
           {meal.ingredients.join(", ")}
         </p>
-        <section className="flex flex-row items-center gap-[1vw]">
+        <section className="flex flex-row items-center gap-[1vw] w-100%">
           <MainButton
             borderWidthRecipe={"0px"}
             buttonWidth="75%"
