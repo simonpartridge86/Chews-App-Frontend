@@ -1,20 +1,23 @@
-// Favourites page - displays list of favourites page
+// FAVOURITES page - displays list of favourites from local storage
 
-import { SimpleGrid } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import RecipeCard from "../components/RecipeCard";
-import { useUser } from "@auth0/nextjs-auth0";
-import MainButton from "../components/MainButton";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import { useUser } from "@auth0/nextjs-auth0";
+import { SimpleGrid } from "@chakra-ui/react";
+import RecipeCard from "../components/RecipeCard";
+import MainButton from "../components/MainButton";
 import LoadingScreen from "../components/LoadingScreen";
 
 export default function Favourites() {
-  const router = useRouter();
-  const { user, error, isLoading } = useUser();
+  // various hooks to handle changes and functionality on page
   const [favouritesExist, setFavouritesExist] = useState(false);
   const [mealArray, setMealArray] = useState([]);
+  const { user, error, isLoading } = useUser();
 
+  const router = useRouter();
+
+  //getFavourites retrieves fabvourites from local storage (if exists)
   function getFavourites() {
     if (!localStorage.getItem("favourites")) {
       setFavouritesExist(false);
@@ -27,6 +30,7 @@ export default function Favourites() {
     }
   }
 
+  //useEffect runs getFavourites to update page on each load
   useEffect(() => {
     const storedFavourites = getFavourites();
     setMealArray(storedFavourites);
@@ -34,6 +38,7 @@ export default function Favourites() {
 
   if (isLoading) return <LoadingScreen />;
 
+  // conditional returns give different returns based on whether user is logged in and/or some favourites exist
   if (user && favouritesExist === false) {
     return (
       <main
@@ -117,41 +122,3 @@ export default function Favourites() {
     );
   }
 }
-
-/*
-PLAN:
-- Hook up favourites from local storage with favourites page ✅ and recipes page ✅ 
-- Extract all meals from local storage ✅ 
-- OR on recipes extract meal from local storage by ID ✅ 
-
-  function handleFavouritesClick() {
-    if (isFavourite === false) {
-      if (!localStorage.getItem("favourites")) {
-        localStorage.setItem("favourites", JSON.stringify([meal]));
-        setIsFavourite(true);
-        return;
-      } else {
-        const storedFavourites = JSON.parse(localStorage.getItem("favourites"));
-        const newFavourites = [...storedFavourites, meal];
-        localStorage.setItem("favourites", JSON.stringify(newFavourites));
-        setIsFavourite(true);
-        return;
-      }
-    }
-    if (isFavourite === true) {
-      const storedFavourites = JSON.parse(localStorage.getItem("favourites"));
-      const index = storedFavourites
-        .map((object) => object.id)
-        .indexOf(meal.id);
-      console.log(index);
-      const newFavourites = [
-        ...storedFavourites.slice(0, index),
-        ...storedFavourites.slice(index + 1),
-      ];
-      localStorage.setItem("favourites", JSON.stringify(newFavourites));
-      setIsFavourite(false);
-      return;
-    }
-  }
-
-*/

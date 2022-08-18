@@ -1,7 +1,5 @@
 // MAINBUTTON COMPONENT - used for stylized buttons throughout the app
 
-import { Button } from "@chakra-ui/react";
-
 /*
 Prop Notes:
  - buttonWidth = to adjust width of button to your needs (not required)
@@ -11,6 +9,8 @@ Prop Notes:
  - colorMode = add "light" for white button with red details, otherwise add "dark" for a standard red button with white details
  - isDisabled = takes boolean to determine whether button is enabled or disabled (true = disabled), defaults to false
 */
+
+import { Button } from "@chakra-ui/react";
 
 export default function MainButton({
   buttonWidth,

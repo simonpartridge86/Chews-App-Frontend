@@ -1,7 +1,9 @@
-// Results page - displays random recipe from local data
+// RESULTS BY INGREDIENT - displays random recipe based on meal type and ingredients selected
 
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
+import { useRouter } from "next/router";
+import { useUser } from "@auth0/nextjs-auth0";
 import { useDisclosure, Divider, Collapse } from "@chakra-ui/react";
 import { StarIcon, ViewIcon, RepeatIcon, ViewOffIcon } from "@chakra-ui/icons";
 import BackButton from "../../components/BackButton";
@@ -9,10 +11,9 @@ import MainButton from "../../components/MainButton";
 import RecipeView from "../../components/RecipeView";
 import NoResultsDisplay from "../../components/NoResultsDisplay";
 import FavouritesButton from "../../components/FavouritesButton";
-import { useRouter } from "next/router";
 import NoFavouritesButton from "../../components/NoFavouritesButton";
-import { useUser } from "@auth0/nextjs-auth0";
 
+// fetchMealByIngredients is declared outside of the page component because it is also used by getServerSideProps
 async function fetchMealByIngredients(meal, ingredients) {
   if (meal === "main dish") {
     const response = await fetch(
@@ -30,15 +31,31 @@ async function fetchMealByIngredients(meal, ingredients) {
 }
 
 export default function Results({ initialMeal, noMeal, docTitle }) {
-  // various hooks to handle changes on page
-  const { user, error, isLoading } = useUser();
+  // various hooks to handle changes and functionality on page
   const [meal, setMeal] = useState(initialMeal);
   const [buttonText, setButtonText] = useState("View Recipe");
   const [buttonIcon, setButtonIcon] = useState(<ViewIcon />);
   const [isFavourite, setIsFavourite] = useState(false);
-  const [isNoMeal, setIsNoMeal] = useState(noMeal);
   const { isOpen: isCollapseOpen, onToggle } = useDisclosure();
+  const { user, error, isLoading } = useUser();
+
   const router = useRouter();
+
+  //getMeal runs all meal fetches initiated by "Chews Again" button
+  async function getMeal() {
+    const fetchedMeal = await fetchMealByIngredients(
+      router.query.meal,
+      router.query.ingredients.toLowerCase()
+    );
+    setMeal({
+      id: fetchedMeal.id,
+      name: fetchedMeal.name,
+      image: fetchedMeal.image,
+      ingredients: fetchedMeal.ingredients,
+      measures: fetchedMeal.measures,
+      instructions: fetchedMeal.instructions,
+    });
+  }
 
   //changeButtonText changes the text on the "View Recipe" button based on whether full recipe is open or closed
   function changeButtonText() {
@@ -51,6 +68,7 @@ export default function Results({ initialMeal, noMeal, docTitle }) {
     }
   }
 
+  // handleFavouritesClick updates the favourites array in local storage and changes button appearance when favourites button clicked
   function handleFavouritesClick() {
     if (isFavourite === false) {
       if (!localStorage.getItem("favourites")) {
@@ -81,22 +99,7 @@ export default function Results({ initialMeal, noMeal, docTitle }) {
     }
   }
 
-  // useEffect(() => {
-  //   console.log(meals[count]);
-  //   if (Object.keys(meals[count]).length === 0) {
-  //     setIsNoMeal(true);
-  //     setMeal({});
-  //   } else {
-  //     setMeal(meals[count]);
-  //     setIsNoMeal(false);
-  //   }
-  // }, [count]);
-
-  useEffect(() => {
-    console.log("useEffect runs", isFavourite);
-    checkFavourites();
-  }, [meal]);
-
+  //checkFavourites checks whether current meal is saved in fabvourites - used to update favourites button appearance & functionality
   function checkFavourites() {
     if (!localStorage.getItem("favourites")) {
       setIsFavourite(false);
@@ -111,28 +114,16 @@ export default function Results({ initialMeal, noMeal, docTitle }) {
     }
   }
 
-  async function getMeal() {
-    const fetchedMeal = await fetchMealByIngredients(
-      router.query.meal,
-      router.query.ingredients.toLowerCase()
-    );
-    if (!fetchedMeal) {
-      setIsNoMeal(true);
-    } else {
-      setMeal({
-        id: fetchedMeal.id,
-        name: fetchedMeal.name,
-        image: fetchedMeal.image,
-        ingredients: fetchedMeal.ingredients,
-        measures: fetchedMeal.measures,
-        instructions: fetchedMeal.instructions,
-      });
-    }
+  //useEffect runs checkFavourites on initial load and every time the meal changes
+  useEffect(() => {
+    checkFavourites();
+  }, [meal]);
+
+  //below code ensures that an error page is displayed if no results found
+  if (noMeal === true) {
+    return <NoResultsDisplay />;
   }
 
-  if (isNoMeal === true) {
-    return <NoResultsDisplay />;
-  } //returns error page if no more results found
   return (
     <main
       aria-label={docTitle}
@@ -142,11 +133,7 @@ export default function Results({ initialMeal, noMeal, docTitle }) {
         <title>{docTitle}</title>
       </Head>
       <section className="absolute top-[12vh] left-[2vh]">
-        <BackButton
-          extraText={"to Search"}
-          buttonSize="sm"
-          ariaLabel="back button"
-        />
+        <BackButton />
       </section>
       <section className="flex flex-col w-[80vw] h-[50vh] items-center justify-end space-y-2 max-w-lg">
         <h2 className="font-nunito font-bold text-xl text-dark-color text-center">
@@ -192,7 +179,7 @@ export default function Results({ initialMeal, noMeal, docTitle }) {
           )}
           {!user && (
             <NoFavouritesButton
-              ariaLabel="add or remove from favourites"
+              ariaLabel="disabled favourites button"
               buttonSize="lg"
               buttonWidth="20%"
             />
@@ -255,14 +242,20 @@ export default function Results({ initialMeal, noMeal, docTitle }) {
   );
 }
 
-//getServerSideProps runs initial fetch request for recipe before page load, this avoids the flicker update caused by useEffect as the alternative
+//getServerSideProps runs initial fetch request for recipe before page load
 export async function getServerSideProps(context) {
   const mealType = context.query.meal;
   const searchIngredients = context.query.ingredients.toLowerCase();
   const meal = await fetchMealByIngredients(mealType, searchIngredients);
   if (!meal) {
-    return { props: { initialMeal: {}, noMeal: true } };
+    return { props: { initialMeal: {}, noMeal: true, docTitle: "No Results" } };
   } else {
-    return { props: { initialMeal: meal, noMeal: false } };
+    return {
+      props: {
+        initialMeal: meal,
+        noMeal: false,
+        docTitle: `Results for ${context.query.meal} (Ingredients: ${context.query.ingredients})`,
+      },
+    };
   }
 }

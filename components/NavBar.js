@@ -1,22 +1,11 @@
 // NAVBAR COMPONENT - for use on all pages through Layout Component - set to take up top 10vh of screen
 // includes HamburgerMenu, logo text, profile pic and horizontal closing line underneath
-/*
-Component contains the navigation bar, with a burger menu, logo, and profile pic, as well as a horizontal line underneath
-The height is set to 10% of the user's screen. Revise this if unsuitable design.
-
-Things to do:
-- Get link for the Logo and working links for hamburger and profile pic
-- Change profile pic for profile pic component
-- Adapt design to suit desktops
-- Allow dark mode
-*/
 
 import { Flex } from "@chakra-ui/react";
 import HamburgerMenu from "./HamburgerMenu";
 import { Divider } from "@chakra-ui/react";
 import { useUser } from "@auth0/nextjs-auth0";
 import { useRouter } from "next/router";
-import { Image } from "@chakra-ui/react";
 
 export default function NavBar() {
   const { user, error, isLoading } = useUser();

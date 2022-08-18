@@ -1,4 +1,4 @@
-// FILTERMODAL COMPONENT - used to display filters on any page
+// FILTERMODAL COMPONENT - used to display filters on search page
 
 /*
 Usage Notes:
