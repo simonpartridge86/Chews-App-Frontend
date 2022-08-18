@@ -85,8 +85,6 @@ export default function FavouritesButton({
     return (
       <Button
         aria-label={ariaLabel}
-        leftIcon={leftIcon}
-        rightIcon={rightIcon}
         disabled={isDisabled}
         onClick={() => {
           onClick();
