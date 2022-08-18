@@ -32,7 +32,7 @@ Please view the app in deployment here: [chews.vercel.app](https://chews.vercel.
 
 ---
 
-## Skills & Retrospective
+## Project Skills & Retrospective
 
 This was our second experience of a group project on School of Code, and aimed to apply knowledge gained throughout School of Code bootcamp, as well as getting further experience of the following skills:
 
@@ -74,7 +74,7 @@ We have planned to add the following functionality in any future sprints:
 
 In addition to technologies that we'd learned on the School of Code bootcamp, namely, React and Auth0, we also selected a number of tools that were new to the team, namely, Next.js, Vercel, Chakra UI and Tailwind CSS:
 
-- Next.js was selected for its improved SEO and performance, dynamic routing, and server-side fetching and rendering.
+- Next.js was selected for its improved SEO and performance, dynamic routing, and server-side rendering and pre-fetching.
 - Vercel was used as the favoured deployment option for Next.js apps.
 - Chakra UI was used for its simple-to-use and highly functional modular components, which enhanced the appearance and functionality of our app and reduced development time.
 - Tailwind CSS was selected for convenient styling of custom components and responsive layouts.
@@ -116,11 +116,11 @@ The app will automatically run on http://localhost:3000 by default, or the next 
 
 ## Color and Font References
 
-| Color                                          | Hex                                        |
-| ---------------------------------------------- | ------------------------------------------ |
-| <span style="color:#FD2B46">Chews Red</span>   | <span style="color:#FD2B46">#FD2B46</span> |
-| <span style="color:#32373B">Chews Black</span> | <span style="color:#32373B">#32373B</span> |
-| <span style="color:#FFF">Chews White</span>    | <span style="color:#FFF">#FFF</span>       |
+| Color                    | Hex                                        |
+| ------------------------ | ------------------------------------------ |
+| <span>Chews Red</span>   | <span style="color:#FD2B46">#FD2B46</span> |
+| <span>Chews Black</span> | <span style="color:#32373B">#32373B</span> |
+| <span>Chews White</span> | <span style="color:#FFFFFF">#FFFFFF</span> |
 
 Header font - [Permanent Marker](https://fonts.adobe.com/fonts/permanent-marker)
 

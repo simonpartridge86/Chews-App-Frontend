@@ -7,6 +7,7 @@ import { useUser } from "@auth0/nextjs-auth0";
 import MainButton from "../components/MainButton";
 import BackButton from "../components/BackButton";
 import RecipeView from "../components/RecipeView";
+import LoadingScreen from "../components/LoadingScreen";
 
 export default function Recipes() {
   const [favouritesExist, setFavouritesExist] = useState(false);
