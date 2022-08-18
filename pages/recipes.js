@@ -1,6 +1,7 @@
 // Recipes page - displays full recipe taken from results page
 
 import React, { useEffect, useState } from "react";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { StarIcon, ArrowUpIcon } from "@chakra-ui/icons";
 import MainButton from "../components/MainButton";
@@ -38,13 +39,20 @@ function Recipes() {
   }, []);
 
   if (favouritesExist === false) {
-    return "something";
+    return "error";
   }
   if (favouritesExist === true) {
     return (
-      <main className="flex flex-col justify-around items-center w-screen">
+      <main className="flex flex-col justify-around items-center w-screen" aria-label="Search results">
+        <Head>
+          <title>{`Recipe: ${meal.name}`}</title>
+        </Head>
         <section className="absolute top-[12vh] left-[2vh]">
-          <BackButton extraText={"to Favourites"} buttonSize="sm" />
+          <BackButton
+            extraText={"to Favourites"}
+            buttonSize="sm"
+            ariaLabel="back button"
+          />
         </section>
         <section className="flex flex-col w-[80vw] items-center space-y-2 mt-[8vh] max-w-lg">
           <h1 className="font-nunito font-bold text-2xl text-dark-color text-center">
@@ -66,6 +74,7 @@ function Recipes() {
         />
         <section className="flex flex-col w-[80vw] items-center space-y-2 my-[2vh] max-w-lg">
           <MainButton
+            ariaLabel="return to top"
             onClick={() => {
               window.scrollTo({
                 top: 0,

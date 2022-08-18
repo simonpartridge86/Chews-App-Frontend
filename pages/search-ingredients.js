@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import Head from "next/head";
 import {
   Divider,
   HStack,
@@ -108,9 +109,19 @@ export default function SearchIngredients() {
 
   if (isLoading) return <LoadingScreen />; // makes LoadingScreen component show while the next Results page is loading
   return (
-    <main className="h-[80vh] w-screen flex flex-col items-center justify-center space-y-6">
+    <main
+      className="h-[80vh] w-screen flex flex-col items-center justify-center space-y-6"
+      aria-label="Ingredients search"
+    >
+      <Head>
+        <title>Choose ingredients</title>
+      </Head>
       <section className="absolute top-[12vh] left-[2vh]">
-        <BackButton extraText={"to Search Options"} buttonSize="sm" />
+        <BackButton
+          extraText={"to Search Options"}
+          buttonSize="sm"
+          ariaLabel="back button"
+        />
       </section>
       <VStack width="80vw" className="max-w-md">
         <h1 className="font-nunito font-bold text-2xl text-center">
@@ -140,6 +151,8 @@ export default function SearchIngredients() {
           Select from list:
         </label>
         <Select
+          size="lg"
+          ariaLabel="choose from list"
           placeholder="Chews from list"
           name="ingredients"
           id="ingredients"
@@ -183,6 +196,7 @@ export default function SearchIngredients() {
         </HStack>
 
         <MainButton
+          ariaLabel="add ingredient to search"
           onClick={() => {
             addTag(currentIngredient);
           }}
@@ -199,6 +213,7 @@ export default function SearchIngredients() {
           Added your ingredients?
         </h2>
         <MainButton
+          ariaLabel="search for a meal"
           leftIcon={"Yes, now"}
           buttonText={
             <span className="font-permanent-marker text-center text-xl text-light-color font-normal">

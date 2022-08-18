@@ -1,24 +1,44 @@
 // Results page - displays random recipe from local data
 
 import React, { useEffect, useState } from "react";
+import Head from "next/head";
 import { useDisclosure, Divider, Collapse } from "@chakra-ui/react";
 import { StarIcon, ViewIcon, RepeatIcon, ViewOffIcon } from "@chakra-ui/icons";
 import BackButton from "../../components/BackButton";
-import FilterModal from "../../components/FilterModal";
 import MainButton from "../../components/MainButton";
 import RecipeView from "../../components/RecipeView";
 import NoResultsDisplay from "../../components/NoResultsDisplay";
 import FavouritesButton from "../../components/FavouritesButton";
+import { useRouter } from "next/router";
+import NoFavouritesButton from "../../components/NoFavouritesButton";
+import { useUser } from "@auth0/nextjs-auth0";
 
-export default function Results({ meals, noMeal }) {
+async function fetchMealByIngredients(meal, ingredients) {
+  if (meal === "main dish") {
+    const response = await fetch(
+      `https://chews-backend.herokuapp.com/ingredients-category?category=main&ingredients=${ingredients}`
+    );
+    const data = await response.json();
+    return data.payload[0];
+  } else {
+    const response = await fetch(
+      `https://chews-backend.herokuapp.com/ingredients-category?category=${meal}&ingredients=${ingredients}`
+    );
+    const data = await response.json();
+    return data.payload[0];
+  }
+}
+
+export default function Results({ initialMeal, noMeal, docTitle }) {
   // various hooks to handle changes on page
-  const [count, setCount] = useState(0);
-  const [meal, setMeal] = useState(meals[0]);
+  const { user, error, isLoading } = useUser();
+  const [meal, setMeal] = useState(initialMeal);
   const [buttonText, setButtonText] = useState("View Recipe");
   const [buttonIcon, setButtonIcon] = useState(<ViewIcon />);
   const [isFavourite, setIsFavourite] = useState(false);
   const [isNoMeal, setIsNoMeal] = useState(noMeal);
   const { isOpen: isCollapseOpen, onToggle } = useDisclosure();
+  const router = useRouter();
 
   //changeButtonText changes the text on the "View Recipe" button based on whether full recipe is open or closed
   function changeButtonText() {
@@ -29,11 +49,6 @@ export default function Results({ meals, noMeal }) {
       setButtonText("Hide Recipe");
       setButtonIcon(<ViewOffIcon />);
     }
-  }
-
-  //handleClick function is handed to "Chews Again" button
-  function handleClick() {
-    setCount(count + 1);
   }
 
   function handleFavouritesClick() {
@@ -66,16 +81,16 @@ export default function Results({ meals, noMeal }) {
     }
   }
 
-  useEffect(() => {
-    console.log(meals[count]);
-    if (Object.keys(meals[count]).length === 0) {
-      setIsNoMeal(true);
-      setMeal({});
-    } else {
-      setMeal(meals[count]);
-      setIsNoMeal(false);
-    }
-  }, [count]);
+  // useEffect(() => {
+  //   console.log(meals[count]);
+  //   if (Object.keys(meals[count]).length === 0) {
+  //     setIsNoMeal(true);
+  //     setMeal({});
+  //   } else {
+  //     setMeal(meals[count]);
+  //     setIsNoMeal(false);
+  //   }
+  // }, [count]);
 
   useEffect(() => {
     console.log("useEffect runs", isFavourite);
@@ -96,13 +111,42 @@ export default function Results({ meals, noMeal }) {
     }
   }
 
+  async function getMeal() {
+    const fetchedMeal = await fetchMealByIngredients(
+      router.query.meal,
+      router.query.ingredients.toLowerCase()
+    );
+    if (!fetchedMeal) {
+      setIsNoMeal(true);
+    } else {
+      setMeal({
+        id: fetchedMeal.id,
+        name: fetchedMeal.name,
+        image: fetchedMeal.image,
+        ingredients: fetchedMeal.ingredients,
+        measures: fetchedMeal.measures,
+        instructions: fetchedMeal.instructions,
+      });
+    }
+  }
+
   if (isNoMeal === true) {
-    return <NoResultsDisplay hasHistory={true} setCount={setCount} />;
+    return <NoResultsDisplay />;
   } //returns error page if no more results found
   return (
-    <main className="flex flex-col min-h-[80vh] w-screen items-center justify-center space-y-5 pb-[2vh] pt-[5vh]">
+    <main
+      aria-label={docTitle}
+      className="flex flex-col min-h-[80vh] w-screen items-center justify-center space-y-5 pb-[2vh] pt-[5vh]"
+    >
+      <Head>
+        <title>{docTitle}</title>
+      </Head>
       <section className="absolute top-[12vh] left-[2vh]">
-        <BackButton extraText={"to Search"} buttonSize="sm" />
+        <BackButton
+          extraText={"to Search"}
+          buttonSize="sm"
+          ariaLabel="back button"
+        />
       </section>
       <section className="flex flex-col w-[80vw] h-[50vh] items-center justify-end space-y-2 max-w-lg">
         <h2 className="font-nunito font-bold text-xl text-dark-color text-center">
@@ -118,12 +162,13 @@ export default function Results({ meals, noMeal }) {
         <img
           className="w-[100%] max-h-[25vh] object-cover rounded"
           src={meal.image}
-          alt="recipe image"
+          alt={meal.name}
         />
         <section className="flex flex-row justify-between w-[80vw] space-x-2 max-w-lg">
           <MainButton
             buttonText={buttonText}
             leftIcon={buttonIcon}
+            ariaLabel="view or hide recipe"
             buttonSize="lg"
             colorMode="dark"
             buttonWidth="80%"
@@ -132,16 +177,26 @@ export default function Results({ meals, noMeal }) {
               changeButtonText();
             }}
           />
-          <FavouritesButton
-            buttonText={<StarIcon />}
-            buttonSize="lg"
-            buttonWidth="20%"
-            isDisabled={false}
-            isFavourite={isFavourite}
-            onClick={() => {
-              handleFavouritesClick();
-            }}
-          />
+          {user && (
+            <FavouritesButton
+              buttonText={<StarIcon />}
+              ariaLabel="add or remove from favourites"
+              buttonSize="lg"
+              buttonWidth="20%"
+              isDisabled={false}
+              isFavourite={isFavourite}
+              onClick={() => {
+                handleFavouritesClick();
+              }}
+            />
+          )}
+          {!user && (
+            <NoFavouritesButton
+              ariaLabel="add or remove from favourites"
+              buttonSize="lg"
+              buttonWidth="20%"
+            />
+          )}
         </section>
       </section>
 
@@ -163,6 +218,7 @@ export default function Results({ meals, noMeal }) {
               buttonSize="sm"
               buttonText={"Return to Top"}
               colorMode="light"
+              ariaLabel="return to top"
             />
           </section>
         </Collapse>
@@ -173,13 +229,14 @@ export default function Results({ meals, noMeal }) {
           Prefer something else?
         </h2>
         <MainButton
+          ariaLabel="choose again"
           onClick={() => {
             if (isCollapseOpen) {
               onToggle();
               changeButtonText();
-              handleClick();
+              getMeal();
             } else {
-              handleClick();
+              getMeal();
             }
           }}
           leftIcon={<RepeatIcon />}
@@ -202,23 +259,10 @@ export default function Results({ meals, noMeal }) {
 export async function getServerSideProps(context) {
   const mealType = context.query.meal;
   const searchIngredients = context.query.ingredients.toLowerCase();
-  let mealsArray;
-  if (mealType === "main dish") {
-    const response = await fetch(
-      `https://chews-backend.herokuapp.com/ingredients-category?category=main&ingredients=${searchIngredients}`
-    );
-    const data = await response.json();
-    mealsArray = data.payload;
+  const meal = await fetchMealByIngredients(mealType, searchIngredients);
+  if (!meal) {
+    return { props: { initialMeal: {}, noMeal: true } };
   } else {
-    const response = await fetch(
-      `https://chews-backend.herokuapp.com/ingredients-category?category=${mealType}&ingredients=${searchIngredients}`
-    );
-    const data = await response.json();
-    mealsArray = data.payload;
-  }
-  if (mealsArray.length === 0) {
-    return { props: { meals: [{}], noMeal: true } };
-  } else {
-    return { props: { meals: mealsArray, noMeal: false } };
+    return { props: { initialMeal: meal, noMeal: false } };
   }
 }

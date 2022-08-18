@@ -1,6 +1,7 @@
 // Meal-Select page - allows user to select meal option (Breakfast, Main or Dessert)
 
 import React from "react";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { VStack } from "@chakra-ui/react";
 import MainButton from "../components/MainButton";
@@ -10,9 +11,16 @@ export default function MealSelect() {
   const router = useRouter();
 
   return (
-    <main className="flex flex-col h-[80vh] justify-center items-center">
+    <main className="flex flex-col h-[80vh] justify-center items-center" aria-label="Select your meals">
+      <Head>
+        <title>Choose meal type</title>
+      </Head>
       <section className="absolute top-[12vh] left-[2vh]">
-        <BackButton extraText={"to Home"} buttonSize="sm" />
+        <BackButton
+          extraText={"to Home"}
+          buttonSize="sm"
+          ariaLabel="back button"
+        />
       </section>
       <VStack spacing={4} align="center">
         <h1 className="font-nunito font-bold text-2xl">
@@ -24,6 +32,7 @@ export default function MealSelect() {
         </h1>
         <section className="w-screen max-w-lg space-y-4 text-center">
           <MainButton
+            ariaLabel="breakfast"
             buttonText="Breakfast"
             buttonSize="lg"
             colorMode="dark"
@@ -37,6 +46,7 @@ export default function MealSelect() {
             }}
           />
           <MainButton
+            ariaLabel="main dish"
             buttonText="Main Dish"
             buttonSize="lg"
             colorMode="dark"
@@ -50,6 +60,7 @@ export default function MealSelect() {
             }}
           />
           <MainButton
+            ariaLabel="dessert"
             buttonText="Dessert"
             buttonSize="lg"
             colorMode="dark"

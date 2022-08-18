@@ -18,7 +18,12 @@ import { Button } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
 
-export default function BackButton({ buttonWidth, buttonSize, extraText }) {
+export default function BackButton({
+  buttonWidth,
+  buttonSize,
+  extraText,
+  ariaLabel,
+}) {
   const router = useRouter();
   let buttonText = "Back";
   // if (extraText) {
@@ -26,6 +31,7 @@ export default function BackButton({ buttonWidth, buttonSize, extraText }) {
   // }
   return (
     <Button
+      aria-label={ariaLabel}
       onClick={() => {
         router.back();
       }}

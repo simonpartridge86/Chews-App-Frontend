@@ -1,6 +1,7 @@
 // Search-select page - allows user to choose between viewing random recipe or searching by ingredients
 
 import React, { useState } from "react";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { Divider, VStack, useDisclosure } from "@chakra-ui/react";
 import MainButton from "../components/MainButton";
@@ -76,9 +77,16 @@ export default function SearchSelect() {
   if (isLoading) return <LoadingScreen />; // makes LoadingScreen component show while the next Results page is loading
 
   return (
-    <main className="flex flex-col h-[80vh] w-screen justify-center items-center">
+    <main className="flex flex-col h-[80vh] w-screen justify-center items-center" aria-label="Choose your search">
+      <Head>
+        <title>Choose search option</title>
+      </Head>
       <section className="absolute top-[12vh] left-[2vh]">
-        <BackButton extraText={"to Meal Options"} buttonSize="sm" />
+        <BackButton
+          extraText={"to Meal Options"}
+          buttonSize="sm"
+          ariaLabel="back button"
+        />
       </section>
       <VStack spacing={4} align="center" className="max-w-lg">
         <h2 className="font-nunito font-bold text-xl text-center">
@@ -94,6 +102,7 @@ export default function SearchSelect() {
           a search option:
         </h2>
         <MainButton
+          ariaLabel="choose a random meal for me"
           buttonText={
             <span className="font-permanent-marker text-center text-xl text-light-color font-normal">
               Chews
@@ -118,6 +127,7 @@ export default function SearchSelect() {
           Hello {<span>World</span>}
         </MainButton>
         <MainButton
+          ariaLabel="choose a meal by ingredient"
           leftIcon={
             <span className="font-permanent-marker text-center text-xl text-light-color font-normal">
               Chews
@@ -135,6 +145,7 @@ export default function SearchSelect() {
           }}
         />
         <MainButton
+          ariaLabel="add search filters"
           leftIcon={<EditIcon />}
           buttonText="Add Search Filters"
           buttonSize="sm"
