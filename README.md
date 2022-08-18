@@ -2,19 +2,19 @@
 
 ---
 
-This README file covers details of the front-end repo and the project from which it arose. To view the corresponding back-end repo, please click [here](https://github.com/AdamPhasey/baristacrats-backend-repo).
+This README file covers details of the front-end repo for Chews app, as well as a project summary. To view the corresponding back-end repo, please click [here](https://github.com/AdamPhasey/baristacrats-backend-repo).
 
 ---
 
 ## Index
 
 - [Project Description](#project-description)
-- [Skills & Retrospective](#skills-and-retrospective)
+- [Skills & Lessons](#skills--lessons)
 - [Future Plans/Roadmap](#future-plansroadmap)
 - [Front-End Tools](#front-end-tools)
 - [Dev Manual](#dev-manual)
 - [User Guide](#user-guide)
-- [Running Tests](#running-tests)
+- [App Screenshots](#app-screenshots)
 - [Color and Font References](#color-and-font-references)
 - [Support and Feedback](#support-and-feedback)
 
@@ -22,20 +22,21 @@ This README file covers details of the front-end repo and the project from which
 
 ## Project Description
 
-Chews is a mobile-first web app created by [Simon Partridge](https://github.com/simonpartridge86), [Adam Phasey](https://github.com/AdamPhasey), [Sam Wylie](https://github.com/samsonhumber), [Maurizio Monti](https://github.com/mauriziomonti), [Kunal Shukla](https://github.com/kun-shukla) and [Mino Devito](https://github.com/MagicMino) during the final project at [School of Code](https://www.schoolofcode.co.uk/) bootcamp. We were challenged to come up with an app that solves any problem of our choice in a four-week challenge.
+Chews is a mobile-first web app created by [Simon Partridge](https://github.com/simonpartridge86), [Adam Phasey](https://github.com/AdamPhasey), [Sam Wylie](https://github.com/samsonhumber), [Maurizio Monti](https://github.com/mauriziomonti), [Kunal Shukla](https://github.com/kun-shukla) and [Mino Devito](https://github.com/MagicMino) during our final project month at [School of Code](https://www.schoolofcode.co.uk/) bootcamp. We were challenged to come up with an app that solves any problem of our choice in a four-week challenge.
 
 The problem we identified was decision fatigue around meal/recipe selection, which has been exacerbated by the increased amount of home-cooking during the COVID pandemic and the 2022 cost-of-living crisis. This problem can result in a lack of inspiration in the kitchen and sap the joy out of cooking.
 
-The resulting app, "Chews" is a web app that helps users quickly and easily find a recipe suggestion for their next meal, either at random or based on ingredients in their pantry, greatly reducing any searching or decision-making on their part.
+The resulting app, "Chews" is a web app that helps users quickly and easily find a recipe suggestion for their next meal, either at random or based on ingredients in their pantry, greatly reducing any research or decision-making on their part.
 
 Please view the app in deployment here: [chews.vercel.app](https://chews.vercel.app/)
 
 ---
 
-## Project Skills & Retrospective
+## Skills & Lessons
 
-This was our second experience of a group project on School of Code, and aimed to apply knowledge gained throughout School of Code bootcamp, as well as getting further experience of the following skills:
+This was our second experience of a group project at School of Code, and aimed to apply knowledge gained throughout School of Code bootcamp, as well as getting further experience of the following skills:
 
+- Broadening our horizons with additional technologues outside of the bootcamp curriculum scope.
 - Agile methodologies and tools
 - Project planning & management
 - UX/UI design processes
@@ -43,21 +44,21 @@ This was our second experience of a group project on School of Code, and aimed t
 
 Having reflected on the project week as a team, we believe that our strengths included:
 
-- x
-- y
-- z
+- A strong team manifesto that gave us clear processes for handling decisions and conflict, which helped all members feel comfortable in the team.
+- Taking swift and decisive action at certain points in the project when significant changes in direction were needed, particularly when previous decisions needed to be revisited or revised, which was enabled by our Agile project management approach.
+- Reaching out for external help from mentors when we lacked expertise regarding certain coding issues, and from peers when we wanted extra feedback on our ongoing design decisions.
 
 Lessons to take forward to future projects:
 
-- x
-- y
-- z
+- Time-blocking is hard! As a team, we got better at predicting how long certain coding tickets would take as we became more familiar with each others work pace and expertise, but further room for improvement remains.
+- Reliance on external third-party APIs for data fetching is ultimately risky, so we learned a lot (with guidance) about how to keep backend design RESTful and reliable, and how to limit such risks.
+- UI libraries and CSS frameworks can take a lot of the hassle and hard work out of styling attractive, highly functional, and responsive components, and our project benefitted from their use.
 
 ---
 
 ## Future Plans/Roadmap
 
-We have planned to add the following functionality in any future sprints:
+We have planned to add the following functionality in future sprints:
 
 - Add additional dietary requirement filters, prioritising allergies
 - Add functionality to allow crowd-sourced/user-posted recipes, which would reduce reliance on external meal API.
@@ -72,7 +73,7 @@ We have planned to add the following functionality in any future sprints:
 
 ![Front-end Tools](./public/front-end-tech.png)
 
-In addition to technologies that we'd learned on the School of Code bootcamp, namely, React and Auth0, we also selected a number of tools that were new to the team, namely, Next.js, Vercel, Chakra UI and Tailwind CSS:
+In addition to consolidating our knowledge of various technologies learned during the School of Code bootcamp, such as, React and Auth0, we also elected to use a number of tools that were new to us, namely, Next.js, Vercel, Chakra UI and Tailwind CSS:
 
 - Next.js was selected for its improved SEO and performance, dynamic routing, and server-side rendering and pre-fetching.
 - Vercel was used as the favoured deployment option for Next.js apps.
@@ -108,9 +109,15 @@ The app will automatically run on http://localhost:3000 by default, or the next 
 
 ## User Guide
 
+For a short demonstration of the app, including a short introduction from our team members, please watch [this Youtube video](https://youtu.be/vULfbCpL3NU)
+
 ---
 
-## Running Tests
+## App Screenshots
+
+![Screenshot 1](./public/Screenshots-1.png)
+![Screenshot 1](./public/Screenshots-2.png)
+![Screenshot 1](./public/Screenshots-3.png)
 
 ---
 
