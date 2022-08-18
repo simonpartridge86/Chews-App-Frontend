@@ -41,13 +41,6 @@ export default function Recipes() {
   }, []);
   if (isLoading) return <LoadingScreen />;
 
-  // conditional returns based on login status and whether favourites exist
-  if (favouritesExist === false || !user) {
-    router.push({
-      pathname: "/",
-    });
-  }
-
   if (favouritesExist === true && user) {
     return (
       <main
