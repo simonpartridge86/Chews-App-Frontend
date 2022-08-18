@@ -138,6 +138,7 @@ export default function Results({ initialMeal, noMeal, docTitle }) {
     });
   }
 
+  // handleFavouritesClick updates the favourites array in local storage and changes button appearance when favourites button clicked
   function handleFavouritesClick() {
     if (isFavourite === false) {
       if (!localStorage.getItem("favourites")) {
@@ -294,13 +295,23 @@ export default function Results({ initialMeal, noMeal, docTitle }) {
   );
 }
 
-//getServerSideProps fetches initial recipe before load, avoiding the flicker update caused by useEffect as the alternative
+//getServerSideProps fetches initial recipe before load, and sets the document title based on search type
 export async function getServerSideProps(context) {
   const meal = await fetchRandomMeal(
     context.query.meal,
     context.query.category,
     context.query.area
   );
+  let docTitle;
+  if (context.query.category && context.query.area) {
+    `Results for ${context.query.meal} (${context.query.category}, ${context.query.area})`;
+  } else if (context.query.category) {
+    docTitle = `Results for ${context.query.meal} (${context.query.category})`;
+  } else if (context.query.area) {
+    docTitle = `Results for ${context.query.meal} (${context.query.area})`;
+  } else {
+    docTitle = `Results for ${context.query.meal}`;
+  }
   if (meal) {
     const mealObject = {
       id: meal.id,
@@ -314,7 +325,7 @@ export async function getServerSideProps(context) {
       props: {
         initialMeal: mealObject,
         noMeal: false,
-        docTitle: `Results for ${context.query.meal} (${context.query.category},${context.query.area})`,
+        docTitle: docTitle,
       },
     };
   } else {
