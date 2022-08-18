@@ -1,3 +1,5 @@
+// RECIPE VIEW - used to display full-page recipes when accessed from favourites
+
 import { ListItem, UnorderedList, Divider } from "@chakra-ui/react";
 import React from "react";
 

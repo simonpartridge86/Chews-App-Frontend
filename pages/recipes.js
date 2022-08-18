@@ -3,21 +3,21 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { StarIcon, ArrowUpIcon } from "@chakra-ui/icons";
+import { useUser } from "@auth0/nextjs-auth0";
 import MainButton from "../components/MainButton";
 import BackButton from "../components/BackButton";
-import LoadingScreen from "../components/LoadingScreen";
 import RecipeView from "../components/RecipeView";
 
-function Recipes() {
+export default function Recipes() {
+  const [favouritesExist, setFavouritesExist] = useState(false);
+  const [meal, setMeal] = useState({});
+  const { user, error, isLoading } = useUser();
+
   const router = useRouter();
   const mealIndex = router.query.mealId;
-  const [favouritesExist, setFavouritesExist] = useState(false);
-  const [loading, setLoading] = useState(false);
-  // const [index, setIndex] = useState(newIndex);
-  const [meal, setMeal] = useState({});
 
-  function getCurrentFavourite() {
+  // getCurrentFavourites retrieves favourites from local storage (if exists)
+  function getCurrentFavourites() {
     if (
       !localStorage.getItem("favourites") ||
       localStorage.getItem("favourites") === []
@@ -33,26 +33,31 @@ function Recipes() {
     }
   }
 
+  // useEffect runs getCurrentFavourites on page load
   useEffect(() => {
-    const currentMeal = getCurrentFavourite();
+    const currentMeal = getCurrentFavourites();
     setMeal(currentMeal);
   }, []);
+  if (isLoading) return <LoadingScreen />;
 
-  if (favouritesExist === false) {
-    return "error";
+  // conditional returns based on login status and whether favourites exist
+  if (favouritesExist === false || !user) {
+    router.push({
+      pathname: "/",
+    });
   }
-  if (favouritesExist === true) {
+
+  if (favouritesExist === true && user) {
     return (
-      <main className="flex flex-col justify-around items-center w-screen" aria-label="Search results">
+      <main
+        className="flex flex-col justify-around items-center w-screen"
+        aria-label="Search results"
+      >
         <Head>
           <title>{`Recipe: ${meal.name}`}</title>
         </Head>
         <section className="absolute top-[12vh] left-[2vh]">
-          <BackButton
-            extraText={"to Favourites"}
-            buttonSize="sm"
-            ariaLabel="back button"
-          />
+          <BackButton />
         </section>
         <section className="flex flex-col w-[80vw] items-center space-y-2 mt-[8vh] max-w-lg">
           <h1 className="font-nunito font-bold text-2xl text-dark-color text-center">
@@ -90,5 +95,3 @@ function Recipes() {
     );
   }
 }
-
-export default Recipes;

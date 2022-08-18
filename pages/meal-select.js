@@ -1,4 +1,4 @@
-// Meal-Select page - allows user to select meal option (Breakfast, Main or Dessert)
+// MEAL-SELECT page - allows user to select meal option (Breakfast, Main Dish, or Dessert)
 
 import React from "react";
 import Head from "next/head";
@@ -11,16 +11,15 @@ export default function MealSelect() {
   const router = useRouter();
 
   return (
-    <main className="flex flex-col h-[80vh] justify-center items-center" aria-label="Select your meals">
+    <main
+      className="flex flex-col h-[80vh] justify-center items-center"
+      aria-label="Select your meals"
+    >
       <Head>
         <title>Choose meal type</title>
       </Head>
       <section className="absolute top-[12vh] left-[2vh]">
-        <BackButton
-          extraText={"to Home"}
-          buttonSize="sm"
-          ariaLabel="back button"
-        />
+        <BackButton />
       </section>
       <VStack spacing={4} align="center">
         <h1 className="font-nunito font-bold text-2xl">

@@ -1,4 +1,4 @@
-// Search-Ingredients page - allows user to add ingredients to their search
+// SEARCH-INGREDIENTS page - allows user to add ingredients to their search
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
@@ -55,7 +55,7 @@ export default function SearchIngredients() {
   const [tagsArray, setTagsArray] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  // fetchIngredients function fetches ingredients list from our database (originally from TheMealDB API) based on user input
+  // fetchIngredients fetches ingredients list from our database based on user input
   async function fetchIngredients(inputText) {
     console.log(inputText);
     const response = await fetch(
@@ -66,7 +66,7 @@ export default function SearchIngredients() {
     return data.payload;
   }
 
-  // addTag function validates user input before adding new tag to ingredients list, and resets input on text input and dropdown menu
+  // addTag validates user input before adding new tag to ingredients list, and resets input on text input and dropdown menu
   function addTag(str) {
     if (tagsArray.length > 2) {
       onOpenAlert1();
@@ -91,12 +91,12 @@ export default function SearchIngredients() {
     setIngredientOptions([]);
   }
 
-  // deleteTag function is added to ingredient tag close button to allow ingredients to be deleted from the list
+  // deleteTag is added to ingredient tag close button to allow ingredients to be deleted from the list
   function deleteTag(index) {
     setTagsArray([...tagsArray.slice(0, index), ...tagsArray.slice(index + 1)]);
   }
 
-  // useEffect function runs the ingredients fetch to ensure up-to-date rendering
+  // useEffect runs the ingredients fetch to ensure up-to-date rendering, runs every time inputText changes
   useEffect(() => {
     if (inputText && /^[a-zA-Z]/.test(inputText)) {
       const getIngredients = async () => {
@@ -117,11 +117,7 @@ export default function SearchIngredients() {
         <title>Choose ingredients</title>
       </Head>
       <section className="absolute top-[12vh] left-[2vh]">
-        <BackButton
-          extraText={"to Search Options"}
-          buttonSize="sm"
-          ariaLabel="back button"
-        />
+        <BackButton />
       </section>
       <VStack width="80vw" className="max-w-md">
         <h1 className="font-nunito font-bold text-2xl text-center">
