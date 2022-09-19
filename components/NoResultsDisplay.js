@@ -1,3 +1,5 @@
+//NORESULTSDISPLAY shows when a search returns no results
+
 import React from "react";
 import MainButton from "./MainButton";
 import { useRouter } from "next/router";

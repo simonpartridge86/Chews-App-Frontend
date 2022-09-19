@@ -1,15 +1,4 @@
-/*
-PLAN:
-- Create a favourites button component
-- functionality: should be able to save meals to local storage, or delete meals from local storage depending on context
-- reuse main button code for button styling
-- reuse local storage code from filter modal
-*/
-
 // FAVOURITESBUTTON COMPONENT - used for adding recipe to favourites on various pages
-
-import { Button } from "@chakra-ui/react";
-import { useToast } from "@chakra-ui/react";
 
 /*
 Prop Notes:
@@ -18,16 +7,17 @@ Prop Notes:
  - buttonText = the text you want to appear on the button
  - onClick = onClick callback function you want to pass to the button
  - isDisabled = takes boolean to determine whether button is enabled or disabled (true = disabled), defaults to false
- - goldStar = boolean, determines whether star is gold or white
+ - ariaLabel = aria label for button
 */
+
+import { Button } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 
 export default function FavouritesButton({
   buttonWidth,
   buttonSize,
   buttonText,
   isDisabled,
-  leftIcon,
-  rightIcon,
   isFavourite,
   onClick,
   ariaLabel,
@@ -62,8 +52,6 @@ export default function FavouritesButton({
     return (
       <Button
         aria-label={ariaLabel}
-        leftIcon={leftIcon}
-        rightIcon={rightIcon}
         disabled={isDisabled}
         onClick={() => {
           onClick();
@@ -97,8 +85,6 @@ export default function FavouritesButton({
     return (
       <Button
         aria-label={ariaLabel}
-        leftIcon={leftIcon}
-        rightIcon={rightIcon}
         disabled={isDisabled}
         onClick={() => {
           onClick();

@@ -1,28 +1,31 @@
-// Search-select page - allows user to choose between viewing random recipe or searching by ingredients
+// SEARCH-SELECT page - allows user to choose between viewing random recipe or searching by ingredients
 
 import React, { useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { Divider, VStack, useDisclosure } from "@chakra-ui/react";
+import { EditIcon } from "@chakra-ui/icons";
 import MainButton from "../components/MainButton";
 import BackButton from "../components/BackButton";
-import { EditIcon } from "@chakra-ui/icons";
 import FilterModal from "../components/FilterModal";
 import LoadingScreen from "../components/LoadingScreen";
 
 export default function SearchSelect() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLoading, setIsLoading] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const router = useRouter();
 
   // Below adds fallback to "Main dish" in case user navigates to this page directly, rather than from meal-select page
-  let selectedMeal;
+  let selectedMeal, categories, cuisines;
+
   if (router.query.meal) {
     selectedMeal = router.query.meal;
   } else {
     selectedMeal = "main dish";
   }
-  var categories, cuisines;
+
+  //getFilters retrieves filters from local storage (if exists) for filter modal render
   function getFilters() {
     if (localStorage.getItem("category")) {
       const storedcategoryFilters = JSON.parse(
@@ -49,6 +52,7 @@ export default function SearchSelect() {
     return createQueryObject();
   }
 
+  // createQueryObject creates the info object to be passed to the results page using router.push
   function createQueryObject(categories, cuisines) {
     if (categories && cuisines) {
       return {
@@ -77,16 +81,15 @@ export default function SearchSelect() {
   if (isLoading) return <LoadingScreen />; // makes LoadingScreen component show while the next Results page is loading
 
   return (
-    <main className="flex flex-col h-[80vh] w-screen justify-center items-center" aria-label="Choose your search">
+    <main
+      className="flex flex-col h-[80vh] w-screen justify-center items-center"
+      aria-label="Choose your search"
+    >
       <Head>
         <title>Choose search option</title>
       </Head>
       <section className="absolute top-[12vh] left-[2vh]">
-        <BackButton
-          extraText={"to Meal Options"}
-          buttonSize="sm"
-          ariaLabel="back button"
-        />
+        <BackButton />
       </section>
       <VStack spacing={4} align="center" className="max-w-lg">
         <h2 className="font-nunito font-bold text-xl text-center">

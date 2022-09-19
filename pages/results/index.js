@@ -1,26 +1,25 @@
-// Results page - displays random recipe from local data
+// RESULTS - displays random recipe based on meal type (also with diet and cuisine filters if selected)
 
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { useUser } from "@auth0/nextjs-auth0";
 import { useDisclosure, Divider, Collapse } from "@chakra-ui/react";
 import { StarIcon, ViewIcon, RepeatIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { useUser } from "@auth0/nextjs-auth0";
 import BackButton from "../../components/BackButton";
-import FilterModal from "../../components/FilterModal";
 import MainButton from "../../components/MainButton";
 import RecipeView from "../../components/RecipeView";
 import NoResultsDisplay from "../../components/NoResultsDisplay";
 import FavouritesButton from "../../components/FavouritesButton";
 import NoFavouritesButton from "../../components/NoFavouritesButton";
 
+// fetchRandomMeal is declared outside of the page component because it is also used by getServerSideProps
 async function fetchRandomMeal(mealType, category, area) {
   if (category && area) {
     const response = await fetch(
       `https://chews-backend.herokuapp.com/area-category?category=${category}&area=${area}`
     );
     const data = await response.json();
-    console.log("Meal:", data.payload[0]);
     if (data.payload.length === 0) {
       return null;
     } else {
@@ -33,7 +32,6 @@ async function fetchRandomMeal(mealType, category, area) {
       `https://chews-backend.herokuapp.com/area-category?category=${category}`
     );
     const data = await response.json();
-    console.log("Meal:", data.payload[0]);
     if (data.payload.length === 0) {
       return null;
     } else {
@@ -46,7 +44,6 @@ async function fetchRandomMeal(mealType, category, area) {
       `https://chews-backend.herokuapp.com/area-category?area=${area}`
     );
     const data = await response.json();
-    console.log("Meal:", data.payload[0]);
     if (data.payload.length === 0) {
       return null;
     } else {
@@ -59,7 +56,6 @@ async function fetchRandomMeal(mealType, category, area) {
       );
 
       const data = await response.json();
-      console.log("Meal:", data.payload[0]);
       if (data.payload.length === 0) {
         return null;
       } else {
@@ -71,7 +67,6 @@ async function fetchRandomMeal(mealType, category, area) {
     );
 
     const data = await response.json();
-    console.log("Meal", data.payload[0]);
     if (data.payload.length === 0) {
       return null;
     } else {
@@ -81,47 +76,17 @@ async function fetchRandomMeal(mealType, category, area) {
 }
 
 export default function Results({ initialMeal, noMeal, docTitle }) {
-  // Various hooks to manage changes on page
+  // various hooks to handle changes and functionality on page
   const { user, error, isLoading } = useUser();
   const [meal, setMeal] = useState(initialMeal);
   const [buttonText, setButtonText] = useState("View Recipe");
   const [buttonIcon, setButtonIcon] = useState(<ViewIcon />);
-  const { isOpen: isFilterOpen, onOpen, onClose } = useDisclosure();
-  const { isOpen: isCollapseOpen, onToggle } = useDisclosure();
   const [isFavourite, setIsFavourite] = useState(false);
-  const [isNoMeal, setIsNoMeal] = useState(noMeal);
+  const { isOpen: isCollapseOpen, onToggle } = useDisclosure();
+
   const router = useRouter();
 
-  function checkFavourites() {
-    if (!localStorage.getItem("favourites")) {
-      setIsFavourite(false);
-    } else {
-      const storedFavourites = JSON.parse(localStorage.getItem("favourites"));
-      if (storedFavourites.filter((e) => e.id === meal.id).length > 0) {
-        console.log("found item:");
-        setIsFavourite(true);
-      } else {
-        setIsFavourite(false);
-      }
-    }
-  }
-
-  useEffect(() => {
-    console.log("useEffect runs", isFavourite);
-    checkFavourites();
-  }, [meal]);
-
-  //changeButtonText changes the text on the "View Recipe" button based on whether full recipe is open or closed
-  function changeButtonText() {
-    if (isCollapseOpen) {
-      setButtonText("View Recipe");
-      setButtonIcon(<ViewIcon />);
-    } else {
-      setButtonText("Hide Recipe");
-      setButtonIcon(<ViewOffIcon />);
-    }
-  }
-
+  //getMeal runs all meal fetches initiated by "Chews Again" button
   async function getMeal() {
     const fetchedMeal = await fetchRandomMeal(
       router.query.meal,
@@ -138,6 +103,37 @@ export default function Results({ initialMeal, noMeal, docTitle }) {
     });
   }
 
+  //changeButtonText changes the text on the "View Recipe" button based on whether full recipe is open or closed
+  function changeButtonText() {
+    if (isCollapseOpen) {
+      setButtonText("View Recipe");
+      setButtonIcon(<ViewIcon />);
+    } else {
+      setButtonText("Hide Recipe");
+      setButtonIcon(<ViewOffIcon />);
+    }
+  }
+
+  //checkFavourites checks whether current meal is saved in fabvourites - used to update favourites button appearance & functionality
+  function checkFavourites() {
+    if (!localStorage.getItem("favourites")) {
+      setIsFavourite(false);
+    } else {
+      const storedFavourites = JSON.parse(localStorage.getItem("favourites"));
+      if (storedFavourites.filter((e) => e.id === meal.id).length > 0) {
+        setIsFavourite(true);
+      } else {
+        setIsFavourite(false);
+      }
+    }
+  }
+
+  //useEffect runs checkFavourites on initial load and every time the meal changes
+  useEffect(() => {
+    checkFavourites();
+  }, [meal]);
+
+  // handleFavouritesClick updates the favourites array in local storage and changes button appearance when favourites button clicked
   function handleFavouritesClick() {
     if (isFavourite === false) {
       if (!localStorage.getItem("favourites")) {
@@ -157,7 +153,6 @@ export default function Results({ initialMeal, noMeal, docTitle }) {
       const index = storedFavourites
         .map((object) => object.id)
         .indexOf(meal.id);
-      console.log(index);
       const newFavourites = [
         ...storedFavourites.slice(0, index),
         ...storedFavourites.slice(index + 1),
@@ -168,9 +163,11 @@ export default function Results({ initialMeal, noMeal, docTitle }) {
     }
   }
 
-  if (isNoMeal === true) {
-    return <NoResultsDisplay hasHistory={false} />;
-  } //returns error page if no more results found
+  //below code ensures that an error page is displayed if no results found
+  if (noMeal === true) {
+    return <NoResultsDisplay />;
+  }
+
   return (
     <main
       aria-label={docTitle}
@@ -180,11 +177,7 @@ export default function Results({ initialMeal, noMeal, docTitle }) {
         <title>{docTitle}</title>
       </Head>
       <section className="absolute top-[12vh] left-[2vh]">
-        <BackButton
-          extraText={"to Search"}
-          buttonSize="sm"
-          ariaLabel="back button"
-        />
+        <BackButton />
       </section>
       <section className="flex flex-col w-[80vw] h-[50vh] items-center justify-end space-y-2 max-w-lg">
         <h2 className="font-nunito font-bold text-xl text-dark-color text-center">
@@ -230,7 +223,7 @@ export default function Results({ initialMeal, noMeal, docTitle }) {
           )}
           {!user && (
             <NoFavouritesButton
-              ariaLabel="add or remove from favourites"
+              ariaLabel="disabled favourites button"
               buttonSize="lg"
               buttonWidth="20%"
             />
@@ -289,18 +282,27 @@ export default function Results({ initialMeal, noMeal, docTitle }) {
           buttonWidth="80%"
         />
       </section>
-      <FilterModal isOpen={isFilterOpen} onClose={onClose} />
     </main>
   );
 }
 
-//getServerSideProps fetches initial recipe before load, avoiding the flicker update caused by useEffect as the alternative
+//getServerSideProps fetches initial recipe before load, and sets the document title based on search type
 export async function getServerSideProps(context) {
   const meal = await fetchRandomMeal(
     context.query.meal,
     context.query.category,
     context.query.area
   );
+  let docTitle;
+  if (context.query.category && context.query.area) {
+    `Results for ${context.query.meal} (${context.query.category}, ${context.query.area})`;
+  } else if (context.query.category) {
+    docTitle = `Results for ${context.query.meal} (${context.query.category})`;
+  } else if (context.query.area) {
+    docTitle = `Results for ${context.query.meal} (${context.query.area})`;
+  } else {
+    docTitle = `Results for ${context.query.meal}`;
+  }
   if (meal) {
     const mealObject = {
       id: meal.id,
@@ -314,7 +316,7 @@ export async function getServerSideProps(context) {
       props: {
         initialMeal: mealObject,
         noMeal: false,
-        docTitle: `Results for ${context.query.meal} (${context.query.category},${context.query.area})`,
+        docTitle: docTitle,
       },
     };
   } else {

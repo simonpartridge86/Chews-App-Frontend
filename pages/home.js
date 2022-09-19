@@ -1,15 +1,13 @@
-// Home page - displays intro text and "Get Started" button
+// HOME page - displays intro text and "Get Started" button
 
 import React from "react";
 import { useRouter } from "next/router";
 import ChewsLogo from "../components/ChewsLogo";
 import MainButton from "../components/MainButton";
-import { useUser } from "@auth0/nextjs-auth0";
 import Head from "next/head";
 
 export default function Home() {
   const router = useRouter();
-  const { user, error, isLoading } = useUser();
 
   return (
     <main

@@ -1,47 +1,30 @@
 // BACKBUTTON COMPONENT - used to create back buttons at top of each page
 
 /*
-To use, copy this code into the relevant page:
+To use, copy this code into the top of the relevant page function return:
 <section className="absolute top-[12vh] left-[2vh]">
-  <BackButton extraText={"custom text"} buttonSize="sm" />
+  <BackButton />
 </section>;
-*/
-
-/*
-Prop Notes:
- - buttonWidth = to adjust width of button to your needs, if necessary
- - buttonSize = options are lg, md, sm, xs (will also adjust text size)
- - extraText = whatever text you want to appear on the button after "Back"
 */
 
 import { Button } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
 
-export default function BackButton({
-  buttonWidth,
-  buttonSize,
-  extraText,
-  ariaLabel,
-}) {
+export default function BackButton() {
   const router = useRouter();
-  let buttonText = "Back";
-  // if (extraText) {
-  //   buttonText = `Back ${extraText}`;
-  // }
   return (
     <Button
-      aria-label={ariaLabel}
+      aria-label="back"
       onClick={() => {
         router.back();
       }}
-      size={buttonSize}
+      size="sm"
       leftIcon={<ArrowBackIcon />}
       fontWeight={"600"}
       fontFamily={"brand.main"}
-      fontSize={buttonSize}
+      fontSize="sm"
       rounded={"lg"}
-      width={buttonWidth}
       _hover={{
         bg: "brand.primary",
         color: "brand.light",
@@ -55,7 +38,7 @@ export default function BackButton({
         color: "brand.dark",
       }}
     >
-      {buttonText}
+      Back
     </Button>
   );
 }

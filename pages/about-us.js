@@ -1,3 +1,5 @@
+// ABOUT US PAGE - displays our information and github links - accessed from link in footer
+
 import React from "react";
 import Head from "next/head";
 import { SimpleGrid } from "@chakra-ui/react";
