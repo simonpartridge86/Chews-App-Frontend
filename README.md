@@ -2,7 +2,7 @@
 
 ---
 
-This README file provides info on the Chews app front-end, as well as providing a project summary.
+This README file provides info on the Chews app front-end and a project summary.
 
 To view the corresponding back-end repo, please click [here](https://github.com/simonpartridge86/Chews-App-Backend).
 
