@@ -2,7 +2,7 @@
 
 ---
 
-This README file covers details of the front-end repo for Chews app, as well as a project summary. To view the corresponding back-end repo, please click [here](https://github.com/AdamPhasey/baristacrats-backend-repo).
+This README file provides info on the front-end repo for Chews app, as well as a project summary. To view the corresponding back-end repo, please click [here](https://github.com/AdamPhasey/baristacrats-backend-repo).
 
 ---
 
